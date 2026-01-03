@@ -40,6 +40,11 @@ public class ClipboardItem: NSManagedObject, Identifiable {
         return NSImage(data: data)
     }
 
+    var attributedString: NSAttributedString? {
+        guard let data = rtfData else { return nil }
+        return NSAttributedString(rtf: data, documentAttributes: nil)
+    }
+
     var displayText: String {
         switch itemType {
         case .text, .rtf:

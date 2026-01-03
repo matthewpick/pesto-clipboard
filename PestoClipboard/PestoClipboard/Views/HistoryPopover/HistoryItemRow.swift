@@ -31,7 +31,7 @@ struct HistoryItemRow: View {
             if index <= 9 {
                 Text("\(index)")
                     .font(.system(size: 12, weight: .medium, design: .monospaced))
-                    .foregroundStyle(isSelected ? .white.opacity(0.7) : .secondary)
+                    .foregroundStyle(.secondary)
             }
         }
         .padding(.vertical, 6)
@@ -40,6 +40,12 @@ struct HistoryItemRow: View {
         .background {
             RoundedRectangle(cornerRadius: 6)
                 .fill(backgroundColor)
+        }
+        .overlay {
+            if isSelected {
+                RoundedRectangle(cornerRadius: 6)
+                    .stroke(Color.accentColor, lineWidth: 2)
+            }
         }
         .onHover { hovering in
             withAnimation(.easeInOut(duration: 0.12)) {
@@ -52,9 +58,7 @@ struct HistoryItemRow: View {
     }
 
     private var backgroundColor: Color {
-        if isSelected {
-            return Color.accentColor
-        } else if isHovered {
+        if isHovered && !isSelected {
             return Color.primary.opacity(0.08)
         } else {
             return Color.clear
@@ -83,12 +87,69 @@ struct HistoryItemRow: View {
                     .font(.system(size: 13, design: .default))
                     .foregroundStyle(.blue)
                     .lineLimit(2)
+            } else if let nsAttributedString = item.attributedString {
+                // Display rich text with formatting
+                Text(attributedPreview(from: nsAttributedString))
+                    .lineLimit(3)
             } else {
                 Text(item.previewText)
                     .font(.system(size: 13))
-                    .foregroundStyle(isSelected ? .white : .primary)
+                    .foregroundStyle(.primary)
                     .lineLimit(3)
             }
+        }
+    }
+
+    private func attributedPreview(from nsAttributedString: NSAttributedString) -> AttributedString {
+        // Truncate to reasonable preview length
+        let maxLength = 200
+        let length = min(nsAttributedString.length, maxLength)
+        let truncated = nsAttributedString.attributedSubstring(from: NSRange(location: 0, length: length))
+
+        // Create a mutable copy to normalize font sizes while preserving other attributes
+        let mutableAttrString = NSMutableAttributedString(attributedString: truncated)
+        let fullRange = NSRange(location: 0, length: mutableAttrString.length)
+
+        // Remove background color attribute (keep foreground/text color)
+        mutableAttrString.removeAttribute(.backgroundColor, range: fullRange)
+
+        // Enumerate through font attributes and normalize size while preserving traits (bold, italic)
+        mutableAttrString.enumerateAttribute(.font, in: fullRange, options: []) { value, range, _ in
+            if let font = value as? NSFont {
+                // Get font traits (bold, italic, etc.)
+                let traits = NSFontManager.shared.traits(of: font)
+                // Create new font with same traits but normalized size
+                var newFont = NSFont.systemFont(ofSize: 13)
+                if traits.contains(.boldFontMask) && traits.contains(.italicFontMask) {
+                    if let boldItalic = NSFontManager.shared.font(
+                        withFamily: NSFont.systemFont(ofSize: 13).familyName ?? "",
+                        traits: [.boldFontMask, .italicFontMask],
+                        weight: 0,
+                        size: 13
+                    ) {
+                        newFont = boldItalic
+                    }
+                } else if traits.contains(.boldFontMask) {
+                    newFont = NSFont.boldSystemFont(ofSize: 13)
+                } else if traits.contains(.italicFontMask) {
+                    if let italic = NSFontManager.shared.font(
+                        withFamily: NSFont.systemFont(ofSize: 13).familyName ?? "",
+                        traits: .italicFontMask,
+                        weight: 5,
+                        size: 13
+                    ) {
+                        newFont = italic
+                    }
+                }
+                mutableAttrString.addAttribute(.font, value: newFont, range: range)
+            }
+        }
+
+        // Convert to SwiftUI AttributedString
+        do {
+            return try AttributedString(mutableAttrString, including: \.appKit)
+        } catch {
+            return AttributedString(truncated.string)
         }
     }
 
@@ -112,7 +173,7 @@ struct HistoryItemRow: View {
             VStack(alignment: .leading, spacing: 1) {
                 Text("Image")
                     .font(.system(size: 13))
-                    .foregroundStyle(isSelected ? .white : .primary)
+                    .foregroundStyle(.primary)
 
                 if let imageData = item.imageData {
                     Text(formatFileSize(imageData.count))
@@ -136,7 +197,7 @@ struct HistoryItemRow: View {
                     if urls.count == 1 {
                         Text(urls[0].lastPathComponent)
                             .font(.system(size: 13))
-                            .foregroundStyle(isSelected ? .white : .primary)
+                            .foregroundStyle(.primary)
                             .lineLimit(1)
 
                         Text(urls[0].deletingLastPathComponent().path)
@@ -146,7 +207,7 @@ struct HistoryItemRow: View {
                     } else {
                         Text("\(urls.count) files")
                             .font(.system(size: 13))
-                            .foregroundStyle(isSelected ? .white : .primary)
+                            .foregroundStyle(.primary)
 
                         Text(urls.map { $0.lastPathComponent }.prefix(3).joined(separator: ", "))
                             .font(.system(size: 11))

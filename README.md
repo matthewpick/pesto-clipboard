@@ -4,8 +4,6 @@
 
 A free, open-source macOS clipboard manager with a modern Liquid Glass UI.
 
-<img src="assets/screenshot.png" width="400" alt="Pesto Clipboard Screenshot">
-
 ## Features
 
 - **Menu Bar App**: Lives in your menu bar, out of the way
@@ -15,6 +13,8 @@ A free, open-source macOS clipboard manager with a modern Liquid Glass UI.
 - **Plaintext Paste**: Strip formatting when pasting
 - **Launch at Login**: Start automatically when you log in
 - **Modern UI**: Liquid Glass design inspired by macOS Tahoe
+
+<img src="assets/screenshot.png" width="400" alt="Pesto Clipboard Screenshot">
 
 ## Requirements
 

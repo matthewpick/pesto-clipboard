@@ -2,6 +2,7 @@ import Testing
 import CoreData
 @testable import Pesto_Clipboard
 
+@MainActor
 struct ClipboardItemTests {
     let persistenceController: PersistenceController
     let context: NSManagedObjectContext

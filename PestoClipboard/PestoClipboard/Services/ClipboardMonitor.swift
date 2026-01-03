@@ -94,10 +94,13 @@ class ClipboardMonitor: ObservableObject {
             return
         }
 
-        // Check for text (including RTF as plain text)
-        if settings.captureText, let text = extractText(from: pasteboard), !text.isEmpty {
-            historyManager.addTextItem(text)
-            return
+        // Check for text (including RTF)
+        if settings.captureText {
+            let (text, rtfData) = extractTextAndRTF(from: pasteboard)
+            if let text = text, !text.isEmpty {
+                historyManager.addTextItem(text, rtfData: rtfData)
+                return
+            }
         }
     }
 
@@ -174,6 +177,24 @@ class ClipboardMonitor: ObservableObject {
         }
 
         return nil
+    }
+
+    /// Extracts both plain text and RTF data from pasteboard
+    /// Returns tuple of (plainText, rtfData) where rtfData is nil if no RTF formatting exists
+    private func extractTextAndRTF(from pasteboard: NSPasteboard) -> (String?, Data?) {
+        // Check for RTF data first
+        if let rtfData = pasteboard.data(forType: .rtf) {
+            if let attributedString = NSAttributedString(rtf: rtfData, documentAttributes: nil) {
+                return (attributedString.string, rtfData)
+            }
+        }
+
+        // Fall back to plain text (no RTF data)
+        if let text = pasteboard.string(forType: .string) {
+            return (text, nil)
+        }
+
+        return (nil, nil)
     }
 }
 

@@ -2,6 +2,7 @@ import Testing
 import CoreData
 @testable import Pesto_Clipboard
 
+@MainActor
 struct ClipboardHistoryManagerTests {
 
     // MARK: - Helper

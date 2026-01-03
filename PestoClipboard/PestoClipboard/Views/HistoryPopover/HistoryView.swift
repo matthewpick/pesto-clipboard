@@ -221,29 +221,12 @@ struct HistoryView: View {
     private func pasteItem(_ item: ClipboardItem, asPlainText: Bool) {
         print("📋 Pasting item: \(item.previewText.prefix(50))... (plainText: \(asPlainText))")
 
-        // Write to pasteboard
-        let pasteboard = NSPasteboard.general
-        pasteboard.clearContents()
-
-        switch item.itemType {
-        case .text, .rtf:
-            if asPlainText {
-                // Strip formatting and paste as plain text
-                pasteboard.setString(item.textContent ?? "", forType: .string)
-            } else {
-                pasteboard.setString(item.textContent ?? "", forType: .string)
-            }
-
-        case .image:
-            if let imageData = item.imageData {
-                pasteboard.setData(imageData, forType: .png)
-            }
-
-        case .file:
-            if let urls = item.fileURLs {
-                pasteboard.writeObjects(urls as [NSURL])
-            }
-        }
+        // Write to pasteboard using helper
+        PasteHelper.writeToClipboard(
+            item: item,
+            pasteboard: NSPasteboard.general,
+            asPlainText: asPlainText
+        )
 
         // Update item's position (move to top)
         historyManager.moveToTop(item)

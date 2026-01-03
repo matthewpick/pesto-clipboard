@@ -1,6 +1,7 @@
 import Testing
 @testable import Pesto_Clipboard
 
+@MainActor
 struct ClipboardItemTypeTests {
 
     // MARK: - Display Name Tests

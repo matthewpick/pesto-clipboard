@@ -2,6 +2,7 @@ import Testing
 import AppKit
 @testable import Pesto_Clipboard
 
+@MainActor
 struct ThumbnailGeneratorTests {
 
     // MARK: - Helper
@@ -129,6 +130,7 @@ struct ThumbnailGeneratorTests {
 
 // MARK: - NSImage Extension Tests
 
+@MainActor
 struct NSImageExtensionTests {
 
     @Test func jpegDataFromValidImage() {

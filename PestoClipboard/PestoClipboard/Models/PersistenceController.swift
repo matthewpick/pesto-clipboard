@@ -72,6 +72,11 @@ struct PersistenceController {
         textContentAttribute.attributeType = .stringAttributeType
         textContentAttribute.isOptional = true
 
+        let rtfDataAttribute = NSAttributeDescription()
+        rtfDataAttribute.name = "rtfData"
+        rtfDataAttribute.attributeType = .binaryDataAttributeType
+        rtfDataAttribute.isOptional = true
+
         let imageDataAttribute = NSAttributeDescription()
         imageDataAttribute.name = "imageData"
         imageDataAttribute.attributeType = .binaryDataAttributeType
@@ -100,6 +105,7 @@ struct PersistenceController {
             contentTypeAttribute,
             contentHashAttribute,
             textContentAttribute,
+            rtfDataAttribute,
             imageDataAttribute,
             thumbnailDataAttribute,
             fileURLsAttribute,

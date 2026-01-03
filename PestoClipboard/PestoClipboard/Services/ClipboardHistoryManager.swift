@@ -43,7 +43,7 @@ class ClipboardHistoryManager: ObservableObject {
 
     // MARK: - Add Item
 
-    func addTextItem(_ text: String) {
+    func addTextItem(_ text: String, rtfData: Data? = nil) {
         let hash = computeHash(for: text)
 
         // Check for duplicate
@@ -52,10 +52,12 @@ class ClipboardHistoryManager: ObservableObject {
             return
         }
 
+        let itemType: ClipboardItemType = rtfData != nil ? .rtf : .text
         let item = ClipboardItem.create(
             in: viewContext,
-            type: .text,
+            type: itemType,
             textContent: text,
+            rtfData: rtfData,
             contentHash: hash
         )
 

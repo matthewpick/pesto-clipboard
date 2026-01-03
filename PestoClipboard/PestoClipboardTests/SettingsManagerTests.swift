@@ -1,6 +1,8 @@
 import Testing
+import Foundation
 @testable import Pesto_Clipboard
 
+@MainActor
 struct SettingsManagerTests {
 
     // MARK: - SortOrder Enum Tests
@@ -70,6 +72,7 @@ struct SettingsManagerTests {
 
 // MARK: - Constants Tests
 
+@MainActor
 struct ConstantsTests {
 
     @Test func clipboardPollInterval() {

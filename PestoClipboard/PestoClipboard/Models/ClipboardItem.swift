@@ -8,6 +8,7 @@ public class ClipboardItem: NSManagedObject, Identifiable {
     @NSManaged public var contentType: String
     @NSManaged public var contentHash: String
     @NSManaged public var textContent: String?
+    @NSManaged public var rtfData: Data?
     @NSManaged public var imageData: Data?
     @NSManaged public var thumbnailData: Data?
     @NSManaged public var fileURLsData: Data?
@@ -72,6 +73,7 @@ public class ClipboardItem: NSManagedObject, Identifiable {
         in context: NSManagedObjectContext,
         type: ClipboardItemType,
         textContent: String? = nil,
+        rtfData: Data? = nil,
         imageData: Data? = nil,
         thumbnailData: Data? = nil,
         fileURLs: [URL]? = nil,
@@ -83,6 +85,7 @@ public class ClipboardItem: NSManagedObject, Identifiable {
         item.contentType = type.rawValue
         item.contentHash = contentHash
         item.textContent = textContent
+        item.rtfData = rtfData
         item.imageData = imageData
         item.thumbnailData = thumbnailData
         item.fileURLs = fileURLs

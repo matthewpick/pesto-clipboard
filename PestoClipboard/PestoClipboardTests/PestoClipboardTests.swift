@@ -7,6 +7,7 @@
 
 import Testing
 
+@MainActor
 struct PestoClipboardTests {
 
     @Test func example() async throws {

@@ -15,6 +15,16 @@
 		2CEE90A82F08AEE900168750 /* PestoClipboardTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PestoClipboardTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXContainerItemProxy section */
+		2CEE90AF2F08AEE900168750 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 2C5E3D462F083DE2006C065B /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 2C5E3D4D2F083DE2006C065B;
+			remoteInfo = PestoClipboard;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		2C5E3D502F083DE2006C065B /* PestoClipboard */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
@@ -102,6 +112,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				2CEE90B02F08AEE900168750 /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
 				2CEE90A92F08AEE900168750 /* PestoClipboardTests */,
@@ -187,6 +198,14 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		2CEE90B02F08AEE900168750 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 2C5E3D4D2F083DE2006C065B /* PestoClipboard */;
+			targetProxy = 2CEE90AF2F08AEE900168750 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		2C5E3D572F083DE4006C065B /* Debug */ = {

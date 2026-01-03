@@ -12,12 +12,18 @@
 
 /* Begin PBXFileReference section */
 		2C5E3D4E2F083DE2006C065B /* PestoClipboard.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = PestoClipboard.app; path = "Pesto Clipboard.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2CEE90A82F08AEE900168750 /* PestoClipboardTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PestoClipboardTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		2C5E3D502F083DE2006C065B /* PestoClipboard */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = PestoClipboard;
+			sourceTree = "<group>";
+		};
+		2CEE90A92F08AEE900168750 /* PestoClipboardTests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = PestoClipboardTests;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -31,6 +37,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		2CEE90A52F08AEE900168750 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -38,6 +51,7 @@
 			isa = PBXGroup;
 			children = (
 				2C5E3D502F083DE2006C065B /* PestoClipboard */,
+				2CEE90A92F08AEE900168750 /* PestoClipboardTests */,
 				2C5E3D4F2F083DE2006C065B /* Products */,
 			);
 			sourceTree = "<group>";
@@ -46,6 +60,7 @@
 			isa = PBXGroup;
 			children = (
 				2C5E3D4E2F083DE2006C065B /* PestoClipboard.app */,
+				2CEE90A82F08AEE900168750 /* PestoClipboardTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -76,6 +91,28 @@
 			productReference = 2C5E3D4E2F083DE2006C065B /* PestoClipboard.app */;
 			productType = "com.apple.product-type.application";
 		};
+		2CEE90A72F08AEE900168750 /* PestoClipboardTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 2CEE90AC2F08AEE900168750 /* Build configuration list for PBXNativeTarget "PestoClipboardTests" */;
+			buildPhases = (
+				2CEE90A42F08AEE900168750 /* Sources */,
+				2CEE90A52F08AEE900168750 /* Frameworks */,
+				2CEE90A62F08AEE900168750 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				2CEE90A92F08AEE900168750 /* PestoClipboardTests */,
+			);
+			name = PestoClipboardTests;
+			packageProductDependencies = (
+			);
+			productName = PestoClipboardTests;
+			productReference = 2CEE90A82F08AEE900168750 /* PestoClipboardTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -87,6 +124,9 @@
 				LastUpgradeCheck = 2620;
 				TargetAttributes = {
 					2C5E3D4D2F083DE2006C065B = {
+						CreatedOnToolsVersion = 26.2;
+					};
+					2CEE90A72F08AEE900168750 = {
 						CreatedOnToolsVersion = 26.2;
 					};
 				};
@@ -109,6 +149,7 @@
 			projectRoot = "";
 			targets = (
 				2C5E3D4D2F083DE2006C065B /* PestoClipboard */,
+				2CEE90A72F08AEE900168750 /* PestoClipboardTests */,
 			);
 		};
 /* End PBXProject section */
@@ -121,10 +162,24 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		2CEE90A62F08AEE900168750 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		2C5E3D4A2F083DE2006C065B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2CEE90A42F08AEE900168750 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -318,6 +373,49 @@
 			};
 			name = Release;
 		};
+		2CEE90AD2F08AEE900168750 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 15.6;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.pestoclipboard.PestoClipboardTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Pesto Clipboard.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Pesto Clipboard";
+			};
+			name = Debug;
+		};
+		2CEE90AE2F08AEE900168750 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 15.6;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.pestoclipboard.PestoClipboardTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Pesto Clipboard.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Pesto Clipboard";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -335,6 +433,15 @@
 			buildConfigurations = (
 				2C5E3D5A2F083DE4006C065B /* Debug */,
 				2C5E3D5B2F083DE4006C065B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		2CEE90AC2F08AEE900168750 /* Build configuration list for PBXNativeTarget "PestoClipboardTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2CEE90AD2F08AEE900168750 /* Debug */,
+				2CEE90AE2F08AEE900168750 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

@@ -110,14 +110,17 @@ jobs:
           body: |
             ## Installation
 
-            ### Via Homebrew (Recommended)
-            ```bash
-            brew install --cask pesto-clipboard
-            ```
-
             ### Manual Download
             1. Download `${{ env.DMG_NAME }}` below
             2. Open the DMG and drag Pesto Clipboard to Applications
+            3. Run the following command to allow the app to open (required for unsigned apps):
+               ```bash
+               xattr -cr "/Applications/Pesto Clipboard.app"
+               ```
+
+            > **Note:** This app is not yet code-signed. macOS will show a security warning on first launch.
+            > The command above removes the quarantine flag. Once we obtain an Apple Developer certificate,
+            > future releases will be signed and notarized.
 
             ## Verification
 

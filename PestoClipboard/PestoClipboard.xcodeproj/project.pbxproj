@@ -10,11 +10,6 @@
 		2C5E3D5E2F083E09006C065B /* KeyboardShortcuts in Frameworks */ = {isa = PBXBuildFile; productRef = 2C5E3D5D2F083E09006C065B /* KeyboardShortcuts */; };
 /* End PBXBuildFile section */
 
-/* Begin PBXFileReference section */
-		2C5E3D4E2F083DE2006C065B /* PestoClipboard.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = PestoClipboard.app; path = "Pesto Clipboard.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		2CEE90A82F08AEE900168750 /* PestoClipboardTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PestoClipboardTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-/* End PBXFileReference section */
-
 /* Begin PBXContainerItemProxy section */
 		2CEE90AF2F08AEE900168750 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -24,6 +19,11 @@
 			remoteInfo = PestoClipboard;
 		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		2C5E3D4E2F083DE2006C065B /* PestoClipboard.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = PestoClipboard.app; path = "Pesto Clipboard.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2CEE90A82F08AEE900168750 /* PestoClipboardTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PestoClipboardTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		2C5E3D502F083DE2006C065B /* PestoClipboard */ = {

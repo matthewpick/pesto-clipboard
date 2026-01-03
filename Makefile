@@ -1,4 +1,4 @@
-.PHONY: build build-debug test clean install dmg
+.PHONY: build build-debug test clean install dmg bump-version
 
 PROJECT_NAME = PestoClipboard
 APP_NAME = Pesto Clipboard
@@ -56,3 +56,14 @@ dmg: build
 
 clean:
 	rm -rf $(BUILD_DIR) dmg-contents *.dmg
+
+# Bump version: make bump-version V=0.0.4
+bump-version:
+ifndef V
+	$(error V is required. Usage: make bump-version V=0.0.4)
+endif
+	cd $(PROJECT_DIR) && agvtool new-marketing-version $(V)
+	@echo ""
+	@echo "Version bumped to $(V). Next steps:"
+	@echo "  git add -A && git commit -m 'Bump version to $(V)'"
+	@echo "  git tag v$(V) && git push origin main --tags"

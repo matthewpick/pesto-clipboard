@@ -84,40 +84,6 @@ brew install --cask pesto-clipboard
 | Shift+Return | Paste as plain text |
 | Delete | Delete selected item |
 
-## Project Structure
-
-```
-PestoClipboard/
-├── App/
-│   ├── PestoClipboardApp.swift    # Main entry point
-│   ├── AppDelegate.swift          # Menu bar setup
-│   └── Info.plist
-├── Models/
-│   ├── ClipboardItem.swift        # Core Data model
-│   ├── ClipboardItemType.swift    # Content type enum
-│   └── PersistenceController.swift # Core Data stack
-├── Services/
-│   ├── ClipboardMonitor.swift     # Clipboard polling
-│   ├── ClipboardHistoryManager.swift # CRUD operations
-│   ├── ThumbnailGenerator.swift   # Image thumbnails
-│   ├── HotkeyManager.swift        # Global shortcuts
-│   └── LaunchAtLoginManager.swift # Login item
-├── Views/
-│   ├── StatusBar/
-│   │   └── StatusBarController.swift
-│   ├── HistoryPopover/
-│   │   ├── HistoryView.swift
-│   │   ├── HistoryItemRow.swift
-│   │   ├── SearchBar.swift
-│   │   └── ToolbarView.swift
-│   └── Preferences/
-│       ├── PreferencesView.swift
-│       ├── GeneralSettingsView.swift
-│       └── HotkeySettingsView.swift
-└── Utilities/
-    └── Extensions.swift
-```
-
 ## Data Storage
 
 Clipboard history is stored in a Core Data SQLite database at:

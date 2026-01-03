@@ -8,6 +8,7 @@ struct HistoryView: View {
     @State private var plainTextMode: Bool = false
     @State private var showStarredOnly: Bool = false
     var onDismiss: () -> Void
+    var onSettings: () -> Void
 
     private var filteredItems: [ClipboardItem] {
         if showStarredOnly {
@@ -139,7 +140,8 @@ struct HistoryView: View {
                 isPaused: $clipboardMonitor.isPaused,
                 onDelete: {
                     deleteSelectedItem()
-                }
+                },
+                onSettings: onSettings
             )
         }
         .frame(minWidth: 280, minHeight: 300)
@@ -398,6 +400,7 @@ struct StarredEmptyStateView: View {
     return HistoryView(
         historyManager: historyManager,
         clipboardMonitor: clipboardMonitor,
-        onDismiss: {}
+        onDismiss: {},
+        onSettings: {}
     )
 }

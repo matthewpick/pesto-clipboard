@@ -1,6 +1,10 @@
 # Pesto Clipboard
 
+<img src="assets/app-icon.png" width="128" alt="Pesto Clipboard Icon">
+
 A free, open-source macOS clipboard manager with a modern Liquid Glass UI.
+
+![Pesto Clipboard Screenshot](assets/screenshot.png)
 
 ## Features
 
@@ -112,6 +116,20 @@ PestoClipboard/
     └── Extensions.swift
 ```
 
+## Data Storage
+
+Clipboard history is stored in a Core Data SQLite database at:
+
+```
+~/Library/Containers/com.pestoclipboard.PestoClipboard/Data/Library/Application Support/PestoClipboard/
+```
+
+To forcefully delete all clipboard history, quit the app and run:
+
+```bash
+rm -rf ~/Library/Containers/com.pestoclipboard.PestoClipboard/Data/Library/Application\ Support/PestoClipboard/
+```
+
 ## License
 
 MIT License - see LICENSE file for details.
@@ -119,4 +137,4 @@ MIT License - see LICENSE file for details.
 ## Acknowledgments
 
 - [KeyboardShortcuts](https://github.com/sindresorhus/KeyboardShortcuts) by Sindre Sorhus
-- Inspired by [Maccy](https://maccy.app) and Copy 'Em
+- Inspired by [Maccy](https://maccy.app) and [Copy 'Em](https://apprywhere.com/ce-mac.html)

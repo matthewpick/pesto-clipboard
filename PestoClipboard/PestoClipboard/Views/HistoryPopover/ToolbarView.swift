@@ -5,6 +5,7 @@ struct ToolbarView: View {
     @Binding var showStarredOnly: Bool
     @Binding var isPaused: Bool
     var onDelete: () -> Void
+    var onSettings: () -> Void
 
     var body: some View {
         HStack(spacing: 12) {
@@ -39,6 +40,11 @@ struct ToolbarView: View {
             }
 
             Spacer()
+
+            // Settings button
+            ToolbarButton(icon: "gearshape", help: "Settings") {
+                onSettings()
+            }
 
             // Delete button
             ToolbarButton(icon: "trash", help: "Delete (⌫)", tint: .red) {
@@ -118,7 +124,8 @@ struct ToolbarButton: View {
         plainTextMode: .constant(false),
         showStarredOnly: .constant(false),
         isPaused: .constant(false),
-        onDelete: {}
+        onDelete: {},
+        onSettings: {}
     )
     .frame(width: 320)
     .background(.ultraThinMaterial)

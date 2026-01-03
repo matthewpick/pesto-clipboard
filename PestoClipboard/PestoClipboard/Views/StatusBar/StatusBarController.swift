@@ -107,10 +107,14 @@ class StatusBarController {
     private func setupPanel() {
         let historyView = HistoryView(
             historyManager: historyManager,
-            clipboardMonitor: clipboardMonitor
-        ) { [weak self] in
-            self?.hidePanel()
-        }
+            clipboardMonitor: clipboardMonitor,
+            onDismiss: { [weak self] in
+                self?.hidePanel()
+            },
+            onSettings: { [weak self] in
+                self?.showPreferencesAction()
+            }
+        )
 
         panel = FloatingPanel(contentView: historyView)
     }

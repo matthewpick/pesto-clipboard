@@ -15,11 +15,16 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Select Xcode
-        run: sudo xcode-select -s /Applications/Xcode_16.2.app/Contents/Developer
+      - name: Select latest Xcode
+        run: |
+          LATEST_XCODE=$(ls -d /Applications/Xcode*.app 2>/dev/null | sort -V | tail -1)
+          echo "Using Xcode: $LATEST_XCODE"
+          sudo xcode-select -s "$LATEST_XCODE/Contents/Developer"
 
       - name: Show Xcode version
-        run: xcodebuild -version
+        run: |
+          xcodebuild -version
+          swift --version
 
       - name: Resolve Swift Package Dependencies
         run: |

@@ -87,6 +87,37 @@ struct GeneralSettingsView: View {
                     )
                 }
 
+                // Appearance Section
+                SettingsSection(title: "Appearance") {
+                    SettingsToggle(
+                        title: "Transparent background",
+                        subtitle: "Use a glass effect for the clipboard panel",
+                        isOn: $settings.useTransparentBackground
+                    )
+                }
+
+                // Setup Section
+                SettingsSection(title: "Setup") {
+                    VStack(alignment: .leading, spacing: 8) {
+                        Button {
+                            NSApp.keyWindow?.close()
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                                OnboardingWindowController.shared.showOnboarding()
+                            }
+                        } label: {
+                            HStack {
+                                Image(systemName: "wand.and.stars")
+                                Text("Run Setup Wizard")
+                            }
+                        }
+                        .buttonStyle(.bordered)
+
+                        Text("Re-run the initial setup wizard to configure basic settings.")
+                            .font(.subheadline)
+                            .foregroundStyle(.secondary)
+                    }
+                }
+
                 Spacer()
             }
             .padding(24)
@@ -278,7 +309,7 @@ struct StorageSettingsView: View {
                 // Danger Zone
                 SettingsSection(title: "Danger Zone") {
                     VStack(alignment: .leading, spacing: 12) {
-                        Text("Clearing history will remove all clipboard items except starred ones.")
+                        Text("Clearing history cannot be undone.")
                             .font(.subheadline)
                             .foregroundStyle(.secondary)
 

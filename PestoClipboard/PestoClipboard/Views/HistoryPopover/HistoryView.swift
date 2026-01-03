@@ -155,7 +155,7 @@ struct HistoryView: View {
             )
         }
         .frame(minWidth: 280, minHeight: 300)
-        .background(.regularMaterial)
+        .background(settings.useTransparentBackground ? AnyShapeStyle(.regularMaterial) : AnyShapeStyle(Color(nsColor: .windowBackgroundColor)))
         .clipShape(RoundedRectangle(cornerRadius: 12))
         .focusable()
         .focusEffectDisabled()
@@ -165,6 +165,11 @@ struct HistoryView: View {
             searchText = ""
             selectedIndex = -1
             focusedField = .list
+        }
+        .onReceive(NotificationCenter.default.publisher(for: .deleteSelectedItem)) { _ in
+            // Handle delete key from event monitor
+            guard !isSearchFocused else { return }
+            deleteSelectedItem()
         }
         .onKeyPress(.upArrow) {
             moveSelection(by: -1)
@@ -181,7 +186,11 @@ struct HistoryView: View {
             return .handled
         }
         .onKeyPress(.delete) {
-            // Don't handle delete when search field is focused
+            guard !isSearchFocused else { return .ignored }
+            deleteSelectedItem()
+            return .handled
+        }
+        .onKeyPress(.deleteForward) {
             guard !isSearchFocused else { return .ignored }
             deleteSelectedItem()
             return .handled

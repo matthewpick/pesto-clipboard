@@ -7,6 +7,7 @@ class StatusBarController {
     private var historyManager: ClipboardHistoryManager
     private var clipboardMonitor: ClipboardMonitor
     private var eventMonitor: Any?
+    private var keyEventMonitor: Any?
     private var preferencesWindow: NSWindow?
     private var notificationObserver: Any?
 
@@ -26,6 +27,14 @@ class StatusBarController {
             queue: .main
         ) { [weak self] _ in
             self?.hidePanel()
+        }
+
+        NotificationCenter.default.addObserver(
+            forName: .openHistoryPanel,
+            object: nil,
+            queue: .main
+        ) { [weak self] _ in
+            self?.showPanel()
         }
     }
 
@@ -132,6 +141,18 @@ class StatusBarController {
                 self.hidePanel()
             }
         }
+
+        // Monitor for delete key presses when panel is visible
+        keyEventMonitor = NSEvent.addLocalMonitorForEvents(matching: .keyDown) { [weak self] event in
+            guard let self = self, self.panel.isVisible else { return event }
+
+            // Check for delete (backspace) key (keyCode 51) or forward delete (keyCode 117)
+            if event.keyCode == 51 || event.keyCode == 117 {
+                NotificationCenter.default.post(name: .deleteSelectedItem, object: nil)
+                return nil // Consume the event
+            }
+            return event
+        }
     }
 
     func togglePopover() {
@@ -154,6 +175,9 @@ class StatusBarController {
 
     deinit {
         if let monitor = eventMonitor {
+            NSEvent.removeMonitor(monitor)
+        }
+        if let monitor = keyEventMonitor {
             NSEvent.removeMonitor(monitor)
         }
         if let observer = notificationObserver {

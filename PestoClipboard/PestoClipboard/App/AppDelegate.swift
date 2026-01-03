@@ -31,6 +31,13 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         setupGlobalHotkey()
 
         print("🍝 Pesto Clipboard started - use Cmd+Shift+V to open")
+
+        // Show onboarding wizard if not completed
+        if !SettingsManager.shared.hasCompletedOnboarding {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                OnboardingWindowController.shared.showOnboarding()
+            }
+        }
     }
 
     func applicationWillTerminate(_ notification: Notification) {

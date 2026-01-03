@@ -3,6 +3,8 @@ import SwiftUI
 extension Notification.Name {
     static let hideHistoryPanel = Notification.Name("hideHistoryPanel")
     static let showHistoryPanel = Notification.Name("showHistoryPanel")
+    static let openHistoryPanel = Notification.Name("openHistoryPanel")
+    static let deleteSelectedItem = Notification.Name("deleteSelectedItem")
 }
 
 @main

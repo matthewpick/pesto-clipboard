@@ -22,6 +22,14 @@ class SettingsManager: ObservableObject {
         didSet { UserDefaults.standard.set(isPaused, forKey: "isPaused") }
     }
 
+    @Published var hasCompletedOnboarding: Bool {
+        didSet { UserDefaults.standard.set(hasCompletedOnboarding, forKey: "hasCompletedOnboarding") }
+    }
+
+    @Published var useTransparentBackground: Bool {
+        didSet { UserDefaults.standard.set(useTransparentBackground, forKey: "useTransparentBackground") }
+    }
+
     // MARK: - Storage Settings
 
     @Published var captureText: Bool {
@@ -61,9 +69,11 @@ class SettingsManager: ObservableObject {
 
     private init() {
         self.launchAtLogin = UserDefaults.standard.bool(forKey: "launchAtLogin")
-        self.pasteAutomatically = UserDefaults.standard.object(forKey: "pasteAutomatically") as? Bool ?? true
+        self.pasteAutomatically = UserDefaults.standard.object(forKey: "pasteAutomatically") as? Bool ?? false
         self.plainTextMode = UserDefaults.standard.bool(forKey: "plainTextMode")
         self.isPaused = UserDefaults.standard.bool(forKey: "isPaused")
+        self.hasCompletedOnboarding = UserDefaults.standard.bool(forKey: "hasCompletedOnboarding")
+        self.useTransparentBackground = UserDefaults.standard.object(forKey: "useTransparentBackground") as? Bool ?? true
         self.captureText = UserDefaults.standard.object(forKey: "captureText") as? Bool ?? true
         self.captureImages = UserDefaults.standard.object(forKey: "captureImages") as? Bool ?? true
         self.captureFiles = UserDefaults.standard.object(forKey: "captureFiles") as? Bool ?? true

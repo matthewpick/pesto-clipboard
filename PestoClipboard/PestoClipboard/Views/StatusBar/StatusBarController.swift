@@ -145,6 +145,7 @@ class StatusBarController {
     func showPanel() {
         historyManager.fetchItems()
         panel.showPanel()
+        NotificationCenter.default.post(name: .showHistoryPanel, object: nil)
     }
 
     func hidePanel() {
@@ -159,6 +160,12 @@ class StatusBarController {
             NotificationCenter.default.removeObserver(observer)
         }
     }
+}
+
+// MARK: - Key-accepting Hosting View
+
+class KeyAcceptingHostingView<Content: View>: NSHostingView<Content> {
+    override var acceptsFirstResponder: Bool { true }
 }
 
 // MARK: - Floating Panel
@@ -204,14 +211,23 @@ class FloatingPanel: NSPanel {
         self.minSize = NSSize(width: Self.minWidth, height: Self.minHeight)
         self.maxSize = NSSize(width: Self.maxWidth, height: Self.maxHeight)
 
-        // Set SwiftUI content
-        let hostingView = NSHostingView(rootView: contentView)
-        hostingView.frame = NSRect(x: 0, y: 0, width: width, height: height)
-        hostingView.autoresizingMask = [.width, .height]
-        self.contentView = hostingView
+        // Set SwiftUI content using custom hosting view that accepts first responder
+        let hosting = KeyAcceptingHostingView(rootView: contentView)
+        hosting.frame = NSRect(x: 0, y: 0, width: width, height: height)
+        hosting.autoresizingMask = [.width, .height]
+        self.contentView = hosting
+        self.hostingView = hosting
 
         // Restore last position or center on screen
         restorePosition()
+    }
+
+    // Store the hosting view to use as first responder
+    private var hostingView: NSView?
+
+    override var initialFirstResponder: NSView? {
+        get { hostingView }  // Use hosting view, not text field
+        set { }
     }
 
     func showPanel() {
@@ -224,6 +240,12 @@ class FloatingPanel: NSPanel {
         // Show panel as key window but don't activate our app
         // This keeps the menu bar showing the previous app
         self.makeKeyAndOrderFront(nil)
+
+        // Make hosting view first responder so key events reach SwiftUI
+        // but don't focus the text field
+        if let hosting = hostingView {
+            self.makeFirstResponder(hosting)
+        }
     }
 
     private func positionNearMouse() {

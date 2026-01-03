@@ -1,8 +1,9 @@
 import SwiftUI
 
-struct SearchBar: View {
+struct SearchBar<FocusValue: Hashable>: View {
     @Binding var text: String
-    @FocusState private var isFocused: Bool
+    var focusBinding: FocusState<FocusValue?>.Binding
+    var focusValue: FocusValue
 
     var body: some View {
         HStack(spacing: 6) {
@@ -13,7 +14,7 @@ struct SearchBar: View {
             TextField("Search", text: $text)
                 .textFieldStyle(.plain)
                 .font(.system(size: 13))
-                .focused($isFocused)
+                .focused(focusBinding, equals: focusValue)
 
             if !text.isEmpty {
                 Button {
@@ -32,17 +33,5 @@ struct SearchBar: View {
             RoundedRectangle(cornerRadius: 6)
                 .fill(.quaternary)
         }
-        .onAppear {
-            // Focus search bar when popover appears
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                isFocused = true
-            }
-        }
     }
-}
-
-#Preview {
-    SearchBar(text: .constant(""))
-        .frame(width: 300)
-        .padding()
 }

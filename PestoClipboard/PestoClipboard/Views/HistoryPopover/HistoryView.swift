@@ -1,14 +1,24 @@
 import SwiftUI
 
 struct HistoryView: View {
+    enum FocusField {
+        case list
+        case search
+    }
+
     @ObservedObject var historyManager: ClipboardHistoryManager
     @ObservedObject var clipboardMonitor: ClipboardMonitor
+    @ObservedObject private var settings = SettingsManager.shared
     @State private var searchText: String = ""
     @State private var selectedIndex: Int = -1
-    @State private var plainTextMode: Bool = false
     @State private var showStarredOnly: Bool = false
+    @FocusState private var focusedField: FocusField?
     var onDismiss: () -> Void
     var onSettings: () -> Void
+
+    private var isSearchFocused: Bool {
+        focusedField == .search
+    }
 
     private var filteredItems: [ClipboardItem] {
         if showStarredOnly {
@@ -23,7 +33,7 @@ struct HistoryView: View {
             HeaderView(itemCount: filteredItems.count)
 
             // Search bar
-            SearchBar(text: $searchText)
+            SearchBar(text: $searchText, focusBinding: $focusedField, focusValue: FocusField.search)
                 .padding(.horizontal, 10)
                 .padding(.vertical, 6)
                 .onChange(of: searchText) { _, newValue in
@@ -63,7 +73,7 @@ struct HistoryView: View {
                             .onTapGesture {
                                 selectedIndex = index
                                 if SettingsManager.shared.pasteAutomatically {
-                                    pasteItem(item, asPlainText: plainTextMode)
+                                    pasteItem(item, asPlainText: settings.plainTextMode)
                                 } else {
                                     copyToClipboard(item)
                                     onDismiss()
@@ -135,7 +145,7 @@ struct HistoryView: View {
 
             // Bottom toolbar
             ToolbarView(
-                plainTextMode: $plainTextMode,
+                plainTextMode: $settings.plainTextMode,
                 showStarredOnly: $showStarredOnly,
                 isPaused: $clipboardMonitor.isPaused,
                 onDelete: {
@@ -147,6 +157,15 @@ struct HistoryView: View {
         .frame(minWidth: 280, minHeight: 300)
         .background(.regularMaterial)
         .clipShape(RoundedRectangle(cornerRadius: 12))
+        .focusable()
+        .focusEffectDisabled()
+        .focused($focusedField, equals: .list)
+        .onReceive(NotificationCenter.default.publisher(for: .showHistoryPanel)) { _ in
+            // Reset state when panel opens
+            searchText = ""
+            selectedIndex = -1
+            focusedField = .list
+        }
         .onKeyPress(.upArrow) {
             moveSelection(by: -1)
             return .handled
@@ -157,11 +176,13 @@ struct HistoryView: View {
         }
         .onKeyPress(.return) {
             if selectedIndex < filteredItems.count {
-                pasteItem(filteredItems[selectedIndex], asPlainText: plainTextMode)
+                pasteItem(filteredItems[selectedIndex], asPlainText: settings.plainTextMode)
             }
             return .handled
         }
         .onKeyPress(.delete) {
+            // Don't handle delete when search field is focused
+            guard !isSearchFocused else { return .ignored }
             deleteSelectedItem()
             return .handled
         }
@@ -169,12 +190,22 @@ struct HistoryView: View {
             onDismiss()
             return .handled
         }
+        .onKeyPress(keys: ["f"]) { press in
+            if press.modifiers.contains(.command) {
+                focusedField = .search
+                return .handled
+            }
+            return .ignored
+        }
         .onKeyPress(keys: ["1", "2", "3", "4", "5", "6", "7", "8", "9"]) { press in
+            // Don't handle numeric hotkeys when search field is focused
+            guard !isSearchFocused else { return .ignored }
+
             if let number = Int(String(press.characters)), number >= 1, number <= 9 {
                 let index = number - 1
                 if index < filteredItems.count {
                     selectedIndex = index
-                    pasteItem(filteredItems[index], asPlainText: plainTextMode)
+                    pasteItem(filteredItems[index], asPlainText: settings.plainTextMode)
                 }
             }
             return .handled

@@ -2,6 +2,7 @@ import SwiftUI
 
 extension Notification.Name {
     static let hideHistoryPanel = Notification.Name("hideHistoryPanel")
+    static let showHistoryPanel = Notification.Name("showHistoryPanel")
 }
 
 @main

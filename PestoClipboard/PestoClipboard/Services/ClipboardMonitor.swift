@@ -11,8 +11,11 @@ class ClipboardMonitor: ObservableObject {
     private let pollInterval: TimeInterval = Constants.clipboardPollInterval
     private var skipNextCheck: Bool = false
 
-    @Published var isPaused: Bool = false {
+    @Published var isPaused: Bool = SettingsManager.shared.isPaused {
         didSet {
+            // Persist to settings
+            SettingsManager.shared.isPaused = isPaused
+
             if !isPaused {
                 // When unpausing, update lastChangeCount to current
                 // and skip the next check cycle to avoid capturing current clipboard

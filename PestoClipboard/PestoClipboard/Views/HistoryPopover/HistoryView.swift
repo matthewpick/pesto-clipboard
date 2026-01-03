@@ -47,16 +47,7 @@ struct HistoryView: View {
                 }
             } else {
                 ScrollViewReader { proxy in
-                    List(selection: Binding(
-                        get: { selectedIndex >= 0 && selectedIndex < filteredItems.count ? filteredItems[selectedIndex].id : nil },
-                        set: { newValue in
-                            if let id = newValue, let index = filteredItems.firstIndex(where: { $0.id == id }) {
-                                selectedIndex = index
-                            } else {
-                                selectedIndex = -1
-                            }
-                        }
-                    )) {
+                    List {
                         ForEach(Array(filteredItems.enumerated()), id: \.element.id) { index, item in
                             HistoryItemRow(
                                 item: item,
@@ -152,7 +143,7 @@ struct HistoryView: View {
             )
         }
         .frame(minWidth: 280, minHeight: 300)
-        .background(.ultraThinMaterial)
+        .background(.regularMaterial)
         .clipShape(RoundedRectangle(cornerRadius: 12))
         .onKeyPress(.upArrow) {
             moveSelection(by: -1)

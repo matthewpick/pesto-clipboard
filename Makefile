@@ -62,8 +62,9 @@ bump-version:
 ifndef V
 	$(error V is required. Usage: make bump-version V=0.0.4)
 endif
-	cd $(PROJECT_DIR) && agvtool new-marketing-version $(V)
+	@sed -i '' 's/MARKETING_VERSION = [^;]*;/MARKETING_VERSION = $(V);/g' $(PROJECT_DIR)/$(PROJECT_NAME).xcodeproj/project.pbxproj
+	@echo "Version bumped to $(V)"
 	@echo ""
-	@echo "Version bumped to $(V). Next steps:"
+	@echo "Next steps:"
 	@echo "  git add -A && git commit -m 'Bump version to $(V)'"
 	@echo "  git tag v$(V) && git push origin main --tags"

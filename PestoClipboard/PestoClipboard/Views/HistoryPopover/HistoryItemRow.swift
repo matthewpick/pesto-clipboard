@@ -15,8 +15,10 @@ struct HistoryItemRow: View {
                 onToggleStar()
             } label: {
                 Image(systemName: item.isPinned ? "star.fill" : "star")
-                    .font(.system(size: 11))
+                    .font(.system(size: 13))
                     .foregroundStyle(item.isPinned ? .yellow : .secondary.opacity(0.4))
+                    .frame(width: 20, height: 20)
+                    .contentShape(Rectangle())
             }
             .buttonStyle(.plain)
 

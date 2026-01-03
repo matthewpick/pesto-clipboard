@@ -2,7 +2,7 @@
 
 <img src="assets/app-icon.png" width="128" alt="Pesto Clipboard Icon">
 
-A free, open-source macOS clipboard manager with a modern Liquid Glass UI.
+Fresh, free, and open-source clipboard management.
 
 ## Features
 

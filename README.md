@@ -4,7 +4,7 @@
 
 A free, open-source macOS clipboard manager with a modern Liquid Glass UI.
 
-![Pesto Clipboard Screenshot](assets/screenshot.png)
+<img src="assets/screenshot.png" width="400" alt="Pesto Clipboard Screenshot">
 
 ## Features
 

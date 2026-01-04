@@ -8,13 +8,11 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     private var historyManager: ClipboardHistoryManager?
 
     func applicationDidFinishLaunching(_ notification: Notification) {
-        // Check for accessibility permissions (needed for paste simulation)
-        let hasPermission = AccessibilityHelper.checkAndRequestPermission()
-        if hasPermission {
+        // Log accessibility permission status (but don't prompt - that happens in onboarding)
+        if AccessibilityHelper.hasPermission {
             print("✅ Accessibility permission granted - paste will work")
         } else {
-            print("⚠️ Accessibility permission NOT granted - paste will NOT work until permission is granted")
-            print("   Go to: System Settings > Privacy & Security > Accessibility > Enable PestoClipboard")
+            print("ℹ️ Accessibility permission not granted yet - will be requested during onboarding if auto-paste is enabled")
         }
 
         // Initialize Core Data and services

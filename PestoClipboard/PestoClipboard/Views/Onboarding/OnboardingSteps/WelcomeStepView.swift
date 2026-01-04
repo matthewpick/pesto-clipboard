@@ -20,6 +20,8 @@ struct WelcomeStepView: View {
                 FeatureRow(icon: "clock.arrow.circlepath", text: "Access your clipboard history anytime")
                 FeatureRow(icon: "keyboard", text: "Quick access with a keyboard shortcut")
                 FeatureRow(icon: "star.fill", text: "Star items to keep them forever")
+                FeatureRow(icon: "pause.fill", text: "Pause clipboard capturing")
+                FeatureRow(icon: "textformat", text: "Toggle plaintext mode")
             }
             .padding(.top, 16)
         }

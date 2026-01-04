@@ -104,5 +104,5 @@ MIT License - see LICENSE file for details.
 
 ## Acknowledgments
 
-- [KeyboardShortcuts](https://github.com/sindresorhus/KeyboardShortcuts) by Sindre Sorhus
 - Inspired by [Maccy](https://maccy.app) and [Copy 'Em](https://apprywhere.com/ce-mac.html)
+- [KeyboardShortcuts](https://github.com/sindresorhus/KeyboardShortcuts) by Sindre Sorhus

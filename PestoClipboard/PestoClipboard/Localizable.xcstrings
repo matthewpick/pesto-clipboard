@@ -442,6 +442,94 @@
         }
       }
     },
+    "Appearance": {
+      "localizations": {
+        "ca": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Aparença"
+          }
+        },
+        "da": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Udseende"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Erscheinungsbild"
+          }
+        },
+        "en-GB": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Appearance"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Apariencia"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Apparence"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "दिखावट"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Aspetto"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "外観"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "모양"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Weergave"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Оформление"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Utseende"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "外观"
+          }
+        }
+      }
+    },
     "Are you sure you want to clear your clipboard history?": {
       "localizations": {
         "ca": {
@@ -526,6 +614,94 @@
           "stringUnit": {
             "state": "translated",
             "value": "确定要清除剪贴板历史记录吗？"
+          }
+        }
+      }
+    },
+    "Automatically start Pesto Clipboard when you log in": {
+      "localizations": {
+        "ca": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Iniciar Pesto Clipboard automàticament en iniciar sessió"
+          }
+        },
+        "da": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Start Pesto Clipboard automatisk ved login"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pesto Clipboard automatisch beim Anmelden starten"
+          }
+        },
+        "en-GB": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Automatically start Pesto Clipboard when you log in"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Iniciar Pesto Clipboard automáticamente al iniciar sesión"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Démarrer Pesto Clipboard automatiquement à la connexion"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "लॉगिन पर Pesto Clipboard स्वचालित रूप से शुरू करें"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Avvia Pesto Clipboard automaticamente all'accesso"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ログイン時にPesto Clipboardを自動的に起動"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "로그인 시 Pesto Clipboard 자동 시작"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pesto Clipboard automatisch starten bij inloggen"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Автоматически запускать Pesto Clipboard при входе"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Starta Pesto Clipboard automatiskt vid inloggning"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "登录时自动启动 Pesto Clipboard"
           }
         }
       }
@@ -618,6 +794,94 @@
         }
       }
     },
+    "Behavior": {
+      "localizations": {
+        "ca": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Comportament"
+          }
+        },
+        "da": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Adfærd"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Verhalten"
+          }
+        },
+        "en-GB": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Behaviour"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Comportamiento"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Comportement"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "व्यवहार"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Comportamento"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "動作"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "동작"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Gedrag"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Поведение"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Beteende"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "行为"
+          }
+        }
+      }
+    },
     "Cancel": {
       "localizations": {
         "ca": {
@@ -702,6 +966,94 @@
           "stringUnit": {
             "state": "translated",
             "value": "取消"
+          }
+        }
+      }
+    },
+    "Capture Types": {
+      "localizations": {
+        "ca": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tipus de captura"
+          }
+        },
+        "da": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Optagelsestyper"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Erfassungstypen"
+          }
+        },
+        "en-GB": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Capture Types"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tipos de captura"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Types de capture"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "कैप्चर प्रकार"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tipi di acquisizione"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "取り込みタイプ"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "캡처 유형"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vastlegtypen"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Типы захвата"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Fångsttyper"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "捕获类型"
           }
         }
       }
@@ -1762,6 +2114,94 @@
         }
       }
     },
+    "Danger Zone": {
+      "localizations": {
+        "ca": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Zona de perill"
+          }
+        },
+        "da": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Farezone"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Gefahrenzone"
+          }
+        },
+        "en-GB": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Danger Zone"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Zona de peligro"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Zone de danger"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "खतरनाक क्षेत्र"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Zona pericolosa"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "危険ゾーン"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "위험 구역"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Gevarenzone"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Опасная зона"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Farozon"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "危险区域"
+          }
+        }
+      }
+    },
     "Date Added": {
       "localizations": {
         "ca": {
@@ -2114,6 +2554,95 @@
         }
       }
     },
+    "Edit": {},
+    "Files": {
+      "localizations": {
+        "ca": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Fitxers"
+          }
+        },
+        "da": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Filer"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dateien"
+          }
+        },
+        "en-GB": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Files"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Archivos"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Fichiers"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "फ़ाइलें"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "File"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ファイル"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "파일"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bestanden"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Файлы"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Filer"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "文件"
+          }
+        }
+      }
+    },
     "General": {
       "localizations": {
         "ca": {
@@ -2290,6 +2819,94 @@
         }
       }
     },
+    "History": {
+      "localizations": {
+        "ca": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Historial"
+          }
+        },
+        "da": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Historik"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Verlauf"
+          }
+        },
+        "en-GB": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "History"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Historial"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Historique"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "इतिहास"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cronologia"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "履歴"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "기록"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Geschiedenis"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "История"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Historik"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "历史记录"
+          }
+        }
+      }
+    },
     "Ignore": {
       "localizations": {
         "ca": {
@@ -2378,6 +2995,94 @@
         }
       }
     },
+    "Ignored Applications": {
+      "localizations": {
+        "ca": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Aplicacions ignorades"
+          }
+        },
+        "da": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ignorerede apps"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ignorierte Anwendungen"
+          }
+        },
+        "en-GB": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ignored Applications"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Aplicaciones ignoradas"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Applications ignorées"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "अनदेखे ऐप्स"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Applicazioni ignorate"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "除外アプリケーション"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "무시된 앱"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Genegeerde apps"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Игнорируемые приложения"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ignorerade appar"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "已忽略的应用程序"
+          }
+        }
+      }
+    },
     "Image": {
       "localizations": {
         "ca": {
@@ -2456,6 +3161,94 @@
           "stringUnit": {
             "state": "translated",
             "value": "Bild"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "图片"
+          }
+        }
+      }
+    },
+    "Images": {
+      "localizations": {
+        "ca": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Imatges"
+          }
+        },
+        "da": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Billeder"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bilder"
+          }
+        },
+        "en-GB": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Images"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Imágenes"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Images"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "छवियां"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Immagini"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "画像"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "이미지"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Afbeeldingen"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Изображения"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bilder"
           }
         },
         "zh-Hans": {
@@ -3786,6 +4579,94 @@
         }
       }
     },
+    "Paste immediately after selecting an item": {
+      "localizations": {
+        "ca": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Enganxa immediatament després de seleccionar un element"
+          }
+        },
+        "da": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Indsæt straks efter valg af element"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nach Auswahl eines Elements sofort einfügen"
+          }
+        },
+        "en-GB": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Paste immediately after selecting an item"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pegar inmediatamente después de seleccionar un elemento"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Coller immédiatement après la sélection d'un élément"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "आइटम चुनने के बाद तुरंत पेस्ट करें"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Incolla immediatamente dopo aver selezionato un elemento"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "項目を選択後すぐにペースト"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "항목 선택 후 즉시 붙여넣기"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Direct plakken na selectie van een item"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Вставлять сразу после выбора элемента"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Klistra in direkt efter val av objekt"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "选择项目后立即粘贴"
+          }
+        }
+      }
+    },
     "Pause capture": {
       "localizations": {
         "ca": {
@@ -4754,6 +5635,7 @@
         }
       }
     },
+    "Save": {},
     "Search": {
       "localizations": {
         "ca": {
@@ -5008,6 +5890,94 @@
           "stringUnit": {
             "state": "translated",
             "value": "Inställningar"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "设置"
+          }
+        }
+      }
+    },
+    "Setup": {
+      "localizations": {
+        "ca": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Configuració"
+          }
+        },
+        "da": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Opsætning"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Einrichtung"
+          }
+        },
+        "en-GB": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Setup"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Configuración"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Configuration"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "सेटअप"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Configurazione"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "セットアップ"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "설정"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Instellen"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Настройка"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Konfiguration"
           }
         },
         "zh-Hans": {
@@ -5546,270 +6516,6 @@
         }
       }
     },
-    "Storage": {
-      "localizations": {
-        "ca": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Emmagatzematge"
-          }
-        },
-        "da": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Lagring"
-          }
-        },
-        "de": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Speicher"
-          }
-        },
-        "en-GB": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Storage"
-          }
-        },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Almacenamiento"
-          }
-        },
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Stockage"
-          }
-        },
-        "hi": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "संग्रहण"
-          }
-        },
-        "it": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Archiviazione"
-          }
-        },
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "ストレージ"
-          }
-        },
-        "ko": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "저장소"
-          }
-        },
-        "nl": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Opslag"
-          }
-        },
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Хранилище"
-          }
-        },
-        "sv": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Lagring"
-          }
-        },
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "存储"
-          }
-        }
-      }
-    },
-    "Welcome to Pesto Clipboard": {
-      "localizations": {
-        "ca": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Benvingut a Pesto Clipboard"
-          }
-        },
-        "da": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Velkommen til Pesto Clipboard"
-          }
-        },
-        "de": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Willkommen bei Pesto Clipboard"
-          }
-        },
-        "en-GB": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Welcome to Pesto Clipboard"
-          }
-        },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Bienvenido a Pesto Clipboard"
-          }
-        },
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Bienvenue dans Pesto Clipboard"
-          }
-        },
-        "hi": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Pesto Clipboard में आपका स्वागत है"
-          }
-        },
-        "it": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Benvenuto in Pesto Clipboard"
-          }
-        },
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Pesto Clipboardへようこそ"
-          }
-        },
-        "ko": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Pesto Clipboard에 오신 것을 환영합니다"
-          }
-        },
-        "nl": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Welkom bij Pesto Clipboard"
-          }
-        },
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Добро пожаловать в Pesto Clipboard"
-          }
-        },
-        "sv": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Välkommen till Pesto Clipboard"
-          }
-        },
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "欢迎使用 Pesto Clipboard"
-          }
-        }
-      }
-    },
-    "Your clipboard history, always at your fingertips.": {
-      "localizations": {
-        "ca": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "El teu historial del porta-retalls, sempre a l'abast."
-          }
-        },
-        "da": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Din udklipsholderhistorik, altid lige ved hånden."
-          }
-        },
-        "de": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Dein Zwischenablageverlauf, immer griffbereit."
-          }
-        },
-        "en-GB": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Your clipboard history, always at your fingertips."
-          }
-        },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Tu historial del portapapeles, siempre al alcance."
-          }
-        },
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Votre historique du presse-papiers, toujours à portée de main."
-          }
-        },
-        "hi": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "आपका क्लिपबोर्ड इतिहास, हमेशा आपकी उंगलियों पर।"
-          }
-        },
-        "it": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "La cronologia degli appunti, sempre a portata di mano."
-          }
-        },
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "クリップボード履歴をいつでも手元に。"
-          }
-        },
-        "ko": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "클립보드 기록을 언제나 손쉽게."
-          }
-        },
-        "nl": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Je klembordgeschiedenis, altijd binnen handbereik."
-          }
-        },
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "История буфера обмена всегда под рукой."
-          }
-        },
-        "sv": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Din urklippshistorik, alltid nära till hands."
-          }
-        },
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "您的剪贴板历史记录，触手可及。"
-          }
-        }
-      }
-    },
     "Startup": {
       "localizations": {
         "ca": {
@@ -5898,178 +6604,178 @@
         }
       }
     },
-    "Behavior": {
+    "Storage": {
       "localizations": {
         "ca": {
           "stringUnit": {
             "state": "translated",
-            "value": "Comportament"
+            "value": "Emmagatzematge"
           }
         },
         "da": {
           "stringUnit": {
             "state": "translated",
-            "value": "Adfærd"
+            "value": "Lagring"
           }
         },
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "Verhalten"
+            "value": "Speicher"
           }
         },
         "en-GB": {
           "stringUnit": {
             "state": "translated",
-            "value": "Behaviour"
+            "value": "Storage"
           }
         },
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Comportamiento"
+            "value": "Almacenamiento"
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Comportement"
+            "value": "Stockage"
           }
         },
         "hi": {
           "stringUnit": {
             "state": "translated",
-            "value": "व्यवहार"
+            "value": "संग्रहण"
           }
         },
         "it": {
           "stringUnit": {
             "state": "translated",
-            "value": "Comportamento"
+            "value": "Archiviazione"
           }
         },
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "動作"
+            "value": "ストレージ"
           }
         },
         "ko": {
           "stringUnit": {
             "state": "translated",
-            "value": "동작"
+            "value": "저장소"
           }
         },
         "nl": {
           "stringUnit": {
             "state": "translated",
-            "value": "Gedrag"
+            "value": "Opslag"
           }
         },
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Поведение"
+            "value": "Хранилище"
           }
         },
         "sv": {
           "stringUnit": {
             "state": "translated",
-            "value": "Beteende"
+            "value": "Lagring"
           }
         },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "行为"
+            "value": "存储"
           }
         }
       }
     },
-    "Appearance": {
+    "Text": {
       "localizations": {
         "ca": {
           "stringUnit": {
             "state": "translated",
-            "value": "Aparença"
+            "value": "Text"
           }
         },
         "da": {
           "stringUnit": {
             "state": "translated",
-            "value": "Udseende"
+            "value": "Tekst"
           }
         },
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "Erscheinungsbild"
+            "value": "Text"
           }
         },
         "en-GB": {
           "stringUnit": {
             "state": "translated",
-            "value": "Appearance"
+            "value": "Text"
           }
         },
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Apariencia"
+            "value": "Texto"
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Apparence"
+            "value": "Texte"
           }
         },
         "hi": {
           "stringUnit": {
             "state": "translated",
-            "value": "दिखावट"
+            "value": "टेक्स्ट"
           }
         },
         "it": {
           "stringUnit": {
             "state": "translated",
-            "value": "Aspetto"
+            "value": "Testo"
           }
         },
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "外観"
+            "value": "テキスト"
           }
         },
         "ko": {
           "stringUnit": {
             "state": "translated",
-            "value": "모양"
+            "value": "텍스트"
           }
         },
         "nl": {
           "stringUnit": {
             "state": "translated",
-            "value": "Weergave"
+            "value": "Tekst"
           }
         },
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Оформление"
+            "value": "Текст"
           }
         },
         "sv": {
           "stringUnit": {
             "state": "translated",
-            "value": "Utseende"
+            "value": "Text"
           }
         },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "外观"
+            "value": "文本"
           }
         }
       }
@@ -6250,882 +6956,266 @@
         }
       }
     },
-    "Automatically start Pesto Clipboard when you log in": {
+    "Welcome to Pesto Clipboard": {
       "localizations": {
         "ca": {
           "stringUnit": {
             "state": "translated",
-            "value": "Iniciar Pesto Clipboard automàticament en iniciar sessió"
+            "value": "Benvingut a Pesto Clipboard"
           }
         },
         "da": {
           "stringUnit": {
             "state": "translated",
-            "value": "Start Pesto Clipboard automatisk ved login"
+            "value": "Velkommen til Pesto Clipboard"
           }
         },
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "Pesto Clipboard automatisch beim Anmelden starten"
+            "value": "Willkommen bei Pesto Clipboard"
           }
         },
         "en-GB": {
           "stringUnit": {
             "state": "translated",
-            "value": "Automatically start Pesto Clipboard when you log in"
+            "value": "Welcome to Pesto Clipboard"
           }
         },
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Iniciar Pesto Clipboard automáticamente al iniciar sesión"
+            "value": "Bienvenido a Pesto Clipboard"
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Démarrer Pesto Clipboard automatiquement à la connexion"
+            "value": "Bienvenue dans Pesto Clipboard"
           }
         },
         "hi": {
           "stringUnit": {
             "state": "translated",
-            "value": "लॉगिन पर Pesto Clipboard स्वचालित रूप से शुरू करें"
+            "value": "Pesto Clipboard में आपका स्वागत है"
           }
         },
         "it": {
           "stringUnit": {
             "state": "translated",
-            "value": "Avvia Pesto Clipboard automaticamente all'accesso"
+            "value": "Benvenuto in Pesto Clipboard"
           }
         },
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "ログイン時にPesto Clipboardを自動的に起動"
+            "value": "Pesto Clipboardへようこそ"
           }
         },
         "ko": {
           "stringUnit": {
             "state": "translated",
-            "value": "로그인 시 Pesto Clipboard 자동 시작"
+            "value": "Pesto Clipboard에 오신 것을 환영합니다"
           }
         },
         "nl": {
           "stringUnit": {
             "state": "translated",
-            "value": "Pesto Clipboard automatisch starten bij inloggen"
+            "value": "Welkom bij Pesto Clipboard"
           }
         },
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Автоматически запускать Pesto Clipboard при входе"
+            "value": "Добро пожаловать в Pesto Clipboard"
           }
         },
         "sv": {
           "stringUnit": {
             "state": "translated",
-            "value": "Starta Pesto Clipboard automatiskt vid inloggning"
+            "value": "Välkommen till Pesto Clipboard"
           }
         },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "登录时自动启动 Pesto Clipboard"
+            "value": "欢迎使用 Pesto Clipboard"
           }
         }
       }
     },
-    "Paste immediately after selecting an item": {
+    "Your clipboard history, always at your fingertips.": {
       "localizations": {
         "ca": {
           "stringUnit": {
             "state": "translated",
-            "value": "Enganxa immediatament després de seleccionar un element"
+            "value": "El teu historial del porta-retalls, sempre a l'abast."
           }
         },
         "da": {
           "stringUnit": {
             "state": "translated",
-            "value": "Indsæt straks efter valg af element"
+            "value": "Din udklipsholderhistorik, altid lige ved hånden."
           }
         },
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "Nach Auswahl eines Elements sofort einfügen"
+            "value": "Dein Zwischenablageverlauf, immer griffbereit."
           }
         },
         "en-GB": {
           "stringUnit": {
             "state": "translated",
-            "value": "Paste immediately after selecting an item"
+            "value": "Your clipboard history, always at your fingertips."
           }
         },
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Pegar inmediatamente después de seleccionar un elemento"
+            "value": "Tu historial del portapapeles, siempre al alcance."
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Coller immédiatement après la sélection d'un élément"
+            "value": "Votre historique du presse-papiers, toujours à portée de main."
           }
         },
         "hi": {
           "stringUnit": {
             "state": "translated",
-            "value": "आइटम चुनने के बाद तुरंत पेस्ट करें"
+            "value": "आपका क्लिपबोर्ड इतिहास, हमेशा आपकी उंगलियों पर।"
           }
         },
         "it": {
           "stringUnit": {
             "state": "translated",
-            "value": "Incolla immediatamente dopo aver selezionato un elemento"
+            "value": "La cronologia degli appunti, sempre a portata di mano."
           }
         },
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "項目を選択後すぐにペースト"
+            "value": "クリップボード履歴をいつでも手元に。"
           }
         },
         "ko": {
           "stringUnit": {
             "state": "translated",
-            "value": "항목 선택 후 즉시 붙여넣기"
+            "value": "클립보드 기록을 언제나 손쉽게."
           }
         },
         "nl": {
           "stringUnit": {
             "state": "translated",
-            "value": "Direct plakken na selectie van een item"
+            "value": "Je klembordgeschiedenis, altijd binnen handbereik."
           }
         },
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Вставлять сразу после выбора элемента"
+            "value": "История буфера обмена всегда под рукой."
           }
         },
         "sv": {
           "stringUnit": {
             "state": "translated",
-            "value": "Klistra in direkt efter val av objekt"
+            "value": "Din urklippshistorik, alltid nära till hands."
           }
         },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "选择项目后立即粘贴"
+            "value": "您的剪贴板历史记录，触手可及。"
           }
         }
       }
     },
-    "Setup": {
+    "Edit Clipboard Item": {
       "localizations": {
         "ca": {
           "stringUnit": {
             "state": "translated",
-            "value": "Configuració"
+            "value": "Edita l'element del porta-retalls"
           }
         },
         "da": {
           "stringUnit": {
             "state": "translated",
-            "value": "Opsætning"
+            "value": "Rediger udklipsholderpost"
           }
         },
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "Einrichtung"
+            "value": "Zwischenablage-Eintrag bearbeiten"
           }
         },
         "en-GB": {
           "stringUnit": {
             "state": "translated",
-            "value": "Setup"
+            "value": "Edit Clipboard Item"
           }
         },
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Configuración"
+            "value": "Editar elemento del portapapeles"
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Configuration"
+            "value": "Modifier l'élément du presse-papiers"
           }
         },
         "hi": {
           "stringUnit": {
             "state": "translated",
-            "value": "सेटअप"
+            "value": "क्लिपबोर्ड आइटम संपादित करें"
           }
         },
         "it": {
           "stringUnit": {
             "state": "translated",
-            "value": "Configurazione"
+            "value": "Modifica elemento appunti"
           }
         },
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "セットアップ"
+            "value": "クリップボード項目を編集"
           }
         },
         "ko": {
           "stringUnit": {
             "state": "translated",
-            "value": "설정"
+            "value": "클립보드 항목 편집"
           }
         },
         "nl": {
           "stringUnit": {
             "state": "translated",
-            "value": "Instellen"
+            "value": "Klemborditem bewerken"
           }
         },
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Настройка"
+            "value": "Редактировать элемент буфера"
           }
         },
         "sv": {
           "stringUnit": {
             "state": "translated",
-            "value": "Konfiguration"
+            "value": "Redigera urklippspost"
           }
         },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "设置"
-          }
-        }
-      }
-    },
-    "Ignored Applications": {
-      "localizations": {
-        "ca": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Aplicacions ignorades"
-          }
-        },
-        "da": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Ignorerede apps"
-          }
-        },
-        "de": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Ignorierte Anwendungen"
-          }
-        },
-        "en-GB": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Ignored Applications"
-          }
-        },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Aplicaciones ignoradas"
-          }
-        },
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Applications ignorées"
-          }
-        },
-        "hi": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "अनदेखे ऐप्स"
-          }
-        },
-        "it": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Applicazioni ignorate"
-          }
-        },
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "除外アプリケーション"
-          }
-        },
-        "ko": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "무시된 앱"
-          }
-        },
-        "nl": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Genegeerde apps"
-          }
-        },
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Игнорируемые приложения"
-          }
-        },
-        "sv": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Ignorerade appar"
-          }
-        },
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "已忽略的应用程序"
-          }
-        }
-      }
-    },
-    "Danger Zone": {
-      "localizations": {
-        "ca": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Zona de perill"
-          }
-        },
-        "da": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Farezone"
-          }
-        },
-        "de": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Gefahrenzone"
-          }
-        },
-        "en-GB": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Danger Zone"
-          }
-        },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Zona de peligro"
-          }
-        },
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Zone de danger"
-          }
-        },
-        "hi": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "खतरनाक क्षेत्र"
-          }
-        },
-        "it": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Zona pericolosa"
-          }
-        },
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "危険ゾーン"
-          }
-        },
-        "ko": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "위험 구역"
-          }
-        },
-        "nl": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Gevarenzone"
-          }
-        },
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Опасная зона"
-          }
-        },
-        "sv": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Farozon"
-          }
-        },
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "危险区域"
-          }
-        }
-      }
-    },
-    "Capture Types": {
-      "localizations": {
-        "ca": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Tipus de captura"
-          }
-        },
-        "da": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Optagelsestyper"
-          }
-        },
-        "de": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Erfassungstypen"
-          }
-        },
-        "en-GB": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Capture Types"
-          }
-        },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Tipos de captura"
-          }
-        },
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Types de capture"
-          }
-        },
-        "hi": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "कैप्चर प्रकार"
-          }
-        },
-        "it": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Tipi di acquisizione"
-          }
-        },
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "取り込みタイプ"
-          }
-        },
-        "ko": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "캡처 유형"
-          }
-        },
-        "nl": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Vastlegtypen"
-          }
-        },
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Типы захвата"
-          }
-        },
-        "sv": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Fångsttyper"
-          }
-        },
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "捕获类型"
-          }
-        }
-      }
-    },
-    "History": {
-      "localizations": {
-        "ca": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Historial"
-          }
-        },
-        "da": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Historik"
-          }
-        },
-        "de": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Verlauf"
-          }
-        },
-        "en-GB": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "History"
-          }
-        },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Historial"
-          }
-        },
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Historique"
-          }
-        },
-        "hi": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "इतिहास"
-          }
-        },
-        "it": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Cronologia"
-          }
-        },
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "履歴"
-          }
-        },
-        "ko": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "기록"
-          }
-        },
-        "nl": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Geschiedenis"
-          }
-        },
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "История"
-          }
-        },
-        "sv": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Historik"
-          }
-        },
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "历史记录"
-          }
-        }
-      }
-    },
-    "Text": {
-      "localizations": {
-        "ca": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Text"
-          }
-        },
-        "da": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Tekst"
-          }
-        },
-        "de": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Text"
-          }
-        },
-        "en-GB": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Text"
-          }
-        },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Texto"
-          }
-        },
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Texte"
-          }
-        },
-        "hi": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "टेक्स्ट"
-          }
-        },
-        "it": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Testo"
-          }
-        },
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "テキスト"
-          }
-        },
-        "ko": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "텍스트"
-          }
-        },
-        "nl": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Tekst"
-          }
-        },
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Текст"
-          }
-        },
-        "sv": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Text"
-          }
-        },
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "文本"
-          }
-        }
-      }
-    },
-    "Images": {
-      "localizations": {
-        "ca": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Imatges"
-          }
-        },
-        "da": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Billeder"
-          }
-        },
-        "de": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Bilder"
-          }
-        },
-        "en-GB": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Images"
-          }
-        },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Imágenes"
-          }
-        },
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Images"
-          }
-        },
-        "hi": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "छवियां"
-          }
-        },
-        "it": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Immagini"
-          }
-        },
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "画像"
-          }
-        },
-        "ko": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "이미지"
-          }
-        },
-        "nl": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Afbeeldingen"
-          }
-        },
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Изображения"
-          }
-        },
-        "sv": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Bilder"
-          }
-        },
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "图片"
-          }
-        }
-      }
-    },
-    "Files": {
-      "localizations": {
-        "ca": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Fitxers"
-          }
-        },
-        "da": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Filer"
-          }
-        },
-        "de": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Dateien"
-          }
-        },
-        "en-GB": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Files"
-          }
-        },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Archivos"
-          }
-        },
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Fichiers"
-          }
-        },
-        "hi": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "फ़ाइलें"
-          }
-        },
-        "it": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "File"
-          }
-        },
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "ファイル"
-          }
-        },
-        "ko": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "파일"
-          }
-        },
-        "nl": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Bestanden"
-          }
-        },
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Файлы"
-          }
-        },
-        "sv": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Filer"
-          }
-        },
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "文件"
+            "value": "编辑剪贴板项目"
           }
         }
       }

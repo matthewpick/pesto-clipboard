@@ -123,6 +123,13 @@ class ClipboardHistoryManager: ObservableObject {
         saveAndRefresh()
     }
 
+    func updateTextContent(_ item: ClipboardItem, newText: String) {
+        item.textContent = newText
+        item.contentHash = computeHash(for: newText)
+        item.createdAt = Date()
+        saveAndRefresh()
+    }
+
     // MARK: - Delete
 
     func deleteItem(_ item: ClipboardItem) {

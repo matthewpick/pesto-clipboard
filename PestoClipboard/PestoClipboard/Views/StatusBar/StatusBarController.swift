@@ -142,9 +142,9 @@ class StatusBarController {
             }
         }
 
-        // Monitor for delete key presses when panel is visible
+        // Monitor for delete key presses when panel is visible and is key window
         keyEventMonitor = NSEvent.addLocalMonitorForEvents(matching: .keyDown) { [weak self] event in
-            guard let self = self, self.panel.isVisible else { return event }
+            guard let self = self, self.panel.isVisible, self.panel.isKeyWindow else { return event }
 
             // Don't intercept delete keys if a text field is being edited
             if let responder = self.panel.firstResponder, responder is NSTextView {

@@ -12,6 +12,8 @@ struct HistoryView: View {
     @State private var searchText: String = ""
     @State private var selectedIndex: Int = 0
     @State private var showStarredOnly: Bool = false
+    @State private var suppressScrollToTop: Bool = false
+    @State private var itemToEdit: ClipboardItem?
     @FocusState private var focusedField: FocusField?
     var onDismiss: () -> Void
     var onSettings: () -> Void
@@ -102,6 +104,16 @@ struct HistoryView: View {
                                     Label("Paste as Plaintext", systemImage: "textformat")
                                 }
 
+                                if item.itemType == .text || item.itemType == .rtf {
+                                    Divider()
+
+                                    Button {
+                                        itemToEdit = item
+                                    } label: {
+                                        Label("Edit", systemImage: "pencil")
+                                    }
+                                }
+
                                 Divider()
 
                                 Button(role: .destructive) {
@@ -122,13 +134,14 @@ struct HistoryView: View {
                         }
                     }
                     .onChange(of: filteredItems) { _, newItems in
-                        // Scroll to top when items change
-                        if let firstItem = newItems.first {
+                        // Scroll to top when items change (but not during deletion)
+                        if !suppressScrollToTop, let firstItem = newItems.first {
                             proxy.scrollTo(firstItem.id, anchor: .top)
                         }
-                        // Reset selection if current selection is out of bounds
+                        suppressScrollToTop = false
+                        // Adjust selection if current selection is out of bounds
                         if selectedIndex >= newItems.count {
-                            selectedIndex = -1
+                            selectedIndex = max(0, newItems.count - 1)
                         }
                     }
                     .onChange(of: selectedIndex) { _, newIndex in
@@ -220,6 +233,11 @@ struct HistoryView: View {
                 }
             }
             return .handled
+        }
+        .onChange(of: itemToEdit) { _, newItem in
+            if let item = newItem {
+                showEditWindow(for: item)
+            }
         }
     }
 
@@ -321,12 +339,43 @@ struct HistoryView: View {
         guard selectedIndex >= 0, selectedIndex < filteredItems.count else { return }
 
         let item = filteredItems[selectedIndex]
+        suppressScrollToTop = true
         historyManager.deleteItem(item)
+    }
 
-        // Adjust selection
-        if selectedIndex >= filteredItems.count && selectedIndex > 0 {
-            selectedIndex = filteredItems.count - 1
-        }
+    private static var editWindow: NSWindow?
+
+    private func showEditWindow(for item: ClipboardItem) {
+        // Close any existing edit window
+        Self.editWindow?.close()
+
+        let window = NSWindow(
+            contentRect: NSRect(x: 0, y: 0, width: 450, height: 300),
+            styleMask: [.titled, .closable, .resizable],
+            backing: .buffered,
+            defer: false
+        )
+        window.title = String(localized: "Edit Clipboard Item")
+        window.isReleasedWhenClosed = false
+
+        let editView = EditItemView(
+            initialText: item.textContent ?? "",
+            onSave: { [historyManager] newText in
+                historyManager.updateTextContent(item, newText: newText)
+            },
+            onClose: {
+                Self.editWindow?.close()
+                Self.editWindow = nil
+            }
+        )
+
+        window.contentView = NSHostingView(rootView: editView)
+        window.center()
+        window.makeKeyAndOrderFront(nil)
+        NSApp.activate(ignoringOtherApps: true)
+
+        Self.editWindow = window
+        itemToEdit = nil
     }
 }
 
@@ -416,6 +465,46 @@ struct StarredEmptyStateView: View {
                 .foregroundStyle(.tertiary)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
+    }
+}
+
+// MARK: - Edit Item View
+
+struct EditItemView: View {
+    @State private var text: String
+    var onSave: (String) -> Void
+    var onClose: () -> Void
+
+    init(initialText: String, onSave: @escaping (String) -> Void, onClose: @escaping () -> Void) {
+        _text = State(initialValue: initialText)
+        self.onSave = onSave
+        self.onClose = onClose
+    }
+
+    var body: some View {
+        VStack(spacing: 0) {
+            TextEditor(text: $text)
+                .font(.system(.body, design: .monospaced))
+                .frame(minHeight: 200)
+                .padding()
+
+            Divider()
+
+            HStack {
+                Button("Cancel", action: onClose)
+                    .keyboardShortcut(.escape, modifiers: [])
+
+                Spacer()
+
+                Button("Save") {
+                    onSave(text)
+                    onClose()
+                }
+                .keyboardShortcut(.return, modifiers: .command)
+                .buttonStyle(.borderedProminent)
+            }
+            .padding()
+        }
     }
 }
 

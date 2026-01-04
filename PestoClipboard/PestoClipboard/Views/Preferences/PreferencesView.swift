@@ -17,13 +17,21 @@ struct PreferencesView: View {
             case .storage: return "externaldrive.fill"
             }
         }
+
+        var localizedName: String {
+            switch self {
+            case .general: return String(localized: "General")
+            case .ignore: return String(localized: "Ignore")
+            case .storage: return String(localized: "Storage")
+            }
+        }
     }
 
     var body: some View {
         HStack(spacing: 0) {
             // Sidebar
             List(PreferenceTab.allCases, id: \.self, selection: $selectedTab) { tab in
-                Label(tab.rawValue, systemImage: tab.icon)
+                Label(tab.localizedName, systemImage: tab.icon)
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .padding(.vertical, 4)
             }
@@ -295,7 +303,7 @@ struct StorageSettingsView: View {
 
                             Picker("", selection: $settings.sortOrder) {
                                 ForEach(SettingsManager.SortOrder.allCases, id: \.self) { order in
-                                    Text(order.rawValue).tag(order)
+                                    Text(order.localizedName).tag(order)
                                 }
                             }
                             .labelsHidden()
@@ -348,7 +356,7 @@ struct StorageSettingsView: View {
 // MARK: - Reusable Components
 
 struct SettingsSection<Content: View>: View {
-    let title: String
+    let title: LocalizedStringKey
     @ViewBuilder let content: Content
 
     var body: some View {
@@ -363,8 +371,8 @@ struct SettingsSection<Content: View>: View {
 }
 
 struct SettingsToggle: View {
-    let title: String
-    let subtitle: String
+    let title: LocalizedStringKey
+    let subtitle: LocalizedStringKey
     @Binding var isOn: Bool
 
     var body: some View {
@@ -381,7 +389,7 @@ struct SettingsToggle: View {
 }
 
 struct SettingsCheckbox: View {
-    let title: String
+    let title: LocalizedStringKey
     let icon: String
     @Binding var isOn: Bool
 

@@ -172,10 +172,12 @@ struct HistoryView: View {
             deleteSelectedItem()
         }
         .onKeyPress(.upArrow) {
+            focusedField = .list
             moveSelection(by: -1)
             return .handled
         }
         .onKeyPress(.downArrow) {
+            focusedField = .list
             moveSelection(by: 1)
             return .handled
         }

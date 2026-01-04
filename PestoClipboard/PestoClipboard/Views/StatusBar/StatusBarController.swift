@@ -63,12 +63,12 @@ class StatusBarController {
     private func showMenu() {
         let menu = NSMenu()
 
-        menu.addItem(NSMenuItem(title: "Show Clipboard", action: #selector(showClipboardAction), keyEquivalent: ""))
+        menu.addItem(NSMenuItem(title: String(localized: "Show Clipboard"), action: #selector(showClipboardAction), keyEquivalent: ""))
         menu.addItem(NSMenuItem.separator())
-        menu.addItem(NSMenuItem(title: "Preferences", action: #selector(showPreferencesAction), keyEquivalent: ","))
-        menu.addItem(NSMenuItem(title: "About Pesto Clipboard", action: #selector(showAboutAction), keyEquivalent: ""))
+        menu.addItem(NSMenuItem(title: String(localized: "Preferences"), action: #selector(showPreferencesAction), keyEquivalent: ","))
+        menu.addItem(NSMenuItem(title: String(localized: "About Pesto Clipboard"), action: #selector(showAboutAction), keyEquivalent: ""))
         menu.addItem(NSMenuItem.separator())
-        menu.addItem(NSMenuItem(title: "Quit", action: #selector(quitAction), keyEquivalent: "q"))
+        menu.addItem(NSMenuItem(title: String(localized: "Quit"), action: #selector(quitAction), keyEquivalent: "q"))
 
         for item in menu.items {
             item.target = self
@@ -95,7 +95,7 @@ class StatusBarController {
                 backing: .buffered,
                 defer: false
             )
-            preferencesWindow?.title = "Pesto Clipboard Preferences"
+            preferencesWindow?.title = String(localized: "Pesto Clipboard Preferences")
             preferencesWindow?.contentView = NSHostingView(rootView: preferencesView)
             preferencesWindow?.center()
             preferencesWindow?.isReleasedWhenClosed = false
@@ -145,6 +145,11 @@ class StatusBarController {
         // Monitor for delete key presses when panel is visible
         keyEventMonitor = NSEvent.addLocalMonitorForEvents(matching: .keyDown) { [weak self] event in
             guard let self = self, self.panel.isVisible else { return event }
+
+            // Don't intercept delete keys if a text field is being edited
+            if let responder = self.panel.firstResponder, responder is NSTextView {
+                return event
+            }
 
             // Check for delete (backspace) key (keyCode 51) or forward delete (keyCode 117)
             if event.keyCode == 51 || event.keyCode == 117 {

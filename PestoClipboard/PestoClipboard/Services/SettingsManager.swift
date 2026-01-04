@@ -63,6 +63,13 @@ class SettingsManager: ObservableObject {
     enum SortOrder: String, CaseIterable {
         case recentlyUsed = "Recently Used"
         case dateAdded = "Date Added"
+
+        var localizedName: String {
+            switch self {
+            case .recentlyUsed: return String(localized: "Recently Used")
+            case .dateAdded: return String(localized: "Date Added")
+            }
+        }
     }
 
     // MARK: - Init

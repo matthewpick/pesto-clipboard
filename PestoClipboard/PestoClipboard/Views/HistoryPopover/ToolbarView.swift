@@ -13,7 +13,9 @@ struct ToolbarView: View {
             ToolbarToggleButton(
                 icon: showStarredOnly ? "star.fill" : "star",
                 isActive: showStarredOnly,
-                help: showStarredOnly ? "Showing starred only" : "Show starred only",
+                help: showStarredOnly
+                    ? String(localized: "Showing starred only")
+                    : String(localized: "Show starred only"),
                 activeColor: .yellow
             ) {
                 showStarredOnly.toggle()
@@ -23,7 +25,9 @@ struct ToolbarView: View {
             ToolbarToggleButton(
                 icon: isPaused ? "play.fill" : "pause.fill",
                 isActive: isPaused,
-                help: isPaused ? "Resume capture" : "Pause capture",
+                help: isPaused
+                    ? String(localized: "Resume capture")
+                    : String(localized: "Pause capture"),
                 activeColor: .orange
             ) {
                 isPaused.toggle()
@@ -33,7 +37,9 @@ struct ToolbarView: View {
             ToolbarToggleButton(
                 icon: "textformat",
                 isActive: plainTextMode,
-                help: plainTextMode ? "Plain text mode ON" : "Plain text mode OFF",
+                help: plainTextMode
+                    ? String(localized: "Plain text mode ON")
+                    : String(localized: "Plain text mode OFF"),
                 activeColor: .accentColor
             ) {
                 plainTextMode.toggle()
@@ -42,12 +48,12 @@ struct ToolbarView: View {
             Spacer()
 
             // Settings button
-            ToolbarButton(icon: "gearshape", help: "Settings") {
+            ToolbarButton(icon: "gearshape", help: String(localized: "Settings")) {
                 onSettings()
             }
 
             // Delete button
-            ToolbarButton(icon: "trash", help: "Delete (⌫)", tint: .red) {
+            ToolbarButton(icon: "trash", help: String(localized: "Delete (⌫)"), tint: .red) {
                 onDelete()
             }
         }

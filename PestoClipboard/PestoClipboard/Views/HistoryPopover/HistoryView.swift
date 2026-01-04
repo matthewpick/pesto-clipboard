@@ -10,7 +10,7 @@ struct HistoryView: View {
     @ObservedObject var clipboardMonitor: ClipboardMonitor
     @ObservedObject private var settings = SettingsManager.shared
     @State private var searchText: String = ""
-    @State private var selectedIndex: Int = -1
+    @State private var selectedIndex: Int = 0
     @State private var showStarredOnly: Bool = false
     @FocusState private var focusedField: FocusField?
     var onDismiss: () -> Void
@@ -116,7 +116,7 @@ struct HistoryView: View {
                     .scrollContentBackground(.hidden)
                     .onAppear {
                         // Reset selection and scroll to top when view appears
-                        selectedIndex = -1
+                        selectedIndex = 0
                         if let firstItem = filteredItems.first {
                             proxy.scrollTo(firstItem.id, anchor: .top)
                         }
@@ -163,7 +163,7 @@ struct HistoryView: View {
         .onReceive(NotificationCenter.default.publisher(for: .showHistoryPanel)) { _ in
             // Reset state when panel opens
             searchText = ""
-            selectedIndex = -1
+            selectedIndex = 0
             focusedField = .list
         }
         .onReceive(NotificationCenter.default.publisher(for: .deleteSelectedItem)) { _ in

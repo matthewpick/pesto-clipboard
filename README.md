@@ -85,13 +85,17 @@ brew install --cask pesto-clipboard
 | Shift+Return | Paste as plain text |
 | Delete | Delete selected item |
 
-## Data Storage
+## Data Storage & Privacy
 
 Clipboard history is stored in a Core Data SQLite database at:
 
 ```
 ~/Library/Application Support/PestoClipboard/
 ```
+
+**Security:** The app runs in a macOS sandbox, so other sandboxed apps cannot access your clipboard history. Data is not encrypted at the app level — we rely on macOS FileVault (full-disk encryption) for data-at-rest protection, which is enabled by default on most Macs.
+
+**App Exclusions:** You can exclude specific apps from clipboard monitoring in Preferences. Common password managers (1Password, Bitwarden, etc.) are excluded by default.
 
 To forcefully delete all clipboard history, quit the app and run:
 

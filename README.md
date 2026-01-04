@@ -88,13 +88,13 @@ brew install --cask pesto-clipboard
 Clipboard history is stored in a Core Data SQLite database at:
 
 ```
-~/Library/Containers/com.pestoclipboard.PestoClipboard/Data/Library/Application Support/PestoClipboard/
+~/Library/Application Support/PestoClipboard/
 ```
 
 To forcefully delete all clipboard history, quit the app and run:
 
 ```bash
-rm -rf ~/Library/Containers/com.pestoclipboard.PestoClipboard/Data/Library/Application\ Support/PestoClipboard/
+rm -rf ~/Library/Application\ Support/PestoClipboard/
 ```
 
 ## License

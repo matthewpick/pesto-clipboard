@@ -7,12 +7,11 @@ Fresh, free, and open-source clipboard management.
 ## Features
 
 - **Menu Bar App**: Lives in your menu bar, out of the way
-- **Clipboard History**: Stores up to 500 clipboard items (text, images, files)
+- **Clipboard History**: Stores 500+ clipboard items (text, images, files)
 - **Search**: Quickly filter your clipboard history
 - **Global Hotkey**: Open history with Cmd+Shift+V (customizable)
 - **Plaintext Paste**: Strip formatting when pasting
 - **Launch at Login**: Start automatically when you log in
-- **Modern UI**: Liquid Glass design inspired by macOS Tahoe
 
 ## Screenshot
 

@@ -4,6 +4,8 @@
 
 Fresh, free, and open-source clipboard management.
 
+**Website:** [pestoclipboard.com](https://pestoclipboard.com)
+
 ## Features
 
 - **Menu Bar App**: Lives in your menu bar, out of the way

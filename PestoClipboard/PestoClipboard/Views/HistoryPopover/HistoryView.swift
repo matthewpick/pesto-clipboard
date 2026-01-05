@@ -36,7 +36,7 @@ struct HistoryView: View {
 
             // Search bar
             SearchBar(text: $searchText, focusBinding: $focusedField, focusValue: FocusField.search)
-                .padding(.horizontal, 10)
+                .padding(.horizontal, 8)
                 .padding(.vertical, 6)
                 .onChange(of: searchText) { _, newValue in
                     if newValue.isEmpty {
@@ -126,6 +126,7 @@ struct HistoryView: View {
                     }
                     .listStyle(.plain)
                     .scrollContentBackground(.hidden)
+                    .padding(.top, 4)
                     .onAppear {
                         // Reset selection and scroll to top when view appears
                         selectedIndex = 0

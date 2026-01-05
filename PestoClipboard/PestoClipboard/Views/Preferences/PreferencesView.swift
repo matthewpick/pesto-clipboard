@@ -274,6 +274,23 @@ struct StorageSettingsView: View {
                             SettingsCheckbox(title: "Images", icon: "photo.fill", isOn: $settings.captureImages)
                             SettingsCheckbox(title: "Files", icon: "folder.fill", isOn: $settings.captureFiles)
                         }
+
+                        Divider()
+                            .padding(.vertical, 4)
+
+                        Toggle(isOn: $settings.ignoreRemoteClipboard) {
+                            HStack(spacing: 8) {
+                                Image(systemName: "laptopcomputer.and.iphone")
+                                    .foregroundStyle(.secondary)
+                                    .frame(width: 20)
+                                Text("Ignore clipboard from other devices")
+                            }
+                        }
+                        .toggleStyle(.checkbox)
+
+                        Text("When enabled, items copied on other Macs or iOS devices via Universal Clipboard will not be saved.")
+                            .font(.caption)
+                            .foregroundStyle(.tertiary)
                     }
                 }
 

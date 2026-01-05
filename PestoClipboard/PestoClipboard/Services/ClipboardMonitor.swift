@@ -72,6 +72,11 @@ class ClipboardMonitor: ObservableObject {
     private func extractAndStoreContent(from pasteboard: NSPasteboard) {
         let settings = SettingsManager.shared
 
+        // Ignore clipboard content from other devices (Universal Clipboard)
+        if settings.ignoreRemoteClipboard && isFromRemoteDevice(pasteboard: pasteboard) {
+            return
+        }
+
         // Always ignore password manager content (security)
         if isFromPasswordManager(pasteboard: pasteboard) {
             return
@@ -105,6 +110,13 @@ class ClipboardMonitor: ObservableObject {
                 return
             }
         }
+    }
+
+    // MARK: - Remote Device Detection (Universal Clipboard)
+
+    private func isFromRemoteDevice(pasteboard: NSPasteboard) -> Bool {
+        let remoteClipboardType = NSPasteboard.PasteboardType("com.apple.is-remote-clipboard")
+        return pasteboard.types?.contains(remoteClipboardType) ?? false
     }
 
     // MARK: - Password Manager Detection

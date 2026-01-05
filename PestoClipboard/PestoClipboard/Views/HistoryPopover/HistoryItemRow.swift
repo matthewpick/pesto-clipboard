@@ -1,4 +1,5 @@
 import SwiftUI
+import UniformTypeIdentifiers
 
 struct HistoryItemRow: View {
     let item: ClipboardItem
@@ -52,9 +53,53 @@ struct HistoryItemRow: View {
                 isHovered = hovering
             }
         }
+        .onDrag {
+            createItemProvider()
+        }
         .listRowInsets(EdgeInsets(top: 1, leading: 0, bottom: 1, trailing: 0))
         .listRowSeparator(.hidden)
         .listRowBackground(Color.clear)
+    }
+
+    // MARK: - Drag and Drop
+
+    private func createItemProvider() -> NSItemProvider {
+        switch item.itemType {
+        case .text:
+            // Plain text
+            if let text = item.textContent {
+                return NSItemProvider(object: text as NSString)
+            }
+
+        case .rtf:
+            // Rich text - provide both RTF and plain text
+            let provider = NSItemProvider()
+            if let rtfData = item.rtfData {
+                provider.registerDataRepresentation(forTypeIdentifier: UTType.rtf.identifier, visibility: .all) { completion in
+                    completion(rtfData, nil)
+                    return nil
+                }
+            }
+            if let text = item.textContent {
+                provider.registerObject(text as NSString, visibility: .all)
+            }
+            return provider
+
+        case .image:
+            // Image data
+            if let imageData = item.imageData, let nsImage = NSImage(data: imageData) {
+                return NSItemProvider(object: nsImage)
+            }
+
+        case .file:
+            // File URLs
+            if let urls = item.fileURLs, let firstURL = urls.first {
+                return NSItemProvider(object: firstURL as NSURL)
+            }
+        }
+
+        // Fallback
+        return NSItemProvider()
     }
 
     private var backgroundColor: Color {

@@ -5,6 +5,10 @@ struct SearchBar<FocusValue: Hashable>: View {
     var focusBinding: FocusState<FocusValue?>.Binding
     var focusValue: FocusValue
 
+    private var isFocused: Bool {
+        focusBinding.wrappedValue == focusValue
+    }
+
     var body: some View {
         HStack(spacing: 6) {
             Image(systemName: "magnifyingglass")
@@ -32,6 +36,12 @@ struct SearchBar<FocusValue: Hashable>: View {
         .background {
             RoundedRectangle(cornerRadius: 6)
                 .fill(.quaternary)
+        }
+        .overlay {
+            if isFocused {
+                RoundedRectangle(cornerRadius: 6)
+                    .stroke(Color.accentColor, lineWidth: 2)
+            }
         }
     }
 }

@@ -43,8 +43,8 @@ struct HistoryView: View {
                         historyManager.fetchItems()
                     } else {
                         historyManager.searchItems(query: newValue)
+                        selectedIndex = -1
                     }
-                    selectedIndex = -1
                 }
 
             Divider()
@@ -65,7 +65,7 @@ struct HistoryView: View {
                             HistoryItemRow(
                                 item: item,
                                 index: index + 1,
-                                isSelected: index == selectedIndex,
+                                isSelected: index == selectedIndex && !isSearchFocused,
                                 onToggleStar: {
                                     historyManager.togglePin(item)
                                 }
@@ -174,10 +174,12 @@ struct HistoryView: View {
         .focusEffectDisabled()
         .focused($focusedField, equals: .list)
         .onReceive(NotificationCenter.default.publisher(for: .showHistoryPanel)) { _ in
-            // Reset state when panel opens
-            searchText = ""
-            selectedIndex = 0
+            // Restore focus to list for keyboard navigation
             focusedField = .list
+            // Re-apply search filter if there's a search term (fetchItems is called in showPanel)
+            if !searchText.isEmpty {
+                historyManager.searchItems(query: searchText)
+            }
         }
         .onReceive(NotificationCenter.default.publisher(for: .deleteSelectedItem)) { _ in
             // Handle delete key from event monitor
@@ -185,13 +187,23 @@ struct HistoryView: View {
             deleteSelectedItem()
         }
         .onKeyPress(.upArrow) {
-            focusedField = .list
-            moveSelection(by: -1)
+            if selectedIndex == 0 {
+                // At first item, focus search field
+                focusedField = .search
+            } else {
+                focusedField = .list
+                moveSelection(by: -1)
+            }
             return .handled
         }
         .onKeyPress(.downArrow) {
-            focusedField = .list
-            moveSelection(by: 1)
+            if isSearchFocused {
+                // Coming from search, select first item
+                focusedField = .list
+                selectedIndex = 0
+            } else {
+                moveSelection(by: 1)
+            }
             return .handled
         }
         .onKeyPress(.return) {
@@ -291,8 +303,8 @@ struct HistoryView: View {
         // Update item's position (move to top)
         historyManager.moveToTop(item)
 
-        // Reset selection so next open doesn't highlight wrong item
-        selectedIndex = -1
+        // Select the pasted item (now at top) for next open
+        selectedIndex = 0
 
         // Dismiss panel first, then paste
         onDismiss()

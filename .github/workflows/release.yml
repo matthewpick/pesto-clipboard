@@ -83,7 +83,9 @@ jobs:
             CODE_SIGN_STYLE=Manual \
             CODE_SIGN_IDENTITY="Developer ID Application" \
             DEVELOPMENT_TEAM="$APPLE_TEAM_ID" \
-            OTHER_CODE_SIGN_FLAGS="--keychain $KEYCHAIN_PATH"
+            ENABLE_HARDENED_RUNTIME=YES \
+            CODE_SIGN_INJECT_BASE_ENTITLEMENTS=NO \
+            OTHER_CODE_SIGN_FLAGS="--timestamp --keychain $KEYCHAIN_PATH"
 
       - name: Notarize app
         env:
@@ -139,7 +141,7 @@ jobs:
           fi
 
           # Sign the DMG
-          codesign --sign "Developer ID Application" --keychain "$KEYCHAIN_PATH" "$DMG_NAME"
+          codesign --sign "Developer ID Application" --timestamp --keychain "$KEYCHAIN_PATH" "$DMG_NAME"
 
           # Notarize the DMG
           xcrun notarytool submit "$DMG_NAME" \

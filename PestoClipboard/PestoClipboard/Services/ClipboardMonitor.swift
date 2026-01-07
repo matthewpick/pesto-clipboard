@@ -1,8 +1,10 @@
 import AppKit
 import Combine
+import os.log
 import UniformTypeIdentifiers
 
 class ClipboardMonitor: ObservableObject {
+    private static let logger = Logger(subsystem: Bundle.main.bundleIdentifier ?? "PestoClipboard", category: "ClipboardMonitor")
     static var shared: ClipboardMonitor?
 
     private let historyManager: ClipboardHistoryManager
@@ -74,11 +76,13 @@ class ClipboardMonitor: ObservableObject {
 
         // Ignore clipboard content from other devices (Universal Clipboard)
         if settings.ignoreRemoteClipboard && isFromRemoteDevice(pasteboard: pasteboard) {
+            Self.logger.debug("Ignored remote clipboard content (Universal Clipboard)")
             return
         }
 
         // Always ignore password manager content (security)
         if isFromPasswordManager(pasteboard: pasteboard) {
+            Self.logger.debug("Ignored password manager content")
             return
         }
 
@@ -86,11 +90,13 @@ class ClipboardMonitor: ObservableObject {
         if let frontApp = NSWorkspace.shared.frontmostApplication,
            let bundlePath = frontApp.bundleURL?.path,
            settings.ignoredApps.contains(bundlePath) {
+            Self.logger.debug("Ignored content from app: \(frontApp.localizedName ?? bundlePath, privacy: .public)")
             return
         }
 
         // Check for files first (most specific)
         if settings.captureFiles, let fileURLs = extractFileURLs(from: pasteboard), !fileURLs.isEmpty {
+            Self.logger.info("Captured \(fileURLs.count) file(s)")
             historyManager.addFileItem(urls: fileURLs)
             return
         }
@@ -98,6 +104,10 @@ class ClipboardMonitor: ObservableObject {
         // Check for images
         if settings.captureImages, let imageData = extractImageData(from: pasteboard) {
             let thumbnailData = ThumbnailGenerator.generateThumbnail(from: imageData, maxSize: Constants.thumbnailMaxSize)
+            if thumbnailData == nil {
+                Self.logger.warning("Failed to generate thumbnail for image (\(imageData.count) bytes)")
+            }
+            Self.logger.info("Captured image (\(imageData.count) bytes)")
             historyManager.addImageItem(imageData: imageData, thumbnailData: thumbnailData)
             return
         }
@@ -106,10 +116,14 @@ class ClipboardMonitor: ObservableObject {
         if settings.captureText {
             let (text, rtfData) = extractTextAndRTF(from: pasteboard)
             if let text = text, !text.isEmpty {
+                Self.logger.info("Captured text (\(text.count) chars, RTF: \(rtfData != nil))")
                 historyManager.addTextItem(text, rtfData: rtfData)
                 return
             }
         }
+
+        // Log when nothing was captured (pasteboard changed but no recognizable content)
+        Self.logger.debug("Clipboard changed but no capturable content found. Types: \(pasteboard.types?.map(\.rawValue) ?? [], privacy: .public)")
     }
 
     // MARK: - Remote Device Detection (Universal Clipboard)
@@ -172,7 +186,10 @@ class ClipboardMonitor: ObservableObject {
 
         // Try reading as NSImage and convert to PNG
         if let image = NSImage(pasteboard: pasteboard) {
-            return image.pngData()
+            if let pngData = image.pngData() {
+                return pngData
+            }
+            Self.logger.warning("Failed to convert NSImage to PNG data")
         }
 
         return nil

@@ -25,17 +25,17 @@ Fresh, free, and open-source clipboard management.
 
 ## Installation
 
-### Homebrew (Coming Soon)
+### Homebrew
 
 ```bash
-brew install --cask pesto-clipboard
+brew install matthewpick/pesto-clipboard/pesto-clipboard
 ```
 
-### Manual Installation
+### Manual Download
 
-1. Download the latest release from GitHub Releases
-2. Drag `Pesto Clipboard.app` to your Applications folder
-3. Launch the app
+1. Download the latest `.dmg` from [GitHub Releases](https://github.com/matthewpick/pesto-clipboard/releases)
+2. Open the DMG and drag Pesto Clipboard to Applications
+3. Launch from Applications
 
 ## Building from Source
 

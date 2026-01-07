@@ -45,7 +45,7 @@ class OnboardingWindowController {
         if showHistoryPanel {
             // Small delay to let window close, then show history panel
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
-                NotificationCenter.default.post(name: .openHistoryPanel, object: nil)
+                AppEventBus.shared.openHistoryPanel()
             }
         }
     }

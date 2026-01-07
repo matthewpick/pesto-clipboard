@@ -51,7 +51,7 @@ class EventMonitorManager {
 
             // Check for delete (backspace) key or forward delete
             if event.keyCode == Constants.deleteKeyCode || event.keyCode == Constants.forwardDeleteKeyCode {
-                NotificationCenter.default.post(name: .deleteSelectedItem, object: nil)
+                AppEventBus.shared.deleteSelectedItem()
                 return nil
             }
             return event

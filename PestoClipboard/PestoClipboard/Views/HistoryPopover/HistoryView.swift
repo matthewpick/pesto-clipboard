@@ -1,4 +1,5 @@
 import SwiftUI
+import Combine
 
 struct HistoryView: View {
     enum FocusField {
@@ -62,11 +63,11 @@ struct HistoryView: View {
         .focusable()
         .focusEffectDisabled()
         .focused($focusedField, equals: .list)
-        .onReceive(NotificationCenter.default.publisher(for: .showHistoryPanel)) { _ in
+        .onReceive(AppEventBus.shared.publisher(for: .showHistoryPanel)) {
             focusedField = .list
             viewModel.onPanelShow()
         }
-        .onReceive(NotificationCenter.default.publisher(for: .deleteSelectedItem)) { _ in
+        .onReceive(AppEventBus.shared.publisher(for: .deleteSelectedItem)) {
             guard !isSearchFocused else { return }
             viewModel.deleteSelectedItem()
         }

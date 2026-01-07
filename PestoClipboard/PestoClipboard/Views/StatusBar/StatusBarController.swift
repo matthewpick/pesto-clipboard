@@ -1,4 +1,5 @@
 import AppKit
+import Combine
 import SwiftUI
 
 class StatusBarController {
@@ -7,7 +8,7 @@ class StatusBarController {
     private var eventMonitorManager: EventMonitorManager?
     private var historyManager: ClipboardHistoryManager
     private var clipboardMonitor: ClipboardMonitor
-    private var notificationObservers: [Any] = []
+    private var cancellables = Set<AnyCancellable>()
 
     init(historyManager: ClipboardHistoryManager, clipboardMonitor: ClipboardMonitor) {
         self.historyManager = historyManager
@@ -15,29 +16,23 @@ class StatusBarController {
         setupStatusItem()
         setupPanel()
         setupEventMonitor()
-        setupNotificationObservers()
+        setupEventSubscriptions()
     }
 
-    private func setupNotificationObservers() {
-        notificationObservers.append(
-            NotificationCenter.default.addObserver(
-                forName: .hideHistoryPanel,
-                object: nil,
-                queue: .main
-            ) { [weak self] _ in
+    private func setupEventSubscriptions() {
+        AppEventBus.shared.publisher(for: .hideHistoryPanel)
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] in
                 self?.hidePanel()
             }
-        )
+            .store(in: &cancellables)
 
-        notificationObservers.append(
-            NotificationCenter.default.addObserver(
-                forName: .openHistoryPanel,
-                object: nil,
-                queue: .main
-            ) { [weak self] _ in
+        AppEventBus.shared.publisher(for: .openHistoryPanel)
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] in
                 self?.showPanel()
             }
-        )
+            .store(in: &cancellables)
     }
 
     private func setupStatusItem() {
@@ -131,7 +126,7 @@ class StatusBarController {
     func showPanel() {
         historyManager.fetchItems()
         panel.showPanel()
-        NotificationCenter.default.post(name: .showHistoryPanel, object: nil)
+        AppEventBus.shared.showHistoryPanel()
     }
 
     func hidePanel() {
@@ -140,8 +135,6 @@ class StatusBarController {
 
     deinit {
         eventMonitorManager = nil
-        for observer in notificationObservers {
-            NotificationCenter.default.removeObserver(observer)
-        }
+        cancellables.removeAll()
     }
 }

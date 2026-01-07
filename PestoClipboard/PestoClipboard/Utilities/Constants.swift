@@ -1,3 +1,4 @@
+import Carbon
 import Foundation
 
 enum Constants {
@@ -27,4 +28,23 @@ enum Constants {
 
     /// JPEG compression quality for thumbnails
     static let thumbnailCompressionQuality: CGFloat = 0.7
+
+    // MARK: - Key Codes
+
+    /// Virtual key code for Delete (Backspace)
+    static let deleteKeyCode: UInt16 = 51
+
+    /// Virtual key code for Forward Delete
+    static let forwardDeleteKeyCode: UInt16 = 117
+
+    /// Virtual key code for 'V' (used for paste simulation)
+    static let vKeyCode: CGKeyCode = 0x09
+
+    // MARK: - Timing
+
+    /// Delay before simulating paste (seconds) - allows panel to dismiss and focus to return
+    static let pasteSimulationDelay: TimeInterval = 0.15
+
+    /// Standard animation duration for UI transitions
+    static let animationDuration: TimeInterval = 0.15
 }

@@ -86,7 +86,7 @@ struct ToolbarToggleButton: View {
         }
         .buttonStyle(.plain)
         .onHover { hovering in
-            withAnimation(.easeInOut(duration: 0.15)) {
+            withAnimation(.easeInOut(duration: Constants.animationDuration)) {
                 isHovered = hovering
             }
         }
@@ -117,7 +117,7 @@ struct ToolbarButton: View {
         }
         .buttonStyle(.plain)
         .onHover { hovering in
-            withAnimation(.easeInOut(duration: 0.15)) {
+            withAnimation(.easeInOut(duration: Constants.animationDuration)) {
                 isHovered = hovering
             }
         }

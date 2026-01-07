@@ -340,7 +340,7 @@ struct HistoryView: View {
         }
 
         // Delay to let panel dismiss and previous app regain focus
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.15) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + Constants.pasteSimulationDelay) {
             // Maccy-style paste implementation
             // Add 0x000008 flag for left/right modifier key detection
             let cmdFlag = CGEventFlags(rawValue: UInt64(CGEventFlags.maskCommand.rawValue) | 0x000008)
@@ -352,11 +352,8 @@ struct HistoryView: View {
                 state: .eventSuppressionStateSuppressionInterval
             )
 
-            // Virtual key code for 'V' is 0x09
-            let vKeyCode: CGKeyCode = 0x09
-
-            let keyDown = CGEvent(keyboardEventSource: source, virtualKey: vKeyCode, keyDown: true)
-            let keyUp = CGEvent(keyboardEventSource: source, virtualKey: vKeyCode, keyDown: false)
+            let keyDown = CGEvent(keyboardEventSource: source, virtualKey: Constants.vKeyCode, keyDown: true)
+            let keyUp = CGEvent(keyboardEventSource: source, virtualKey: Constants.vKeyCode, keyDown: false)
             keyDown?.flags = cmdFlag
             keyUp?.flags = cmdFlag
             keyDown?.post(tap: .cgSessionEventTap)

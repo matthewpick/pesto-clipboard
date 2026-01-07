@@ -155,8 +155,8 @@ class StatusBarController {
                 return event
             }
 
-            // Check for delete (backspace) key (keyCode 51) or forward delete (keyCode 117)
-            if event.keyCode == 51 || event.keyCode == 117 {
+            // Check for delete (backspace) key or forward delete
+            if event.keyCode == Constants.deleteKeyCode || event.keyCode == Constants.forwardDeleteKeyCode {
                 NotificationCenter.default.post(name: .deleteSelectedItem, object: nil)
                 return nil // Consume the event
             }

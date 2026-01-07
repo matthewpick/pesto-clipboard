@@ -6,559 +6,139 @@ struct HistoryView: View {
         case search
     }
 
-    @ObservedObject var historyManager: ClipboardHistoryManager
-    @ObservedObject var clipboardMonitor: ClipboardMonitor
-    @ObservedObject private var settings = SettingsManager.shared
-    @State private var searchText: String = ""
-    @State private var selectedIndex: Int = 0
-    @State private var showStarredOnly: Bool = false
-    @State private var suppressScrollToTop: Bool = false
-    @State private var itemToEdit: ClipboardItem?
+    @StateObject private var viewModel: HistoryViewModel
     @FocusState private var focusedField: FocusField?
-    var onDismiss: () -> Void
-    var onSettings: () -> Void
+
+    let onDismiss: () -> Void
+    let onSettings: () -> Void
+
+    init(
+        historyManager: ClipboardHistoryManager,
+        clipboardMonitor: ClipboardMonitor,
+        onDismiss: @escaping () -> Void,
+        onSettings: @escaping () -> Void
+    ) {
+        _viewModel = StateObject(wrappedValue: HistoryViewModel(
+            historyManager: historyManager,
+            clipboardMonitor: clipboardMonitor
+        ))
+        self.onDismiss = onDismiss
+        self.onSettings = onSettings
+    }
 
     private var isSearchFocused: Bool {
         focusedField == .search
     }
 
-    private var filteredItems: [ClipboardItem] {
-        if showStarredOnly {
-            return historyManager.items.filter { $0.isPinned }
-        }
-        return historyManager.items
-    }
-
     var body: some View {
         VStack(spacing: 0) {
-            // Header
-            HeaderView(itemCount: filteredItems.count)
+            HeaderView(itemCount: viewModel.filteredItems.count)
 
-            // Search bar
-            SearchBar(text: $searchText, focusBinding: $focusedField, focusValue: FocusField.search)
-                .padding(.horizontal, 8)
-                .padding(.vertical, 6)
-                .onChange(of: searchText) { _, newValue in
-                    if newValue.isEmpty {
-                        historyManager.fetchItems()
-                    } else {
-                        historyManager.searchItems(query: newValue)
-                        selectedIndex = -1
-                    }
-                }
+            SearchBar(
+                text: $viewModel.searchText,
+                focusBinding: $focusedField,
+                focusValue: FocusField.search
+            )
+            .padding(.horizontal, 8)
+            .padding(.vertical, 6)
 
             Divider()
 
-            // History list
-            if filteredItems.isEmpty {
-                if !searchText.isEmpty {
-                    SearchEmptyStateView(query: searchText)
-                } else if showStarredOnly {
-                    StarredEmptyStateView()
-                } else {
-                    EmptyStateView()
-                }
-            } else {
-                ScrollViewReader { proxy in
-                    List {
-                        ForEach(Array(filteredItems.enumerated()), id: \.element.id) { index, item in
-                            HistoryItemRow(
-                                item: item,
-                                index: index + 1,
-                                isSelected: index == selectedIndex && !isSearchFocused,
-                                onToggleStar: {
-                                    historyManager.togglePin(item)
-                                }
-                            )
-                            .id(item.id)
-                            .tag(item.id)
-                            .onTapGesture {
-                                selectedIndex = index
-                                if SettingsManager.shared.pasteAutomatically {
-                                    pasteItem(item, asPlainText: settings.plainTextMode)
-                                } else {
-                                    copyToClipboard(item)
-                                    onDismiss()
-                                }
-                            }
-                            .contextMenu {
-                                Button {
-                                    copyToClipboard(item)
-                                } label: {
-                                    Label("Copy to Clipboard", systemImage: "doc.on.doc")
-                                }
-
-                                Divider()
-
-                                Button {
-                                    selectedIndex = index
-                                    pasteItem(item, asPlainText: false)
-                                } label: {
-                                    Label("Paste as Original", systemImage: "doc.richtext")
-                                }
-
-                                Button {
-                                    selectedIndex = index
-                                    pasteItem(item, asPlainText: true)
-                                } label: {
-                                    Label("Paste as Plaintext", systemImage: "textformat")
-                                }
-
-                                if item.itemType == .text || item.itemType == .rtf {
-                                    Divider()
-
-                                    Button {
-                                        itemToEdit = item
-                                    } label: {
-                                        Label("Edit", systemImage: "pencil")
-                                    }
-                                }
-
-                                Divider()
-
-                                Button(role: .destructive) {
-                                    historyManager.deleteItem(item)
-                                } label: {
-                                    Label("Delete", systemImage: "trash")
-                                }
-                            }
-                        }
-                    }
-                    .listStyle(.plain)
-                    .scrollContentBackground(.hidden)
-                    .padding(.top, 4)
-                    .onAppear {
-                        // Reset selection and scroll to top when view appears
-                        selectedIndex = 0
-                        if let firstItem = filteredItems.first {
-                            proxy.scrollTo(firstItem.id, anchor: .top)
-                        }
-                    }
-                    .onChange(of: filteredItems) { _, newItems in
-                        // Scroll to top when items change (but not during deletion)
-                        if !suppressScrollToTop, let firstItem = newItems.first {
-                            proxy.scrollTo(firstItem.id, anchor: .top)
-                        }
-                        suppressScrollToTop = false
-                        // Adjust selection if current selection is out of bounds
-                        if selectedIndex >= newItems.count {
-                            selectedIndex = max(0, newItems.count - 1)
-                        }
-                    }
-                    .onChange(of: selectedIndex) { _, newIndex in
-                        if newIndex >= 0 && newIndex < filteredItems.count {
-                            withAnimation {
-                                proxy.scrollTo(filteredItems[newIndex].id, anchor: .center)
-                            }
-                        }
-                    }
-                }
-            }
+            historyContent
 
             Divider()
 
-            // Bottom toolbar
             ToolbarView(
-                plainTextMode: $settings.plainTextMode,
-                showStarredOnly: $showStarredOnly,
-                isPaused: $clipboardMonitor.isPaused,
-                onDelete: {
-                    deleteSelectedItem()
-                },
+                plainTextMode: $viewModel.settings.plainTextMode,
+                showStarredOnly: $viewModel.showStarredOnly,
+                isPaused: $viewModel.clipboardMonitor.isPaused,
+                onDelete: { viewModel.deleteSelectedItem() },
                 onSettings: onSettings
             )
         }
         .frame(minWidth: 280, minHeight: 300)
-        .background(settings.useTransparentBackground ? AnyShapeStyle(.regularMaterial) : AnyShapeStyle(Color(nsColor: .windowBackgroundColor)))
+        .background(backgroundStyle)
         .clipShape(RoundedRectangle(cornerRadius: 12))
         .focusable()
         .focusEffectDisabled()
         .focused($focusedField, equals: .list)
         .onReceive(NotificationCenter.default.publisher(for: .showHistoryPanel)) { _ in
-            // Restore focus to list for keyboard navigation
             focusedField = .list
-            // Re-apply search filter if there's a search term (fetchItems is called in showPanel)
-            if !searchText.isEmpty {
-                historyManager.searchItems(query: searchText)
-            }
+            viewModel.onPanelShow()
         }
         .onReceive(NotificationCenter.default.publisher(for: .deleteSelectedItem)) { _ in
-            // Handle delete key from event monitor
             guard !isSearchFocused else { return }
-            deleteSelectedItem()
+            viewModel.deleteSelectedItem()
         }
-        .onKeyPress(.upArrow) {
-            if selectedIndex == 0 {
-                // At first item, focus search field
-                focusedField = .search
-            } else {
-                focusedField = .list
-                moveSelection(by: -1)
-            }
-            return .handled
-        }
-        .onKeyPress(.downArrow) {
-            if isSearchFocused {
-                // Coming from search, select first item
-                focusedField = .list
-                selectedIndex = 0
-            } else {
-                moveSelection(by: 1)
-            }
-            return .handled
-        }
-        .onKeyPress(.return) {
-            if selectedIndex < filteredItems.count {
-                pasteItem(filteredItems[selectedIndex], asPlainText: settings.plainTextMode)
-            }
-            return .handled
-        }
-        .onKeyPress(.delete) {
-            guard !isSearchFocused else { return .ignored }
-            deleteSelectedItem()
-            return .handled
-        }
-        .onKeyPress(.deleteForward) {
-            guard !isSearchFocused else { return .ignored }
-            deleteSelectedItem()
-            return .handled
-        }
-        .onKeyPress(.escape) {
-            onDismiss()
-            return .handled
-        }
-        .onKeyPress(keys: ["f"]) { press in
-            if press.modifiers.contains(.command) {
-                focusedField = .search
-                return .handled
-            }
-            return .ignored
-        }
-        .onKeyPress(keys: ["1", "2", "3", "4", "5", "6", "7", "8", "9"]) { press in
-            // Don't handle numeric hotkeys when search field is focused
-            guard !isSearchFocused else { return .ignored }
-
-            if let number = Int(String(press.characters)), number >= 1, number <= 9 {
-                let index = number - 1
-                if index < filteredItems.count {
-                    selectedIndex = index
-                    pasteItem(filteredItems[index], asPlainText: settings.plainTextMode)
-                }
-            }
-            return .handled
-        }
-        .onChange(of: itemToEdit) { _, newItem in
+        .historyKeyboardHandlers(
+            viewModel: viewModel,
+            focusedField: $focusedField,
+            isSearchFocused: isSearchFocused,
+            onDismiss: onDismiss
+        )
+        .onChange(of: viewModel.itemToEdit) { _, newItem in
             if let item = newItem {
-                showEditWindow(for: item)
+                EditWindowController.shared.showEditWindow(
+                    for: item,
+                    historyManager: viewModel.historyManager
+                )
+                viewModel.itemToEdit = nil
             }
         }
         .alert(
             "Error",
             isPresented: errorAlertBinding,
-            presenting: historyManager.lastError
+            presenting: viewModel.historyManager.lastError
         ) { _ in
-            Button("OK") {
-                historyManager.lastError = nil
-            }
+            Button("OK") { viewModel.clearError() }
         } message: { error in
             Text(error.localizedDescription)
         }
     }
 
+    // MARK: - Subviews
+
+    @ViewBuilder
+    private var historyContent: some View {
+        if viewModel.filteredItems.isEmpty {
+            emptyStateView
+        } else {
+            HistoryListView(
+                viewModel: viewModel,
+                isSearchFocused: isSearchFocused,
+                onDismiss: onDismiss
+            )
+        }
+    }
+
+    @ViewBuilder
+    private var emptyStateView: some View {
+        if !viewModel.searchText.isEmpty {
+            SearchEmptyStateView(query: viewModel.searchText)
+        } else if viewModel.showStarredOnly {
+            StarredEmptyStateView()
+        } else {
+            EmptyStateView()
+        }
+    }
+
+    private var backgroundStyle: AnyShapeStyle {
+        if viewModel.settings.useTransparentBackground {
+            AnyShapeStyle(.regularMaterial)
+        } else {
+            AnyShapeStyle(Color(nsColor: .windowBackgroundColor))
+        }
+    }
+
     private var errorAlertBinding: Binding<Bool> {
         Binding(
-            get: { historyManager.lastError != nil },
-            set: { if !$0 { historyManager.lastError = nil } }
+            get: { viewModel.hasError },
+            set: { if !$0 { viewModel.clearError() } }
         )
     }
-
-    // MARK: - Actions
-
-    private func moveSelection(by delta: Int) {
-        guard !filteredItems.isEmpty else { return }
-
-        if selectedIndex < 0 {
-            // No selection - select first or last based on direction
-            selectedIndex = delta > 0 ? 0 : filteredItems.count - 1
-        } else {
-            let newIndex = selectedIndex + delta
-            if newIndex >= 0 && newIndex < filteredItems.count {
-                selectedIndex = newIndex
-            }
-        }
-    }
-
-    private func copyToClipboard(_ item: ClipboardItem) {
-        let pasteboard = NSPasteboard.general
-        pasteboard.clearContents()
-
-        switch item.itemType {
-        case .text, .rtf:
-            pasteboard.setString(item.textContent ?? "", forType: .string)
-        case .image:
-            if let imageData = item.imageData {
-                pasteboard.setData(imageData, forType: .png)
-            }
-        case .file:
-            if let urls = item.fileURLs {
-                pasteboard.writeObjects(urls as [NSURL])
-            }
-        }
-
-        // Move item to top without dismissing or pasting
-        historyManager.moveToTop(item)
-    }
-
-    private func pasteItem(_ item: ClipboardItem, asPlainText: Bool) {
-        print("📋 Pasting item: \(item.previewText.prefix(50))... (plainText: \(asPlainText))")
-
-        // Write to pasteboard using helper
-        PasteHelper.writeToClipboard(
-            item: item,
-            pasteboard: NSPasteboard.general,
-            asPlainText: asPlainText
-        )
-
-        // Update item's position (move to top)
-        historyManager.moveToTop(item)
-
-        // Select the pasted item (now at top) for next open
-        selectedIndex = 0
-
-        // Dismiss panel first, then paste
-        onDismiss()
-
-        // Simulate paste after panel closes
-        simulatePaste()
-    }
-
-    private func simulatePaste() {
-        // Check accessibility permission first
-        guard AccessibilityHelper.hasPermission else {
-            print("⚠️ Paste failed: No accessibility permission. Please add PestoClipboard to System Settings > Privacy & Security > Accessibility")
-            return
-        }
-
-        // Delay to let panel dismiss and previous app regain focus
-        DispatchQueue.main.asyncAfter(deadline: .now() + Constants.pasteSimulationDelay) {
-            // Maccy-style paste implementation
-            // Add 0x000008 flag for left/right modifier key detection
-            let cmdFlag = CGEventFlags(rawValue: UInt64(CGEventFlags.maskCommand.rawValue) | 0x000008)
-
-            let source = CGEventSource(stateID: .combinedSessionState)
-            // Disable local keyboard events while pasting
-            source?.setLocalEventsFilterDuringSuppressionState(
-                [.permitLocalMouseEvents, .permitSystemDefinedEvents],
-                state: .eventSuppressionStateSuppressionInterval
-            )
-
-            let keyDown = CGEvent(keyboardEventSource: source, virtualKey: Constants.vKeyCode, keyDown: true)
-            let keyUp = CGEvent(keyboardEventSource: source, virtualKey: Constants.vKeyCode, keyDown: false)
-            keyDown?.flags = cmdFlag
-            keyUp?.flags = cmdFlag
-            keyDown?.post(tap: .cgSessionEventTap)
-            keyUp?.post(tap: .cgSessionEventTap)
-
-            print("✅ Paste event posted successfully")
-        }
-    }
-
-    private func deleteSelectedItem() {
-        guard selectedIndex >= 0, selectedIndex < filteredItems.count else { return }
-
-        let item = filteredItems[selectedIndex]
-        suppressScrollToTop = true
-        historyManager.deleteItem(item)
-    }
-
-    private static var editWindow: NSWindow?
-    private static var editWindowDelegate: EditWindowDelegate?
-
-    private func showEditWindow(for item: ClipboardItem) {
-        // Close any existing edit window
-        Self.editWindow?.close()
-        Self.editWindow = nil
-        Self.editWindowDelegate = nil
-
-        let window = NSWindow(
-            contentRect: NSRect(x: 0, y: 0, width: 450, height: 300),
-            styleMask: [.titled, .closable, .resizable],
-            backing: .buffered,
-            defer: false
-        )
-        window.title = String(localized: "Edit Clipboard Item")
-        window.isReleasedWhenClosed = false
-
-        // Set delegate to clean up static reference when window closes
-        let delegate = EditWindowDelegate {
-            Self.editWindow = nil
-            Self.editWindowDelegate = nil
-        }
-        window.delegate = delegate
-        Self.editWindowDelegate = delegate
-
-        let editView = EditItemView(
-            initialText: item.textContent ?? "",
-            onSave: { [historyManager] newText in
-                historyManager.updateTextContent(item, newText: newText)
-            },
-            onClose: {
-                Self.editWindow?.close()
-            }
-        )
-
-        window.contentView = NSHostingView(rootView: editView)
-        window.center()
-        window.makeKeyAndOrderFront(nil)
-        NSApp.activate(ignoringOtherApps: true)
-
-        Self.editWindow = window
-        itemToEdit = nil
-    }
 }
 
-// MARK: - Edit Window Delegate
-
-private class EditWindowDelegate: NSObject, NSWindowDelegate {
-    private let onClose: () -> Void
-
-    init(onClose: @escaping () -> Void) {
-        self.onClose = onClose
-    }
-
-    func windowWillClose(_ notification: Notification) {
-        onClose()
-    }
-}
-
-// MARK: - Header View
-
-struct HeaderView: View {
-    let itemCount: Int
-
-    var body: some View {
-        HStack {
-            Text("Pesto Clipboard")
-                .font(.system(size: 13, weight: .semibold))
-
-            Text("(\(itemCount))")
-                .font(.system(size: 12))
-                .foregroundStyle(.secondary)
-
-            Spacer()
-        }
-        .padding(.horizontal, 12)
-        .padding(.top, 10)
-        .padding(.bottom, 6)
-    }
-}
-
-// MARK: - Empty State View
-
-struct EmptyStateView: View {
-    var body: some View {
-        VStack(spacing: 8) {
-            Image(systemName: "doc.on.clipboard")
-                .font(.system(size: 32))
-                .foregroundStyle(.secondary)
-
-            Text("No clipboard history")
-                .font(.system(size: 13, weight: .medium))
-                .foregroundStyle(.secondary)
-
-            Text("Copy something to get started")
-                .font(.system(size: 12))
-                .foregroundStyle(.tertiary)
-        }
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
-    }
-}
-
-// MARK: - Search Empty State View
-
-struct SearchEmptyStateView: View {
-    let query: String
-
-    var body: some View {
-        VStack(spacing: 8) {
-            Image(systemName: "magnifyingglass")
-                .font(.system(size: 32))
-                .foregroundStyle(.secondary)
-
-            Text("No results found")
-                .font(.system(size: 13, weight: .medium))
-                .foregroundStyle(.secondary)
-
-            Text("No items matching \"\(query)\"")
-                .font(.system(size: 12))
-                .foregroundStyle(.tertiary)
-                .lineLimit(1)
-                .truncationMode(.middle)
-        }
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
-    }
-}
-
-// MARK: - Starred Empty State View
-
-struct StarredEmptyStateView: View {
-    var body: some View {
-        VStack(spacing: 8) {
-            Image(systemName: "star")
-                .font(.system(size: 32))
-                .foregroundStyle(.secondary)
-
-            Text("No starred items")
-                .font(.system(size: 13, weight: .medium))
-                .foregroundStyle(.secondary)
-
-            Text("Star items to keep them safe")
-                .font(.system(size: 12))
-                .foregroundStyle(.tertiary)
-        }
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
-    }
-}
-
-// MARK: - Edit Item View
-
-struct EditItemView: View {
-    @State private var text: String
-    var onSave: (String) -> Void
-    var onClose: () -> Void
-
-    init(initialText: String, onSave: @escaping (String) -> Void, onClose: @escaping () -> Void) {
-        _text = State(initialValue: initialText)
-        self.onSave = onSave
-        self.onClose = onClose
-    }
-
-    var body: some View {
-        VStack(spacing: 0) {
-            TextEditor(text: $text)
-                .font(.system(.body, design: .monospaced))
-                .frame(minHeight: 200)
-                .padding()
-
-            Divider()
-
-            HStack {
-                Button("Cancel", action: onClose)
-                    .keyboardShortcut(.escape, modifiers: [])
-
-                Spacer()
-
-                Button("Save") {
-                    onSave(text)
-                    onClose()
-                }
-                .keyboardShortcut(.return, modifiers: .command)
-                .buttonStyle(.borderedProminent)
-            }
-            .padding()
-        }
-    }
-}
+// MARK: - Preview
 
 #Preview {
     let historyManager = ClipboardHistoryManager()

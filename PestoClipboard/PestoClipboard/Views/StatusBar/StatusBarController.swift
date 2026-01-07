@@ -9,7 +9,7 @@ class StatusBarController {
     private var eventMonitor: Any?
     private var keyEventMonitor: Any?
     private var preferencesWindow: NSWindow?
-    private var notificationObserver: Any?
+    private var notificationObservers: [Any] = []
 
     init(historyManager: ClipboardHistoryManager, clipboardMonitor: ClipboardMonitor) {
         self.historyManager = historyManager
@@ -21,21 +21,25 @@ class StatusBarController {
     }
 
     private func setupNotificationObserver() {
-        notificationObserver = NotificationCenter.default.addObserver(
-            forName: .hideHistoryPanel,
-            object: nil,
-            queue: .main
-        ) { [weak self] _ in
-            self?.hidePanel()
-        }
+        notificationObservers.append(
+            NotificationCenter.default.addObserver(
+                forName: .hideHistoryPanel,
+                object: nil,
+                queue: .main
+            ) { [weak self] _ in
+                self?.hidePanel()
+            }
+        )
 
-        NotificationCenter.default.addObserver(
-            forName: .openHistoryPanel,
-            object: nil,
-            queue: .main
-        ) { [weak self] _ in
-            self?.showPanel()
-        }
+        notificationObservers.append(
+            NotificationCenter.default.addObserver(
+                forName: .openHistoryPanel,
+                object: nil,
+                queue: .main
+            ) { [weak self] _ in
+                self?.showPanel()
+            }
+        )
     }
 
     private func setupStatusItem() {
@@ -185,7 +189,7 @@ class StatusBarController {
         if let monitor = keyEventMonitor {
             NSEvent.removeMonitor(monitor)
         }
-        if let observer = notificationObserver {
+        for observer in notificationObservers {
             NotificationCenter.default.removeObserver(observer)
         }
     }

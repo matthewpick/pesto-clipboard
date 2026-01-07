@@ -357,10 +357,13 @@ struct HistoryView: View {
     }
 
     private static var editWindow: NSWindow?
+    private static var editWindowDelegate: EditWindowDelegate?
 
     private func showEditWindow(for item: ClipboardItem) {
         // Close any existing edit window
         Self.editWindow?.close()
+        Self.editWindow = nil
+        Self.editWindowDelegate = nil
 
         let window = NSWindow(
             contentRect: NSRect(x: 0, y: 0, width: 450, height: 300),
@@ -371,6 +374,14 @@ struct HistoryView: View {
         window.title = String(localized: "Edit Clipboard Item")
         window.isReleasedWhenClosed = false
 
+        // Set delegate to clean up static reference when window closes
+        let delegate = EditWindowDelegate {
+            Self.editWindow = nil
+            Self.editWindowDelegate = nil
+        }
+        window.delegate = delegate
+        Self.editWindowDelegate = delegate
+
         let editView = EditItemView(
             initialText: item.textContent ?? "",
             onSave: { [historyManager] newText in
@@ -378,7 +389,6 @@ struct HistoryView: View {
             },
             onClose: {
                 Self.editWindow?.close()
-                Self.editWindow = nil
             }
         )
 
@@ -389,6 +399,20 @@ struct HistoryView: View {
 
         Self.editWindow = window
         itemToEdit = nil
+    }
+}
+
+// MARK: - Edit Window Delegate
+
+private class EditWindowDelegate: NSObject, NSWindowDelegate {
+    private let onClose: () -> Void
+
+    init(onClose: @escaping () -> Void) {
+        self.onClose = onClose
+    }
+
+    func windowWillClose(_ notification: Notification) {
+        onClose()
     }
 }
 

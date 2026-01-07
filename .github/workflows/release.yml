@@ -34,13 +34,44 @@ jobs:
         id: version
         run: echo "VERSION=${GITHUB_REF#refs/tags/v}" >> $GITHUB_OUTPUT
 
+      - name: Install Apple certificate
+        env:
+          APPLE_CERTIFICATE_BASE64: ${{ secrets.APPLE_CERTIFICATE_BASE64 }}
+          APPLE_CERTIFICATE_PASSWORD: ${{ secrets.APPLE_CERTIFICATE_PASSWORD }}
+        run: |
+          # Create temporary keychain
+          KEYCHAIN_PATH=$RUNNER_TEMP/app-signing.keychain-db
+          KEYCHAIN_PASSWORD=$(openssl rand -base64 32)
+
+          security create-keychain -p "$KEYCHAIN_PASSWORD" "$KEYCHAIN_PATH"
+          security set-keychain-settings -lut 21600 "$KEYCHAIN_PATH"
+          security unlock-keychain -p "$KEYCHAIN_PASSWORD" "$KEYCHAIN_PATH"
+
+          # Import certificate
+          CERTIFICATE_PATH=$RUNNER_TEMP/certificate.p12
+          echo -n "$APPLE_CERTIFICATE_BASE64" | base64 --decode -o "$CERTIFICATE_PATH"
+
+          security import "$CERTIFICATE_PATH" \
+            -P "$APPLE_CERTIFICATE_PASSWORD" \
+            -A \
+            -t cert \
+            -f pkcs12 \
+            -k "$KEYCHAIN_PATH"
+
+          security set-key-partition-list -S apple-tool:,apple: -k "$KEYCHAIN_PASSWORD" "$KEYCHAIN_PATH"
+          security list-keychain -d user -s "$KEYCHAIN_PATH"
+
+          echo "KEYCHAIN_PATH=$KEYCHAIN_PATH" >> $GITHUB_ENV
+
       - name: Resolve Swift Package Dependencies
         run: |
           xcodebuild -resolvePackageDependencies \
             -project PestoClipboard/PestoClipboard.xcodeproj \
             -scheme PestoClipboard
 
-      - name: Build Release
+      - name: Build and Sign Release
+        env:
+          APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
         run: |
           xcodebuild build \
             -project PestoClipboard/PestoClipboard.xcodeproj \
@@ -49,9 +80,31 @@ jobs:
             -derivedDataPath build \
             -arch arm64 \
             -arch x86_64 \
-            CODE_SIGN_IDENTITY="-" \
-            CODE_SIGNING_REQUIRED=NO \
-            CODE_SIGNING_ALLOWED=NO
+            CODE_SIGN_STYLE=Manual \
+            CODE_SIGN_IDENTITY="Developer ID Application" \
+            DEVELOPMENT_TEAM="$APPLE_TEAM_ID" \
+            OTHER_CODE_SIGN_FLAGS="--keychain $KEYCHAIN_PATH"
+
+      - name: Notarize app
+        env:
+          APPLE_ID: ${{ secrets.APPLE_ID }}
+          APPLE_ID_PASSWORD: ${{ secrets.APPLE_ID_PASSWORD }}
+          APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
+        run: |
+          APP_PATH="build/Build/Products/Release/Pesto Clipboard.app"
+
+          # Create a ZIP for notarization
+          ditto -c -k --keepParent "$APP_PATH" "PestoClipboard.zip"
+
+          # Submit for notarization
+          xcrun notarytool submit "PestoClipboard.zip" \
+            --apple-id "$APPLE_ID" \
+            --password "$APPLE_ID_PASSWORD" \
+            --team-id "$APPLE_TEAM_ID" \
+            --wait
+
+          # Staple the notarization ticket
+          xcrun stapler staple "$APP_PATH"
 
       - name: Install create-dmg
         run: brew install create-dmg
@@ -85,6 +138,18 @@ jobs:
             hdiutil create -volname "Pesto Clipboard" -srcfolder dmg-contents -ov -format UDZO "$DMG_NAME"
           fi
 
+          # Sign the DMG
+          codesign --sign "Developer ID Application" --keychain "$KEYCHAIN_PATH" "$DMG_NAME"
+
+          # Notarize the DMG
+          xcrun notarytool submit "$DMG_NAME" \
+            --apple-id "${{ secrets.APPLE_ID }}" \
+            --password "${{ secrets.APPLE_ID_PASSWORD }}" \
+            --team-id "${{ secrets.APPLE_TEAM_ID }}" \
+            --wait
+
+          xcrun stapler staple "$DMG_NAME"
+
           echo "DMG_NAME=$DMG_NAME" >> $GITHUB_ENV
 
       - name: Calculate SHA256
@@ -110,25 +175,23 @@ jobs:
           body: |
             ## Installation
 
-            ### Manual Download
             1. Download `${{ env.DMG_NAME }}` below
             2. Open the DMG and drag Pesto Clipboard to Applications
-            3. Run the following command to allow the app to open (required for unsigned apps):
-               ```bash
-               xattr -cr "/Applications/Pesto Clipboard.app"
-               ```
-
-            > **Note:** This app is not yet code-signed. macOS will show a security warning on first launch.
-            > The command above removes the quarantine flag. Once we obtain an Apple Developer certificate,
-            > future releases will be signed and notarized.
+            3. Launch from Applications
 
             ## Verification
 
             SHA256: `${{ steps.sha256.outputs.SHA256 }}`
 
-            Verify with:
             ```bash
             echo "${{ steps.sha256.outputs.SHA256 }}  ${{ env.DMG_NAME }}" | shasum -a 256 -c
             ```
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Cleanup keychain
+        if: always()
+        run: |
+          if [ -f "$KEYCHAIN_PATH" ]; then
+            security delete-keychain "$KEYCHAIN_PATH"
+          fi

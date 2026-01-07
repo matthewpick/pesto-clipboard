@@ -252,6 +252,24 @@ struct HistoryView: View {
                 showEditWindow(for: item)
             }
         }
+        .alert(
+            "Error",
+            isPresented: errorAlertBinding,
+            presenting: historyManager.lastError
+        ) { _ in
+            Button("OK") {
+                historyManager.lastError = nil
+            }
+        } message: { error in
+            Text(error.localizedDescription)
+        }
+    }
+
+    private var errorAlertBinding: Binding<Bool> {
+        Binding(
+            get: { historyManager.lastError != nil },
+            set: { if !$0 { historyManager.lastError = nil } }
+        )
     }
 
     // MARK: - Actions

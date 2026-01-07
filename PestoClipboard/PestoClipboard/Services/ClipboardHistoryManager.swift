@@ -10,6 +10,28 @@ class ClipboardHistoryManager: ObservableObject {
     private let maxItems: Int
 
     @Published var items: [ClipboardItem] = []
+    @Published var lastError: ClipboardError?
+
+    enum ClipboardError: LocalizedError {
+        case fetchFailed(Error)
+        case saveFailed(Error)
+        case searchFailed(Error)
+
+        var errorDescription: String? {
+            switch self {
+            case .fetchFailed:
+                return String(localized: "Failed to load clipboard history")
+            case .saveFailed:
+                return String(localized: "Failed to save clipboard item")
+            case .searchFailed:
+                return String(localized: "Failed to search clipboard history")
+            }
+        }
+
+        var recoverySuggestion: String? {
+            String(localized: "Try restarting the app. If the problem persists, your clipboard data may need to be reset.")
+        }
+    }
 
     var viewContext: NSManagedObjectContext {
         persistenceController.container.viewContext
@@ -29,6 +51,7 @@ class ClipboardHistoryManager: ObservableObject {
             items = try viewContext.fetch(request)
         } catch {
             print("Failed to fetch clipboard items: \(error)")
+            lastError = .fetchFailed(error)
         }
     }
 
@@ -38,6 +61,7 @@ class ClipboardHistoryManager: ObservableObject {
             items = try viewContext.fetch(request)
         } catch {
             print("Failed to search clipboard items: \(error)")
+            lastError = .searchFailed(error)
         }
     }
 
@@ -171,6 +195,7 @@ class ClipboardHistoryManager: ObservableObject {
             fetchItems()
         } catch {
             print("Failed to save context: \(error)")
+            lastError = .saveFailed(error)
         }
     }
 

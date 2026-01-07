@@ -24,11 +24,17 @@ xcodebuild -project PestoClipboard/PestoClipboard.xcodeproj -scheme PestoClipboa
 ### Key Components
 
 - **App/AppDelegate.swift** - Sets up global hotkey and initializes StatusBarController
+- **App/AppEventBus.swift** - Type-safe Combine-based event bus for inter-component communication
 - **Services/ClipboardMonitor.swift** - Polls clipboard for changes every 0.5s
 - **Services/ClipboardHistoryManager.swift** - Core Data CRUD operations for clipboard items
 - **Services/SettingsManager.swift** - UserDefaults-backed settings (singleton)
-- **Views/StatusBar/StatusBarController.swift** - Menu bar icon and FloatingPanel management
+- **Views/StatusBar/StatusBarController.swift** - Menu bar icon orchestration
+- **Views/StatusBar/FloatingPanel.swift** - NSPanel subclass for the history popup
+- **Views/StatusBar/EventMonitorManager.swift** - Global/local event monitoring
+- **Views/StatusBar/PreferencesWindowController.swift** - Preferences window lifecycle
 - **Views/HistoryPopover/HistoryView.swift** - Main UI for clipboard history list
+- **Views/HistoryPopover/HistoryViewModel.swift** - State and business logic for HistoryView
+- **Views/HistoryPopover/HistoryKeyboardHandlers.swift** - Keyboard shortcut handling
 
 ### Data Flow
 
@@ -40,19 +46,27 @@ xcodebuild -project PestoClipboard/PestoClipboard.xcodeproj -scheme PestoClipboa
 ### Focus System
 
 The app uses a custom focus system to handle keyboard shortcuts:
-- `KeyAcceptingHostingView` - Custom NSHostingView subclass that accepts first responder
+- `KeyAcceptingHostingView` (in FloatingPanel.swift) - Custom NSHostingView subclass that accepts first responder
 - `FocusField` enum in HistoryView - `.list` (default) or `.search`
 - Hotkeys (1-9, arrows, delete) only work when `.list` is focused
 - Cmd+F focuses the search field
 
 ## Important Patterns
 
-### Notifications
+### Event Bus
+
+The app uses a type-safe Combine-based event bus instead of NotificationCenter:
 
 ```swift
-// Show/hide panel notifications
-Notification.Name.showHistoryPanel  // Posted when panel opens, resets UI state
-Notification.Name.hideHistoryPanel  // Posted to close panel
+// Send events
+AppEventBus.shared.showHistoryPanel()
+AppEventBus.shared.hideHistoryPanel()
+AppEventBus.shared.deleteSelectedItem()
+
+// Subscribe to events
+AppEventBus.shared.publisher(for: .showHistoryPanel)
+    .sink { /* handle event */ }
+    .store(in: &cancellables)
 ```
 
 ### Settings Persistence
@@ -87,7 +101,7 @@ Settings in `SettingsManager` use `@Published` with `didSet` to persist to UserD
 
 ### Adding a new hotkey
 
-1. Add `.onKeyPress` handler in HistoryView
+1. Add `.onKeyPress` handler in `HistoryKeyboardHandlers.swift`
 2. Check `isSearchFocused` if hotkey should be disabled during search
 3. Return `.handled` or `.ignored` appropriately
 

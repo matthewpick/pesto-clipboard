@@ -2,16 +2,114 @@ import Testing
 import AppKit
 @testable import Pesto_Clipboard
 
+// MARK: - Mock Implementation
+
+final class MockClipboardHistoryManager: ClipboardHistoryManaging {
+    var items: [ClipboardItem] = []
+
+    // MARK: - Call Tracking
+
+    private(set) var fetchItemsCalled = false
+    private(set) var searchItemsQueries: [String] = []
+
+    private(set) var addTextItemCalls: [(text: String, rtfData: Data?)] = []
+    private(set) var addImageItemCalls: [(imageData: Data, thumbnailData: Data?)] = []
+    private(set) var addFileItemCalls: [[URL]] = []
+
+    private(set) var moveToTopCalls: [ClipboardItem] = []
+    private(set) var togglePinCalls: [ClipboardItem] = []
+    private(set) var updateTextContentCalls: [(item: ClipboardItem, newText: String)] = []
+
+    private(set) var deleteItemCalls: [ClipboardItem] = []
+    private(set) var deleteItemsAtCalls: [IndexSet] = []
+    private(set) var clearAllCalled = false
+    private(set) var clearAllIncludingStarredCalled = false
+
+    // MARK: - Protocol Implementation
+
+    func fetchItems() {
+        fetchItemsCalled = true
+    }
+
+    func searchItems(query: String) {
+        searchItemsQueries.append(query)
+    }
+
+    func addTextItem(_ text: String, rtfData: Data?) {
+        addTextItemCalls.append((text: text, rtfData: rtfData))
+    }
+
+    func addImageItem(imageData: Data, thumbnailData: Data?) {
+        addImageItemCalls.append((imageData: imageData, thumbnailData: thumbnailData))
+    }
+
+    func addFileItem(urls: [URL]) {
+        addFileItemCalls.append(urls)
+    }
+
+    func moveToTop(_ item: ClipboardItem) {
+        moveToTopCalls.append(item)
+    }
+
+    func togglePin(_ item: ClipboardItem) {
+        togglePinCalls.append(item)
+    }
+
+    func updateTextContent(_ item: ClipboardItem, newText: String) {
+        updateTextContentCalls.append((item: item, newText: newText))
+    }
+
+    func deleteItem(_ item: ClipboardItem) {
+        deleteItemCalls.append(item)
+    }
+
+    func deleteItems(at offsets: IndexSet) {
+        deleteItemsAtCalls.append(offsets)
+    }
+
+    func clearAll() {
+        clearAllCalled = true
+    }
+
+    func clearAllIncludingStarred() {
+        clearAllIncludingStarredCalled = true
+    }
+
+    // MARK: - Test Helpers
+
+    func reset() {
+        items = []
+        fetchItemsCalled = false
+        searchItemsQueries = []
+        addTextItemCalls = []
+        addImageItemCalls = []
+        addFileItemCalls = []
+        moveToTopCalls = []
+        togglePinCalls = []
+        updateTextContentCalls = []
+        deleteItemCalls = []
+        deleteItemsAtCalls = []
+        clearAllCalled = false
+        clearAllIncludingStarredCalled = false
+    }
+}
+
 @MainActor
 struct ClipboardMonitorTests {
 
-    // MARK: - Helper
+    // MARK: - Helpers
 
     func createTestSetup() -> (ClipboardMonitor, ClipboardHistoryManager) {
         let persistenceController = PersistenceController(inMemory: true)
         let historyManager = ClipboardHistoryManager(persistenceController: persistenceController)
         let monitor = ClipboardMonitor(historyManager: historyManager)
         return (monitor, historyManager)
+    }
+
+    func createMockSetup() -> (ClipboardMonitor, MockClipboardHistoryManager) {
+        let mock = MockClipboardHistoryManager()
+        let monitor = ClipboardMonitor(historyManager: mock)
+        return (monitor, mock)
     }
 
     // MARK: - Initialization Tests
@@ -113,6 +211,86 @@ struct ClipboardMonitorTests {
         monitor.startMonitoring()
         monitor.stopMonitoring()
         monitor.stopMonitoring()
+    }
+
+    // MARK: - Mock-Based Tests
+
+    @Test func monitorCanBeCreatedWithMock() {
+        let (monitor, mock) = createMockSetup()
+
+        #expect(monitor != nil)
+        #expect(mock.addTextItemCalls.isEmpty)
+    }
+
+    @Test func mockTracksNoCallsInitially() {
+        let mock = MockClipboardHistoryManager()
+
+        #expect(mock.fetchItemsCalled == false)
+        #expect(mock.clearAllCalled == false)
+        #expect(mock.addTextItemCalls.isEmpty)
+        #expect(mock.addImageItemCalls.isEmpty)
+        #expect(mock.addFileItemCalls.isEmpty)
+    }
+
+    @Test func mockTracksAddTextItemCalls() {
+        let mock = MockClipboardHistoryManager()
+
+        mock.addTextItem("Hello", rtfData: nil)
+        mock.addTextItem("World", rtfData: Data([0x01, 0x02]))
+
+        #expect(mock.addTextItemCalls.count == 2)
+        #expect(mock.addTextItemCalls[0].text == "Hello")
+        #expect(mock.addTextItemCalls[0].rtfData == nil)
+        #expect(mock.addTextItemCalls[1].text == "World")
+        #expect(mock.addTextItemCalls[1].rtfData != nil)
+    }
+
+    @Test func mockTracksAddImageItemCalls() {
+        let mock = MockClipboardHistoryManager()
+        let imageData = Data([0xFF, 0xD8, 0xFF])
+        let thumbnailData = Data([0x89, 0x50, 0x4E, 0x47])
+
+        mock.addImageItem(imageData: imageData, thumbnailData: thumbnailData)
+
+        #expect(mock.addImageItemCalls.count == 1)
+        #expect(mock.addImageItemCalls[0].imageData == imageData)
+        #expect(mock.addImageItemCalls[0].thumbnailData == thumbnailData)
+    }
+
+    @Test func mockTracksAddFileItemCalls() {
+        let mock = MockClipboardHistoryManager()
+        let urls = [URL(fileURLWithPath: "/tmp/test.txt")]
+
+        mock.addFileItem(urls: urls)
+
+        #expect(mock.addFileItemCalls.count == 1)
+        #expect(mock.addFileItemCalls[0] == urls)
+    }
+
+    @Test func mockTracksClearAllCalls() {
+        let mock = MockClipboardHistoryManager()
+
+        #expect(mock.clearAllCalled == false)
+        mock.clearAll()
+        #expect(mock.clearAllCalled == true)
+    }
+
+    @Test func mockResetClearsAllTracking() {
+        let mock = MockClipboardHistoryManager()
+
+        mock.addTextItem("test", rtfData: nil)
+        mock.clearAll()
+        mock.fetchItems()
+
+        #expect(mock.addTextItemCalls.count == 1)
+        #expect(mock.clearAllCalled == true)
+        #expect(mock.fetchItemsCalled == true)
+
+        mock.reset()
+
+        #expect(mock.addTextItemCalls.isEmpty)
+        #expect(mock.clearAllCalled == false)
+        #expect(mock.fetchItemsCalled == false)
     }
 }
 

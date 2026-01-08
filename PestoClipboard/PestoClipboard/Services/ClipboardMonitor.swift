@@ -7,7 +7,7 @@ class ClipboardMonitor: ObservableObject {
     private static let logger = Logger(subsystem: Bundle.main.bundleIdentifier ?? "PestoClipboard", category: "ClipboardMonitor")
     static var shared: ClipboardMonitor?
 
-    private let historyManager: ClipboardHistoryManager
+    private let historyManager: ClipboardHistoryManaging
     private var lastChangeCount: Int = 0
     private var timer: Timer?
     private let pollInterval: TimeInterval = Constants.clipboardPollInterval
@@ -27,7 +27,7 @@ class ClipboardMonitor: ObservableObject {
         }
     }
 
-    init(historyManager: ClipboardHistoryManager) {
+    init(historyManager: ClipboardHistoryManaging) {
         self.historyManager = historyManager
         self.lastChangeCount = NSPasteboard.general.changeCount
         ClipboardMonitor.shared = self

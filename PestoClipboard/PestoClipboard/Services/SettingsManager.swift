@@ -4,6 +4,12 @@ import Combine
 class SettingsManager: ObservableObject {
     static let shared = SettingsManager()
 
+    private weak var historyManager: ClipboardHistoryManaging?
+
+    func configure(historyManager: ClipboardHistoryManaging) {
+        self.historyManager = historyManager
+    }
+
     // MARK: - General Settings
 
     @Published var launchAtLogin: Bool {
@@ -100,9 +106,9 @@ class SettingsManager: ObservableObject {
 
     func clearHistory(includeStarred: Bool = false) {
         if includeStarred {
-            ClipboardHistoryManager.shared.clearAllIncludingStarred()
+            historyManager?.clearAllIncludingStarred()
         } else {
-            ClipboardHistoryManager.shared.clearAll()
+            historyManager?.clearAll()
         }
     }
 }

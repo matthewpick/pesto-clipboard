@@ -3,7 +3,28 @@ import CryptoKit
 import AppKit
 import Combine
 
-class ClipboardHistoryManager: ObservableObject {
+// MARK: - Protocol
+
+protocol ClipboardHistoryManaging: AnyObject {
+    var items: [ClipboardItem] { get }
+
+    func fetchItems()
+    func searchItems(query: String)
+    func addTextItem(_ text: String, rtfData: Data?)
+    func addImageItem(imageData: Data, thumbnailData: Data?)
+    func addFileItem(urls: [URL])
+    func moveToTop(_ item: ClipboardItem)
+    func togglePin(_ item: ClipboardItem)
+    func updateTextContent(_ item: ClipboardItem, newText: String)
+    func deleteItem(_ item: ClipboardItem)
+    func deleteItems(at offsets: IndexSet)
+    func clearAll()
+    func clearAllIncludingStarred()
+}
+
+// MARK: - Implementation
+
+class ClipboardHistoryManager: ObservableObject, ClipboardHistoryManaging {
     static let shared = ClipboardHistoryManager()
 
     private let persistenceController: PersistenceController

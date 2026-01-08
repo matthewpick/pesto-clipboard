@@ -17,6 +17,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
         // Initialize Core Data and services
         historyManager = ClipboardHistoryManager.shared
+        SettingsManager.shared.configure(historyManager: historyManager!)
         clipboardMonitor = ClipboardMonitor(historyManager: historyManager!)
 
         // Initialize status bar (menu bar icon)

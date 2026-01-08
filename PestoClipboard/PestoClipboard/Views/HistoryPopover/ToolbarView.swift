@@ -57,7 +57,8 @@ struct ToolbarView: View {
                 onDelete()
             }
         }
-        .padding(.horizontal, 12)
+        .padding(.leading, 10)
+        .padding(.trailing, 10)
         .padding(.vertical, 6)
     }
 }

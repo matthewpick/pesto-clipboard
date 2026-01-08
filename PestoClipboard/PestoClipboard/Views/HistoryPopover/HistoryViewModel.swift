@@ -48,6 +48,25 @@ class HistoryViewModel: ObservableObject {
         self.clipboardMonitor = clipboardMonitor
         self.settings = settings
 
+        setupBindings()
+    }
+
+    private func setupBindings() {
+        // Forward changes from dependencies to trigger UI refresh
+        Publishers.Merge3(
+            historyManager.$items.map { _ in () },
+            clipboardMonitor.$isPaused.map { _ in () },
+            settings.$plainTextMode.map { _ in () }
+        )
+        .dropFirst()
+        .receive(on: DispatchQueue.main)
+        .sink { [weak self] _ in
+            DispatchQueue.main.async {
+                self?.objectWillChange.send()
+            }
+        }
+        .store(in: &cancellables)
+
         setupSearchBinding()
     }
 

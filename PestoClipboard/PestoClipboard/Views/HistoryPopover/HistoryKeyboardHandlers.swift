@@ -9,62 +9,73 @@ extension View {
         isSearchFocused: Bool,
         onDismiss: @escaping () -> Void
     ) -> some View {
-        self
+        // Defers execution to avoid "publishing during view update" warnings
+        func deferred(_ action: @escaping () -> Void) {
+            DispatchQueue.main.async(execute: action)
+        }
+
+        return self
             .onKeyPress(.upArrow) {
-                if viewModel.selectedIndex == 0 {
-                    focusedField.wrappedValue = .search
-                } else {
-                    focusedField.wrappedValue = .list
-                    viewModel.moveSelection(by: -1)
+                deferred {
+                    if viewModel.selectedIndex == 0 {
+                        focusedField.wrappedValue = .search
+                    } else {
+                        focusedField.wrappedValue = .list
+                        viewModel.moveSelection(by: -1)
+                    }
                 }
                 return .handled
             }
             .onKeyPress(.downArrow) {
-                if isSearchFocused {
-                    focusedField.wrappedValue = .list
-                    viewModel.selectedIndex = 0
-                } else {
-                    viewModel.moveSelection(by: 1)
+                deferred {
+                    if isSearchFocused {
+                        focusedField.wrappedValue = .list
+                        viewModel.selectedIndex = 0
+                    } else {
+                        viewModel.moveSelection(by: 1)
+                    }
                 }
                 return .handled
             }
             .onKeyPress(.return) {
-                viewModel.pasteSelectedItem(
-                    asPlainText: viewModel.settings.plainTextMode,
-                    onDismiss: onDismiss
-                )
+                deferred {
+                    viewModel.pasteSelectedItem(
+                        asPlainText: viewModel.settings.plainTextMode,
+                        onDismiss: onDismiss
+                    )
+                }
                 return .handled
             }
             .onKeyPress(.delete) {
                 guard !isSearchFocused else { return .ignored }
-                viewModel.deleteSelectedItem()
+                deferred { viewModel.deleteSelectedItem() }
                 return .handled
             }
             .onKeyPress(.deleteForward) {
                 guard !isSearchFocused else { return .ignored }
-                viewModel.deleteSelectedItem()
+                deferred { viewModel.deleteSelectedItem() }
                 return .handled
             }
             .onKeyPress(.escape) {
-                onDismiss()
+                deferred { onDismiss() }
                 return .handled
             }
             .onKeyPress(keys: ["f"]) { press in
-                if press.modifiers.contains(.command) {
-                    focusedField.wrappedValue = .search
-                    return .handled
-                }
-                return .ignored
+                guard press.modifiers.contains(.command) else { return .ignored }
+                deferred { focusedField.wrappedValue = .search }
+                return .handled
             }
             .onKeyPress(keys: ["1", "2", "3", "4", "5", "6", "7", "8", "9"]) { press in
                 guard !isSearchFocused else { return .ignored }
-
-                if let number = Int(String(press.characters)), number >= 1, number <= 9 {
-                    viewModel.pasteItemAtIndex(
-                        number - 1,
-                        asPlainText: viewModel.settings.plainTextMode,
-                        onDismiss: onDismiss
-                    )
+                let characters = press.characters
+                deferred {
+                    if let number = Int(String(characters)), number >= 1, number <= 9 {
+                        viewModel.pasteItemAtIndex(
+                            number - 1,
+                            asPlainText: viewModel.settings.plainTextMode,
+                            onDismiss: onDismiss
+                        )
+                    }
                 }
                 return .handled
             }

@@ -231,11 +231,19 @@ struct HistoryItemRow: View {
 
     private var filePreview: some View {
         HStack(alignment: .center, spacing: 8) {
-            // File icon
-            Image(systemName: fileSystemImage)
-                .font(.system(size: 16))
-                .foregroundStyle(.secondary)
-                .frame(width: 24, height: 24)
+            // Show thumbnail if available, otherwise show file icon
+            if let thumbnail = item.thumbnailImage {
+                Image(nsImage: thumbnail)
+                    .resizable()
+                    .aspectRatio(contentMode: .fill)
+                    .frame(width: 36, height: 36)
+                    .clipShape(RoundedRectangle(cornerRadius: 4))
+            } else {
+                Image(systemName: fileSystemImage)
+                    .font(.system(size: 16))
+                    .foregroundStyle(.secondary)
+                    .frame(width: 24, height: 24)
+            }
 
             VStack(alignment: .leading, spacing: 1) {
                 if let urls = item.fileURLs {

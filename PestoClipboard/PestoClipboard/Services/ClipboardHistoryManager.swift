@@ -12,7 +12,7 @@ protocol ClipboardHistoryManaging: AnyObject {
     func searchItems(query: String)
     func addTextItem(_ text: String, rtfData: Data?)
     func addImageItem(imageData: Data, thumbnailData: Data?)
-    func addFileItem(urls: [URL])
+    func addFileItem(urls: [URL], thumbnailData: Data?)
     func moveToTop(_ item: ClipboardItem)
     func togglePin(_ item: ClipboardItem)
     func updateTextContent(_ item: ClipboardItem, newText: String)
@@ -140,7 +140,7 @@ class ClipboardHistoryManager: ObservableObject, ClipboardHistoryManaging {
         pruneIfNeeded()
     }
 
-    func addFileItem(urls: [URL]) {
+    func addFileItem(urls: [URL], thumbnailData: Data? = nil) {
         let urlStrings = urls.map { $0.absoluteString }.sorted()
         let combined = urlStrings.joined(separator: "\n")
         let hash = computeHash(for: combined)
@@ -154,6 +154,7 @@ class ClipboardHistoryManager: ObservableObject, ClipboardHistoryManaging {
         let item = ClipboardItem.create(
             in: viewContext,
             type: .file,
+            thumbnailData: thumbnailData,
             fileURLs: urls,
             contentHash: hash
         )

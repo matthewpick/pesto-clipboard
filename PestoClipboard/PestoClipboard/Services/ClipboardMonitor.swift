@@ -96,8 +96,14 @@ class ClipboardMonitor: ObservableObject {
 
         // Check for files first (most specific)
         if settings.captureFiles, let fileURLs = extractFileURLs(from: pasteboard), !fileURLs.isEmpty {
-            Self.logger.info("Captured \(fileURLs.count) file(s)")
-            historyManager.addFileItem(urls: fileURLs)
+            // Generate thumbnail using QuickLook (works for images, PDFs, videos, documents, etc.)
+            let thumbnailData = ThumbnailGenerator.generateThumbnailFromFirstFile(urls: fileURLs, maxSize: Constants.thumbnailMaxSize)
+            if thumbnailData != nil {
+                Self.logger.info("Captured \(fileURLs.count) file(s) with preview thumbnail")
+            } else {
+                Self.logger.info("Captured \(fileURLs.count) file(s)")
+            }
+            historyManager.addFileItem(urls: fileURLs, thumbnailData: thumbnailData)
             return
         }
 

@@ -128,6 +128,107 @@ struct ThumbnailGeneratorTests {
     }
 }
 
+// MARK: - File URL Thumbnail Tests (QuickLook)
+
+@MainActor
+struct ThumbnailGeneratorFileURLTests {
+
+    // MARK: - Helper
+
+    /// Creates a temporary image file and returns its URL
+    func createTempImageFile(width: Int = 256, height: Int = 256) -> URL? {
+        let image = NSImage(size: NSSize(width: width, height: height))
+        image.lockFocus()
+        NSColor.blue.setFill()
+        NSRect(x: 0, y: 0, width: width, height: height).fill()
+        image.unlockFocus()
+
+        guard let tiffData = image.tiffRepresentation,
+              let bitmap = NSBitmapImageRep(data: tiffData),
+              let pngData = bitmap.representation(using: .png, properties: [:]) else {
+            return nil
+        }
+
+        let tempURL = URL(fileURLWithPath: NSTemporaryDirectory())
+            .appendingPathComponent("test-image-\(UUID().uuidString).png")
+
+        do {
+            try pngData.write(to: tempURL)
+            return tempURL
+        } catch {
+            return nil
+        }
+    }
+
+    // MARK: - Tests
+
+    @Test func generateThumbnailFromImageFile() {
+        guard let imageURL = createTempImageFile() else {
+            Issue.record("Failed to create temp image file")
+            return
+        }
+        defer { try? FileManager.default.removeItem(at: imageURL) }
+
+        let thumbnail = ThumbnailGenerator.generateThumbnail(from: imageURL)
+
+        #expect(thumbnail != nil)
+        #expect(thumbnail!.count > 0)
+    }
+
+    @Test func generateThumbnailFromNonExistentFileReturnsNil() {
+        let fakeURL = URL(fileURLWithPath: "/nonexistent/path/to/file.png")
+
+        let thumbnail = ThumbnailGenerator.generateThumbnail(from: fakeURL)
+
+        #expect(thumbnail == nil)
+    }
+
+    @Test func generateThumbnailFromFirstFileFindsImage() {
+        guard let imageURL = createTempImageFile() else {
+            Issue.record("Failed to create temp image file")
+            return
+        }
+        defer { try? FileManager.default.removeItem(at: imageURL) }
+
+        // Create a text file that won't have a thumbnail
+        let textURL = URL(fileURLWithPath: NSTemporaryDirectory())
+            .appendingPathComponent("test-\(UUID().uuidString).xyz")
+        try? "test".write(to: textURL, atomically: true, encoding: .utf8)
+        defer { try? FileManager.default.removeItem(at: textURL) }
+
+        // Image file should generate thumbnail even if it's not first
+        let urls = [textURL, imageURL]
+        let thumbnail = ThumbnailGenerator.generateThumbnailFromFirstFile(urls: urls)
+
+        #expect(thumbnail != nil)
+    }
+
+    @Test func generateThumbnailFromEmptyArrayReturnsNil() {
+        let thumbnail = ThumbnailGenerator.generateThumbnailFromFirstFile(urls: [])
+
+        #expect(thumbnail == nil)
+    }
+
+    @Test func generateThumbnailFromFileOutputsJPEGData() {
+        guard let imageURL = createTempImageFile() else {
+            Issue.record("Failed to create temp image file")
+            return
+        }
+        defer { try? FileManager.default.removeItem(at: imageURL) }
+
+        let thumbnail = ThumbnailGenerator.generateThumbnail(from: imageURL)
+
+        #expect(thumbnail != nil)
+
+        // Check for JPEG magic bytes (0xFF 0xD8 0xFF)
+        if let data = thumbnail, data.count >= 3 {
+            #expect(data[0] == 0xFF)
+            #expect(data[1] == 0xD8)
+            #expect(data[2] == 0xFF)
+        }
+    }
+}
+
 // MARK: - NSImage Extension Tests
 
 @MainActor

@@ -19,6 +19,20 @@ xcodebuild -project PestoClipboard/PestoClipboard.xcodeproj -scheme PestoClipboa
 xcodebuild -project PestoClipboard/PestoClipboard.xcodeproj -scheme PestoClipboard -configuration Release build
 ```
 
+## Makefile Commands
+
+The project includes a Makefile with convenient shortcuts:
+
+```bash
+make build          # Build release version
+make build-debug    # Build debug version
+make test           # Run tests
+make install        # Build and copy to /Applications
+make dmg            # Create distributable DMG
+make clean          # Remove build artifacts
+make bump-version V=0.3.4  # Bump version number
+```
+
 ## Architecture
 
 ### Key Components

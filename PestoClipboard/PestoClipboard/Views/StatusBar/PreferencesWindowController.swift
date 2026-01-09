@@ -54,6 +54,8 @@ private class PreferencesWindowDelegate: NSObject, NSWindowDelegate {
     }
 
     func windowWillClose(_ notification: Notification) {
+        // Enforce history limit when settings window closes
+        ClipboardHistoryManager.shared.enforceHistoryLimit()
         onClose()
     }
 }

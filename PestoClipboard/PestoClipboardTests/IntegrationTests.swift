@@ -390,58 +390,56 @@ struct PasteFlowIntegrationTests {
 @MainActor
 struct SettingsToHistoryManagerIntegrationTests {
 
-    @Test func reducingHistoryLimitPrunesItemsImmediately() async throws {
+    @Test func reducingHistoryLimitPrunesItemsImmediately() {
         // Save original setting
         let originalLimit = SettingsManager.shared.historyLimit
 
-        // Set a high limit initially
-        SettingsManager.shared.historyLimit = 100
+        // Set a high limit initially (within valid range 50-5000)
+        SettingsManager.shared.historyLimit = 200
 
         // Create manager without override so it uses SettingsManager
         let persistenceController = PersistenceController(inMemory: true)
         let manager = ClipboardHistoryManager(persistenceController: persistenceController)
 
-        // Add 20 items
-        for i in 1...20 {
+        // Add 100 items
+        for i in 1...100 {
             manager.addTextItem("Item \(i)")
         }
 
-        #expect(manager.items.count == 20)
+        #expect(manager.items.count == 100)
 
-        // Reduce the limit to 10
-        SettingsManager.shared.historyLimit = 10
+        // Reduce the limit to 50 (minimum valid value) and enforce it
+        SettingsManager.shared.historyLimit = 50
+        manager.enforceHistoryLimit()
 
-        // Wait for Combine to propagate the change
-        try await Task.sleep(nanoseconds: 50_000_000) // 50ms
+        // Should have pruned to 50 items
+        #expect(manager.items.count == 50)
 
-        // Should have pruned to 10 items
-        #expect(manager.items.count == 10)
+        // Newest items should remain (Item 51-100)
+        #expect(manager.items.contains { $0.textContent == "Item 100" })
+        #expect(manager.items.contains { $0.textContent == "Item 51" })
 
-        // Newest items should remain (Item 11-20)
-        #expect(manager.items.contains { $0.textContent == "Item 20" })
-        #expect(manager.items.contains { $0.textContent == "Item 11" })
-
-        // Oldest items should be deleted (Item 1-10)
+        // Oldest items should be deleted (Item 1-50)
         #expect(!manager.items.contains { $0.textContent == "Item 1" })
-        #expect(!manager.items.contains { $0.textContent == "Item 10" })
+        #expect(!manager.items.contains { $0.textContent == "Item 50" })
 
         // Restore original setting
         SettingsManager.shared.historyLimit = originalLimit
     }
 
-    @Test func reducingHistoryLimitPreservesPinnedItems() async throws {
+    @Test func reducingHistoryLimitPreservesPinnedItems() {
         // Save original setting
         let originalLimit = SettingsManager.shared.historyLimit
 
-        // Set a high limit initially
-        SettingsManager.shared.historyLimit = 100
+        // Set a high limit initially (within valid range 50-5000)
+        SettingsManager.shared.historyLimit = 200
 
         // Create manager without override
         let persistenceController = PersistenceController(inMemory: true)
         let manager = ClipboardHistoryManager(persistenceController: persistenceController)
 
-        // Add 15 items
-        for i in 1...15 {
+        // Add 80 items
+        for i in 1...80 {
             manager.addTextItem("Item \(i)")
         }
 
@@ -452,19 +450,17 @@ struct SettingsToHistoryManagerIntegrationTests {
             }
         }
 
-        #expect(manager.items.count == 15)
+        #expect(manager.items.count == 80)
         #expect(manager.items.filter { $0.isPinned }.count == 3)
 
-        // Reduce limit to 5
-        SettingsManager.shared.historyLimit = 5
+        // Reduce limit to 50 (minimum valid value) and enforce it
+        SettingsManager.shared.historyLimit = 50
+        manager.enforceHistoryLimit()
 
-        // Wait for Combine to propagate
-        try await Task.sleep(nanoseconds: 50_000_000) // 50ms
-
-        // Should have 3 pinned + 5 unpinned = 8 items
-        #expect(manager.items.count == 8)
+        // Should have 3 pinned + 50 unpinned = 53 items
+        #expect(manager.items.count == 53)
         #expect(manager.items.filter { $0.isPinned }.count == 3)
-        #expect(manager.items.filter { !$0.isPinned }.count == 5)
+        #expect(manager.items.filter { !$0.isPinned }.count == 50)
 
         // Pinned items should still exist
         #expect(manager.items.contains { $0.textContent == "Item 1" && $0.isPinned })
@@ -475,32 +471,30 @@ struct SettingsToHistoryManagerIntegrationTests {
         SettingsManager.shared.historyLimit = originalLimit
     }
 
-    @Test func increasingHistoryLimitDoesNotAffectItems() async throws {
+    @Test func increasingHistoryLimitDoesNotAffectItems() {
         // Save original setting
         let originalLimit = SettingsManager.shared.historyLimit
 
-        // Set initial limit
-        SettingsManager.shared.historyLimit = 10
+        // Set initial limit (within valid range 50-5000)
+        SettingsManager.shared.historyLimit = 50
 
         // Create manager without override
         let persistenceController = PersistenceController(inMemory: true)
         let manager = ClipboardHistoryManager(persistenceController: persistenceController)
 
-        // Add 5 items
-        for i in 1...5 {
+        // Add 30 items
+        for i in 1...30 {
             manager.addTextItem("Item \(i)")
         }
 
-        #expect(manager.items.count == 5)
+        #expect(manager.items.count == 30)
 
-        // Increase limit to 100
-        SettingsManager.shared.historyLimit = 100
+        // Increase limit to 200 and enforce it
+        SettingsManager.shared.historyLimit = 200
+        manager.enforceHistoryLimit()
 
-        // Wait for Combine to propagate
-        try await Task.sleep(nanoseconds: 50_000_000) // 50ms
-
-        // Items should remain unchanged
-        #expect(manager.items.count == 5)
+        // Items should remain unchanged (increasing limit doesn't delete anything)
+        #expect(manager.items.count == 30)
 
         // Restore original setting
         SettingsManager.shared.historyLimit = originalLimit

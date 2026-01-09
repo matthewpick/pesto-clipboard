@@ -68,15 +68,6 @@ class ClipboardHistoryManager: ObservableObject, ClipboardHistoryManaging {
         self.maxItemsOverride = maxItems
         fetchItems()
 
-        // Only subscribe to settings changes if not using an override (i.e., not in tests)
-        if maxItems == nil {
-            SettingsManager.shared.$historyLimit
-                .dropFirst()
-                .sink { [weak self] _ in
-                    self?.pruneIfNeeded()
-                }
-                .store(in: &cancellables)
-        }
     }
 
     // MARK: - Fetch
@@ -233,6 +224,11 @@ class ClipboardHistoryManager: ObservableObject, ClipboardHistoryManaging {
             print("Failed to save context: \(error)")
             lastError = .saveFailed(error)
         }
+    }
+
+    /// Enforces the current history limit by pruning excess items
+    func enforceHistoryLimit() {
+        pruneIfNeeded()
     }
 
     private func pruneIfNeeded() {

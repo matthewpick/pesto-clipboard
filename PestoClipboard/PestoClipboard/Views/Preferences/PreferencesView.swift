@@ -7,22 +7,22 @@ struct PreferencesView: View {
 
     enum PreferenceTab: String, CaseIterable {
         case general = "General"
-        case ignore = "Ignore"
-        case storage = "Storage"
+        case capture = "Capture"
+        case history = "History"
 
         var icon: String {
             switch self {
             case .general: return "gearshape.fill"
-            case .ignore: return "eye.slash.fill"
-            case .storage: return "externaldrive.fill"
+            case .capture: return "doc.on.clipboard"
+            case .history: return "clock.fill"
             }
         }
 
         var localizedName: String {
             switch self {
             case .general: return String(localized: "General")
-            case .ignore: return String(localized: "Ignore")
-            case .storage: return String(localized: "Storage")
+            case .capture: return String(localized: "Capture")
+            case .history: return String(localized: "History")
             }
         }
     }
@@ -45,10 +45,10 @@ struct PreferencesView: View {
                 switch selectedTab {
                 case .general:
                     GeneralSettingsView()
-                case .ignore:
-                    IgnoreSettingsView()
-                case .storage:
-                    StorageSettingsView()
+                case .capture:
+                    CaptureSettingsView()
+                case .history:
+                    HistorySettingsView()
                 }
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -135,9 +135,9 @@ struct GeneralSettingsView: View {
     }
 }
 
-// MARK: - Ignore Settings
+// MARK: - Capture Settings
 
-struct IgnoreSettingsView: View {
+struct CaptureSettingsView: View {
     @ObservedObject private var settings = SettingsManager.shared
     @State private var showingAppPicker = false
     @State private var selectedApp: String?
@@ -145,6 +145,41 @@ struct IgnoreSettingsView: View {
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 24) {
+                // Capture Types Section
+                SettingsSection(title: "Content Types") {
+                    VStack(alignment: .leading, spacing: 12) {
+                        Text("Choose what types of content to capture from the clipboard.")
+                            .font(.subheadline)
+                            .foregroundStyle(.secondary)
+
+                        VStack(alignment: .leading, spacing: 8) {
+                            SettingsCheckbox(title: "Text", icon: "doc.text.fill", isOn: $settings.captureText)
+                            SettingsCheckbox(title: "Images", icon: "photo.fill", isOn: $settings.captureImages)
+                            SettingsCheckbox(title: "Files", icon: "folder.fill", isOn: $settings.captureFiles)
+                        }
+                    }
+                }
+
+                // Sources Section
+                SettingsSection(title: "Sources") {
+                    VStack(alignment: .leading, spacing: 12) {
+                        Toggle(isOn: $settings.ignoreRemoteClipboard) {
+                            HStack(spacing: 8) {
+                                Image(systemName: "laptopcomputer.and.iphone")
+                                    .foregroundStyle(.secondary)
+                                    .frame(width: 20)
+                                Text("Ignore clipboard from other devices")
+                            }
+                        }
+                        .toggleStyle(.checkbox)
+
+                        Text("When enabled, items copied on other Macs or iOS devices via Universal Clipboard will not be saved.")
+                            .font(.caption)
+                            .foregroundStyle(.tertiary)
+                    }
+                }
+
+                // Ignored Applications Section
                 SettingsSection(title: "Ignored Applications") {
                     VStack(alignment: .leading, spacing: 8) {
                         Text("Clipboard content from these applications will not be captured.")
@@ -177,7 +212,7 @@ struct IgnoreSettingsView: View {
                                 Spacer()
                             }
                         }
-                        .frame(minHeight: 150, alignment: .top)
+                        .frame(minHeight: 120, alignment: .top)
                         .background(Color(nsColor: .controlBackgroundColor))
                         .clipShape(RoundedRectangle(cornerRadius: 8))
                         .overlay(
@@ -207,6 +242,16 @@ struct IgnoreSettingsView: View {
 
                             Spacer()
                         }
+
+                        // Note about automatic password manager detection
+                        HStack(alignment: .top, spacing: 8) {
+                            Image(systemName: "lock.shield")
+                                .foregroundStyle(.secondary)
+                            Text("Password managers like 1Password, Bitwarden, and LastPass are automatically ignored for security.")
+                                .font(.caption)
+                                .foregroundStyle(.tertiary)
+                        }
+                        .padding(.top, 4)
                     }
                 }
 
@@ -252,50 +297,17 @@ struct AppRow: View {
     }
 }
 
-// MARK: - Storage Settings
+// MARK: - History Settings
 
-struct StorageSettingsView: View {
+struct HistorySettingsView: View {
     @ObservedObject private var settings = SettingsManager.shared
     @State private var showingClearConfirmation = false
-    @State private var includeStarred = false
 
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 24) {
-                // Capture Types Section
-                SettingsSection(title: "Capture Types") {
-                    VStack(alignment: .leading, spacing: 12) {
-                        Text("Choose what types of content to capture from the clipboard.")
-                            .font(.subheadline)
-                            .foregroundStyle(.secondary)
-
-                        VStack(alignment: .leading, spacing: 8) {
-                            SettingsCheckbox(title: "Text", icon: "doc.text.fill", isOn: $settings.captureText)
-                            SettingsCheckbox(title: "Images", icon: "photo.fill", isOn: $settings.captureImages)
-                            SettingsCheckbox(title: "Files", icon: "folder.fill", isOn: $settings.captureFiles)
-                        }
-
-                        Divider()
-                            .padding(.vertical, 4)
-
-                        Toggle(isOn: $settings.ignoreRemoteClipboard) {
-                            HStack(spacing: 8) {
-                                Image(systemName: "laptopcomputer.and.iphone")
-                                    .foregroundStyle(.secondary)
-                                    .frame(width: 20)
-                                Text("Ignore clipboard from other devices")
-                            }
-                        }
-                        .toggleStyle(.checkbox)
-
-                        Text("When enabled, items copied on other Macs or iOS devices via Universal Clipboard will not be saved.")
-                            .font(.caption)
-                            .foregroundStyle(.tertiary)
-                    }
-                }
-
-                // History Section
-                SettingsSection(title: "History") {
+                // History Limits Section
+                SettingsSection(title: "Limits") {
                     VStack(alignment: .leading, spacing: 16) {
                         HStack {
                             Text("Maximum items:")

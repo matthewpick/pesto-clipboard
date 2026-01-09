@@ -972,7 +972,11 @@
         }
       }
     },
+    "Capture" : {
+
+    },
     "Capture Types" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ca" : {
           "stringUnit" : {
@@ -1939,6 +1943,9 @@
           }
         }
       }
+    },
+    "Content Types" : {
+
     },
     "Copy something to get started" : {
       "localizations" : {
@@ -3097,6 +3104,7 @@
       }
     },
     "Ignore" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ca" : {
           "stringUnit" : {
@@ -3888,6 +3896,9 @@
         }
       }
     },
+    "Limits" : {
+
+    },
     "Maximum items:" : {
       "localizations" : {
         "ca" : {
@@ -4594,6 +4605,9 @@
           }
         }
       }
+    },
+    "Password managers like 1Password, Bitwarden, and LastPass are automatically ignored for security." : {
+
     },
     "Paste as Original" : {
       "localizations" : {
@@ -6707,6 +6721,9 @@
         }
       }
     },
+    "Sources" : {
+
+    },
     "Star items to keep them safe" : {
       "localizations" : {
         "ca" : {
@@ -6972,6 +6989,7 @@
       }
     },
     "Storage" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ca" : {
           "stringUnit" : {

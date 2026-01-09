@@ -28,7 +28,12 @@ class ClipboardHistoryManager: ObservableObject, ClipboardHistoryManaging {
     static let shared = ClipboardHistoryManager()
 
     private let persistenceController: PersistenceController
-    private let maxItems: Int
+    private let maxItemsOverride: Int?
+    private var cancellables = Set<AnyCancellable>()
+
+    private var maxItems: Int {
+        maxItemsOverride ?? SettingsManager.shared.historyLimit
+    }
 
     @Published var items: [ClipboardItem] = []
     @Published var lastError: ClipboardError?
@@ -58,10 +63,20 @@ class ClipboardHistoryManager: ObservableObject, ClipboardHistoryManaging {
         persistenceController.container.viewContext
     }
 
-    init(persistenceController: PersistenceController = .shared, maxItems: Int = Constants.defaultHistoryLimit) {
+    init(persistenceController: PersistenceController = .shared, maxItems: Int? = nil) {
         self.persistenceController = persistenceController
-        self.maxItems = maxItems
+        self.maxItemsOverride = maxItems
         fetchItems()
+
+        // Only subscribe to settings changes if not using an override (i.e., not in tests)
+        if maxItems == nil {
+            SettingsManager.shared.$historyLimit
+                .dropFirst()
+                .sink { [weak self] _ in
+                    self?.pruneIfNeeded()
+                }
+                .store(in: &cancellables)
+        }
     }
 
     // MARK: - Fetch

@@ -49,3 +49,12 @@ extension URL {
         NSWorkspace.shared.icon(forFile: path)
     }
 }
+
+// MARK: - Comparable Extensions
+
+extension Comparable {
+    /// Returns self clamped to the given range
+    func clamped(to range: ClosedRange<Self>) -> Self {
+        min(max(self, range.lowerBound), range.upperBound)
+    }
+}

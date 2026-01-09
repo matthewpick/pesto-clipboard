@@ -309,21 +309,30 @@ struct HistorySettingsView: View {
                 // History Limits Section
                 SettingsSection(title: "Limits") {
                     VStack(alignment: .leading, spacing: 16) {
-                        HStack {
-                            Text("Maximum items:")
-                                .frame(width: 120, alignment: .leading)
+                        VStack(alignment: .leading, spacing: 8) {
+                            HStack {
+                                Text("Maximum items:")
+                                    .frame(width: 120, alignment: .leading)
 
-                            TextField("", value: $settings.historyLimit, format: .number)
-                                .textFieldStyle(.roundedBorder)
-                                .frame(width: 80)
+                                TextField("", value: $settings.historyLimit, format: .number)
+                                    .textFieldStyle(.roundedBorder)
+                                    .frame(width: 80)
 
-                            Stepper("", value: $settings.historyLimit, in: Constants.historyLimitRange, step: Constants.historyLimitStep)
-                                .labelsHidden()
+                                SnappingStepper(
+                                    value: $settings.historyLimit,
+                                    range: Constants.historyLimitRange,
+                                    step: Constants.historyLimitStep
+                                )
 
-                            Text("items")
-                                .foregroundStyle(.secondary)
+                                Text("items")
+                                    .foregroundStyle(.secondary)
 
-                            Spacer()
+                                Spacer()
+                            }
+
+                            Text("Reducing this limit will delete older items immediately.")
+                                .font(.caption)
+                                .foregroundStyle(.tertiary)
                         }
 
                         HStack {

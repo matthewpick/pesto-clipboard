@@ -51,7 +51,13 @@ class SettingsManager: ObservableObject {
     }
 
     @Published var historyLimit: Int {
-        didSet { UserDefaults.standard.set(historyLimit, forKey: "historyLimit") }
+        didSet {
+            let clamped = historyLimit.clamped(to: Constants.historyLimitRange)
+            if historyLimit != clamped {
+                historyLimit = clamped
+            }
+            UserDefaults.standard.set(historyLimit, forKey: "historyLimit")
+        }
     }
 
     @Published var sortOrder: SortOrder {
@@ -94,7 +100,8 @@ class SettingsManager: ObservableObject {
         self.captureText = UserDefaults.standard.object(forKey: "captureText") as? Bool ?? true
         self.captureImages = UserDefaults.standard.object(forKey: "captureImages") as? Bool ?? true
         self.captureFiles = UserDefaults.standard.object(forKey: "captureFiles") as? Bool ?? true
-        self.historyLimit = UserDefaults.standard.object(forKey: "historyLimit") as? Int ?? Constants.defaultHistoryLimit
+        let storedLimit = UserDefaults.standard.object(forKey: "historyLimit") as? Int ?? Constants.defaultHistoryLimit
+        self.historyLimit = storedLimit.clamped(to: Constants.historyLimitRange)
         self.ignoredApps = UserDefaults.standard.stringArray(forKey: "ignoredApps") ?? []
         self.ignoreRemoteClipboard = UserDefaults.standard.object(forKey: "ignoreRemoteClipboard") as? Bool ?? true
 

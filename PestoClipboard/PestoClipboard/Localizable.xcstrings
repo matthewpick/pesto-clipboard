@@ -5753,6 +5753,9 @@
         }
       }
     },
+    "Reducing this limit will delete older items immediately." : {
+
+    },
     "Resume capture" : {
       "localizations" : {
         "ca" : {

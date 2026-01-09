@@ -1,6 +1,7 @@
 import Testing
 import AppKit
 import Combine
+import Foundation
 @testable import Pesto_Clipboard
 
 // MARK: - Clipboard to History Manager Integration Tests
@@ -381,5 +382,127 @@ struct PasteFlowIntegrationTests {
 
         #expect(pasteboardFormatted.string(forType: .string) == "Formatted")
         #expect(pasteboardFormatted.data(forType: .rtf) != nil)
+    }
+}
+
+// MARK: - Settings to History Manager Integration Tests
+
+@MainActor
+struct SettingsToHistoryManagerIntegrationTests {
+
+    @Test func reducingHistoryLimitPrunesItemsImmediately() async throws {
+        // Save original setting
+        let originalLimit = SettingsManager.shared.historyLimit
+
+        // Set a high limit initially
+        SettingsManager.shared.historyLimit = 100
+
+        // Create manager without override so it uses SettingsManager
+        let persistenceController = PersistenceController(inMemory: true)
+        let manager = ClipboardHistoryManager(persistenceController: persistenceController)
+
+        // Add 20 items
+        for i in 1...20 {
+            manager.addTextItem("Item \(i)")
+        }
+
+        #expect(manager.items.count == 20)
+
+        // Reduce the limit to 10
+        SettingsManager.shared.historyLimit = 10
+
+        // Wait for Combine to propagate the change
+        try await Task.sleep(nanoseconds: 50_000_000) // 50ms
+
+        // Should have pruned to 10 items
+        #expect(manager.items.count == 10)
+
+        // Newest items should remain (Item 11-20)
+        #expect(manager.items.contains { $0.textContent == "Item 20" })
+        #expect(manager.items.contains { $0.textContent == "Item 11" })
+
+        // Oldest items should be deleted (Item 1-10)
+        #expect(!manager.items.contains { $0.textContent == "Item 1" })
+        #expect(!manager.items.contains { $0.textContent == "Item 10" })
+
+        // Restore original setting
+        SettingsManager.shared.historyLimit = originalLimit
+    }
+
+    @Test func reducingHistoryLimitPreservesPinnedItems() async throws {
+        // Save original setting
+        let originalLimit = SettingsManager.shared.historyLimit
+
+        // Set a high limit initially
+        SettingsManager.shared.historyLimit = 100
+
+        // Create manager without override
+        let persistenceController = PersistenceController(inMemory: true)
+        let manager = ClipboardHistoryManager(persistenceController: persistenceController)
+
+        // Add 15 items
+        for i in 1...15 {
+            manager.addTextItem("Item \(i)")
+        }
+
+        // Pin some old items (Item 1, 2, 3)
+        for i in 1...3 {
+            if let item = manager.items.first(where: { $0.textContent == "Item \(i)" }) {
+                manager.togglePin(item)
+            }
+        }
+
+        #expect(manager.items.count == 15)
+        #expect(manager.items.filter { $0.isPinned }.count == 3)
+
+        // Reduce limit to 5
+        SettingsManager.shared.historyLimit = 5
+
+        // Wait for Combine to propagate
+        try await Task.sleep(nanoseconds: 50_000_000) // 50ms
+
+        // Should have 3 pinned + 5 unpinned = 8 items
+        #expect(manager.items.count == 8)
+        #expect(manager.items.filter { $0.isPinned }.count == 3)
+        #expect(manager.items.filter { !$0.isPinned }.count == 5)
+
+        // Pinned items should still exist
+        #expect(manager.items.contains { $0.textContent == "Item 1" && $0.isPinned })
+        #expect(manager.items.contains { $0.textContent == "Item 2" && $0.isPinned })
+        #expect(manager.items.contains { $0.textContent == "Item 3" && $0.isPinned })
+
+        // Restore original setting
+        SettingsManager.shared.historyLimit = originalLimit
+    }
+
+    @Test func increasingHistoryLimitDoesNotAffectItems() async throws {
+        // Save original setting
+        let originalLimit = SettingsManager.shared.historyLimit
+
+        // Set initial limit
+        SettingsManager.shared.historyLimit = 10
+
+        // Create manager without override
+        let persistenceController = PersistenceController(inMemory: true)
+        let manager = ClipboardHistoryManager(persistenceController: persistenceController)
+
+        // Add 5 items
+        for i in 1...5 {
+            manager.addTextItem("Item \(i)")
+        }
+
+        #expect(manager.items.count == 5)
+
+        // Increase limit to 100
+        SettingsManager.shared.historyLimit = 100
+
+        // Wait for Combine to propagate
+        try await Task.sleep(nanoseconds: 50_000_000) // 50ms
+
+        // Items should remain unchanged
+        #expect(manager.items.count == 5)
+
+        // Restore original setting
+        SettingsManager.shared.historyLimit = originalLimit
     }
 }

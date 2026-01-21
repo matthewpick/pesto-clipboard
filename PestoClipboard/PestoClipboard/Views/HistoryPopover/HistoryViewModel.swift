@@ -185,22 +185,51 @@ class HistoryViewModel: ObservableObject {
         }
 
         DispatchQueue.main.asyncAfter(deadline: .now() + Constants.pasteSimulationDelay) {
-            let cmdFlag = CGEventFlags(rawValue: UInt64(CGEventFlags.maskCommand.rawValue) | 0x000008)
-
+            // Check frontmost app to determine paste strategy
+            let frontmostApp = NSWorkspace.shared.frontmostApplication
+            let bundleId = frontmostApp?.bundleIdentifier?.lowercased() ?? ""
+            
+            // Known RDP/VM clients where Cmd maps to WinKey (if passthrough enabled)
+            // For these, we want to send Ctrl+V (Mac Control key) which maps to Windows Ctrl+V
+            let isRDP = bundleId.contains("royaltsx") || 
+                        bundleId.contains("microsoft.rdc") ||
+                        bundleId.contains("parallels") ||
+                        bundleId.contains("vmware") ||
+                        bundleId.contains("citrix")
+            
+            print("📋 Target App: \(frontmostApp?.localizedName ?? "Unknown") (\(bundleId)) - RDP Mode: \(isRDP)")
+            
             let source = CGEventSource(stateID: .combinedSessionState)
-            source?.setLocalEventsFilterDuringSuppressionState(
-                [.permitLocalMouseEvents, .permitSystemDefinedEvents],
-                state: .eventSuppressionStateSuppressionInterval
-            )
+            // Use HID System State to ensure broad compatibility
+            let hidSource = CGEventSource(stateID: .hidSystemState)
 
-            let keyDown = CGEvent(keyboardEventSource: source, virtualKey: Constants.vKeyCode, keyDown: true)
-            let keyUp = CGEvent(keyboardEventSource: source, virtualKey: Constants.vKeyCode, keyDown: false)
-            keyDown?.flags = cmdFlag
-            keyUp?.flags = cmdFlag
-            keyDown?.post(tap: .cgSessionEventTap)
-            keyUp?.post(tap: .cgSessionEventTap)
+            // Key Codes
+            let vCode = CGKeyCode(0x09)    // V
+            // If RDP, use Control (0x3B). Else use Command (0x37)
+            let modCode = isRDP ? CGKeyCode(0x3B) : CGKeyCode(0x37)
+            let modFlag: CGEventFlags = isRDP ? .maskControl : .maskCommand
 
-            print("✅ Paste event posted successfully")
+            // 1. Press Modifier (Cmd or Ctrl)
+            let modDown = CGEvent(keyboardEventSource: hidSource, virtualKey: modCode, keyDown: true)
+            modDown?.flags = modFlag
+            modDown?.post(tap: .cghidEventTap)
+
+            // 2. Press V
+            let vDown = CGEvent(keyboardEventSource: hidSource, virtualKey: vCode, keyDown: true)
+            vDown?.flags = modFlag
+            vDown?.post(tap: .cghidEventTap)
+
+            // 3. Release V
+            let vUp = CGEvent(keyboardEventSource: hidSource, virtualKey: vCode, keyDown: false)
+            vUp?.flags = modFlag
+            vUp?.post(tap: .cghidEventTap)
+
+            // 4. Release Modifier
+            let modUp = CGEvent(keyboardEventSource: hidSource, virtualKey: modCode, keyDown: false)
+            modUp?.flags = [] // No flags
+            modUp?.post(tap: .cghidEventTap)
+
+            print("✅ Paste event posted (Method: \(isRDP ? "Ctrl+V for RDP" : "Cmd+V for Mac"))")
         }
     }
 

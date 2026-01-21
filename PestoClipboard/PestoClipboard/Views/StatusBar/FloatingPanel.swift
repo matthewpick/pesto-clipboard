@@ -49,6 +49,9 @@ class FloatingPanel: NSPanel {
         hasShadow = true
         minSize = NSSize(width: Self.minWidth, height: Self.minHeight)
         maxSize = NSSize(width: Self.maxWidth, height: Self.maxHeight)
+        
+        // Match ClipKitty: panel becomes key immediately when ordered front
+        becomesKeyOnlyIfNeeded = false
     }
 
     private func setupContent<Content: View>(_ contentView: Content, width: CGFloat, height: CGFloat) {
@@ -70,6 +73,12 @@ class FloatingPanel: NSPanel {
         previousApp = NSWorkspace.shared.frontmostApplication
         positionNearMouse()
         makeKeyAndOrderFront(nil)
+        
+        // DO NOT call NSApp.activate here!
+        // By not activating, RoyalTSX remains the "active" app at the macOS level.
+        // This means key-up events (Shift, Cmd) still go to RoyalTSX, which forwards
+        // them to Windows RDP. No stuck modifiers!
+        // The panel still receives keyboard input via key window status.
 
         if let hosting = hostingView {
             makeFirstResponder(hosting)
@@ -85,7 +94,9 @@ class FloatingPanel: NSPanel {
 
     private func activatePreviousApp() {
         guard let app = previousApp else { return }
-        app.activate(options: .activateIgnoringOtherApps)
+        // Use standard activation (like ClipKitty) instead of forcing
+        // This allows better modifier state synchronization
+        app.activate()
     }
 
     // MARK: - Positioning

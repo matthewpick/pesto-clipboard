@@ -48,7 +48,10 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
 
     private func setupGlobalHotkey() {
-        KeyboardShortcuts.onKeyDown(for: .openHistory) { [weak self] in
+        // Use KeyboardInterceptor with Cmd key buffering to prevent WinKey reaching RDP
+        // Falls back to Carbon HotkeyManager if no accessibility permission
+        KeyboardInterceptor.shared.start { [weak self] in
+            print("⌨️ Global hotkey pressed")
             self?.statusBarController?.togglePopover()
         }
     }

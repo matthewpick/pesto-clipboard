@@ -9,6 +9,8 @@ struct HistoryItemRow: View {
 
     @State private var isHovered: Bool = false
 
+    @Environment(\.colorScheme) private var colorScheme
+
     var body: some View {
         HStack(alignment: .center, spacing: 8) {
             // Star indicator (always visible, vertically centered)
@@ -158,6 +160,18 @@ struct HistoryItemRow: View {
         // Remove background color attribute (keep foreground/text color)
         mutableAttrString.removeAttribute(.backgroundColor, range: fullRange)
 
+        // Drop foreground colors that would be unreadable against the panel
+        // background (e.g. near-black text copied from a light document shown on
+        // the dark panel). Removing the attribute lets the text inherit the
+        // adaptive primary color (white in dark mode, black in light mode), while
+        // genuinely colored text (green paths, orange markdown) is preserved.
+        mutableAttrString.enumerateAttribute(.foregroundColor, in: fullRange, options: []) { value, range, _ in
+            if let color = value as? NSColor,
+               RichTextColorNormalizer.isUnreadable(color, colorScheme: colorScheme) {
+                mutableAttrString.removeAttribute(.foregroundColor, range: range)
+            }
+        }
+
         // Enumerate through font attributes and normalize size while preserving traits (bold, italic)
         mutableAttrString.enumerateAttribute(.font, in: fullRange, options: []) { value, range, _ in
             if let font = value as? NSFont {
@@ -197,6 +211,7 @@ struct HistoryItemRow: View {
             return AttributedString(truncated.string)
         }
     }
+
 
     private var imagePreview: some View {
         HStack(alignment: .center, spacing: 8) {

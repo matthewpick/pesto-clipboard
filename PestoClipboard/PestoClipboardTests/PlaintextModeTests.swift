@@ -226,4 +226,25 @@ struct PlaintextModeTests {
         #expect(manager.items.first?.rtfData == nil)
         #expect(manager.items.first?.itemType == .text)
     }
+
+    // MARK: - Live Clipboard Rewrite (plaintext mode at capture time)
+
+    @Test func writePlainTextStripsFormattingAndMarksPasteboard() {
+        let rtfData = createSampleRTFData(text: "Formatted text")!
+        let pasteboard = NSPasteboard(name: .init("test-writeplain-\(UUID().uuidString)"))
+        pasteboard.clearContents()
+        // Seed with rich content, as copying formatted text would produce.
+        pasteboard.setData(rtfData, forType: .rtf)
+        pasteboard.setString("Formatted text", forType: .string)
+
+        // Plaintext mode rewrites the live clipboard to plain text only.
+        PasteHelper.writePlainText("Formatted text", to: pasteboard)
+
+        #expect(pasteboard.string(forType: .string) == "Formatted text")
+        #expect(pasteboard.data(forType: .rtf) == nil)
+        #expect(PasteHelper.pasteboardHasOnlyPlainText(pasteboard) == true)
+        // The Pesto marker must be present so ClipboardMonitor ignores this
+        // change instead of re-capturing it (no capture loop).
+        #expect(pasteboard.data(forType: ClipboardMonitor.pestoPasteboardType) != nil)
+    }
 }

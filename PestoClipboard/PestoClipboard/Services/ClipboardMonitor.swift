@@ -140,8 +140,19 @@ class ClipboardMonitor: ObservableObject {
         if settings.captureText {
             let (text, rtfData) = extractTextAndRTF(from: pasteboard)
             if let text = text, !text.isEmpty {
-                Self.logger.info("Captured text (\(text.count) chars, RTF: \(rtfData != nil))")
-                historyManager.addTextItem(text, rtfData: rtfData)
+                if settings.plainTextMode {
+                    // Plaintext mode: store the item as plain text (no RTF) and strip
+                    // formatting from the live clipboard so any paste, in any app, is plain.
+                    Self.logger.info("Captured text (\(text.count) chars, plaintext mode)")
+                    historyManager.addTextItem(text, rtfData: nil)
+                    if pasteboardHasFormatting(pasteboard) {
+                        PasteHelper.writePlainText(text, to: pasteboard)
+                        lastChangeCount = pasteboard.changeCount
+                    }
+                } else {
+                    Self.logger.info("Captured text (\(text.count) chars, RTF: \(rtfData != nil))")
+                    historyManager.addTextItem(text, rtfData: rtfData)
+                }
                 return
             }
         }
@@ -183,6 +194,14 @@ class ClipboardMonitor: ObservableObject {
 
     private func isFromPesto(pasteboard: NSPasteboard) -> Bool {
         return pasteboard.types?.contains(Self.pestoPasteboardType) ?? false
+    }
+
+    /// Whether the pasteboard carries rich-text formatting beyond a plain string
+    /// (RTF, RTFD or HTML). Used by plaintext mode to decide if the live clipboard
+    /// needs to be rewritten as plain text.
+    private func pasteboardHasFormatting(_ pasteboard: NSPasteboard) -> Bool {
+        let richTextTypes: [NSPasteboard.PasteboardType] = [.rtf, .rtfd, .html]
+        return richTextTypes.contains { pasteboard.data(forType: $0) != nil }
     }
 
     // MARK: - Content Extraction

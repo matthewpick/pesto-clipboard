@@ -48,6 +48,15 @@ struct PasteHelper {
         addPestoMarker(to: pasteboard)
     }
 
+    /// Replaces the pasteboard contents with plain text only, stripping all formatting.
+    /// Used by plaintext mode to rewrite the live clipboard at capture time. Adds the Pesto
+    /// marker so ClipboardMonitor ignores the resulting change (no capture loop).
+    static func writePlainText(_ text: String, to pasteboard: NSPasteboard) {
+        pasteboard.clearContents()
+        pasteboard.setString(text, forType: .string)
+        addPestoMarker(to: pasteboard)
+    }
+
     /// Adds the Pesto source marker to the pasteboard
     /// This allows ClipboardMonitor to detect and ignore clipboard changes from Pesto itself
     private static func addPestoMarker(to pasteboard: NSPasteboard) {

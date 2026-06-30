@@ -1,8 +1,8 @@
 # French (fr) Translations
 
 Source language: English (en)
-Total strings: 138
-Translated: 138 (100%)
+Total strings: 123
+Translated: 123 (100%)
 Missing: 0
 Stale: 0
 
@@ -34,10 +34,7 @@ Stale: 0
 | ✓ | Cancel | Annuler |
 | ✓ | Capture | Capturer |
 | ✓ | Capture Types | Types de capture |
-| ✓ | Check Now | Vérifier maintenant |
 | ✓ | Check automatically | Vérifier automatiquement |
-| ✓ | Check for Updates | Rechercher des mises à jour |
-| ✓ | Check for updates automatically | Rechercher les mises à jour automatiquement |
 | ✓ | Choose a keyboard shortcut to quickly open your clipboard history from anywhere. | Choisissez un raccourci clavier pour ouvrir rapidement l'historique du presse-papiers. |
 | ✓ | Choose what types of content to capture from the clipboard. | Choisissez les types de contenu à capturer depuis le presse-papiers. |
 | ✓ | Clear All History | Effacer tout l'historique |
@@ -59,7 +56,6 @@ Stale: 0
 | ✓ | Delete | Supprimer |
 | ✓ | Delete (⌫) | Supprimer (⌫) |
 | ✓ | Delete items after: | Supprimer les éléments après : |
-| ✓ | Download Update | Télécharger la mise à jour |
 | ✓ | Edit | Modifier |
 | ✓ | Edit Clipboard Item | Modifier l'élément du presse-papiers |
 | ✓ | Error | Erreur |
@@ -122,9 +118,7 @@ Stale: 0
 | ✓ | Show Clipboard | Afficher le presse-papiers |
 | ✓ | Show starred only | Afficher uniquement les favoris |
 | ✓ | Showing starred only | Affichage des favoris uniquement |
-| ✓ | Skip This Version | Ignorer cette version |
 | ✓ | Sort by: | Trier par : |
-| ✓ | Source | Source |
 | ✓ | Sources | Sources |
 | ✓ | Star items to keep them safe | Marquez les éléments en favoris pour les protéger |
 | ✓ | Starred items are never automatically deleted. | Les éléments favoris ne sont jamais supprimés automatiquement. |
@@ -134,19 +128,10 @@ Stale: 0
 | ✓ | Text | Texte |
 | ✓ | Transparent background | Arrière-plan transparent |
 | ✓ | Try restarting the app. If the problem persists, your clipboard data may need to be reset. | Essayez de redémarrer l'application. Si le problème persiste, vos données du presse-papiers devront peut-être être réinitialisées. |
-| ✓ | Update Available | Mise à jour disponible |
-| ✓ | Update checks disabled for nightly builds | Vérification des mises à jour désactivée pour les versions nightly |
-| ✓ | Updates | Mises à jour |
 | ✓ | Updates are managed through Homebrew. | Les mises à jour sont gérées via Homebrew. |
-| ✓ | Updates are managed through the App Store. | Les mises à jour sont gérées via l'App Store. |
 | ✓ | Use a glass effect for the clipboard panel | Utiliser un effet de verre pour le panneau du presse-papiers |
-| ✓ | Version | Version |
-| ✓ | Version %@ available | Version %@ disponible |
 | ✓ | Welcome to Pesto Clipboard | Bienvenue dans Pesto Clipboard |
 | ✓ | When enabled, items copied from 1Password, Bitwarden, LastPass, and other password managers will not be saved. | Lorsque activé, les éléments copiés depuis 1Password, Bitwarden, LastPass et autres gestionnaires de mots de passe ne seront pas enregistrés. |
 | ✓ | When enabled, items copied on other Macs or iOS devices via Universal Clipboard will not be saved. | Lorsque activé, les éléments copiés sur d'autres Macs ou appareils iOS via le Presse-papiers universel ne seront pas enregistrés. |
-| ✓ | You're up to date | Vous êtes à jour |
 | ✓ | Your clipboard history, always at your fingertips. | Votre historique du presse-papiers, toujours à portée de main. |
-| ✓ | brew upgrade pesto-clipboard | brew upgrade pesto-clipboard |
 | ✓ | items | éléments |
-| ✓ | nightly | nightly |

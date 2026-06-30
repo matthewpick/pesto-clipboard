@@ -1,8 +1,8 @@
 # Russian (ru) Translations
 
 Source language: English (en)
-Total strings: 138
-Translated: 138 (100%)
+Total strings: 123
+Translated: 123 (100%)
 Missing: 0
 Stale: 0
 
@@ -34,10 +34,7 @@ Stale: 0
 | ✓ | Cancel | Отмена |
 | ✓ | Capture | Захват |
 | ✓ | Capture Types | Типы захвата |
-| ✓ | Check Now | Проверить сейчас |
 | ✓ | Check automatically | Проверять автоматически |
-| ✓ | Check for Updates | Проверить обновления |
-| ✓ | Check for updates automatically | Автоматически проверять обновления |
 | ✓ | Choose a keyboard shortcut to quickly open your clipboard history from anywhere. | Выберите сочетание клавиш для быстрого доступа к истории буфера обмена. |
 | ✓ | Choose what types of content to capture from the clipboard. | Выберите типы содержимого для захвата из буфера обмена. |
 | ✓ | Clear All History | Очистить всю историю |
@@ -59,7 +56,6 @@ Stale: 0
 | ✓ | Delete | Удалить |
 | ✓ | Delete (⌫) | Удалить (⌫) |
 | ✓ | Delete items after: | Удалять элементы через: |
-| ✓ | Download Update | Загрузить обновление |
 | ✓ | Edit | Редактировать |
 | ✓ | Edit Clipboard Item | Редактировать элемент буфера |
 | ✓ | Error | Ошибка |
@@ -122,9 +118,7 @@ Stale: 0
 | ✓ | Show Clipboard | Показать буфер обмена |
 | ✓ | Show starred only | Показать только избранное |
 | ✓ | Showing starred only | Показано только избранное |
-| ✓ | Skip This Version | Пропустить эту версию |
 | ✓ | Sort by: | Сортировка: |
-| ✓ | Source | Источник |
 | ✓ | Sources | Источники |
 | ✓ | Star items to keep them safe | Добавьте в избранное для сохранности |
 | ✓ | Starred items are never automatically deleted. | Избранные элементы никогда не удаляются автоматически. |
@@ -134,19 +128,10 @@ Stale: 0
 | ✓ | Text | Текст |
 | ✓ | Transparent background | Прозрачный фон |
 | ✓ | Try restarting the app. If the problem persists, your clipboard data may need to be reset. | Попробуйте перезапустить приложение. Если проблема сохраняется, возможно, потребуется сбросить данные буфера обмена. |
-| ✓ | Update Available | Доступно обновление |
-| ✓ | Update checks disabled for nightly builds | Проверка обновлений отключена для ночных сборок |
-| ✓ | Updates | Обновления |
 | ✓ | Updates are managed through Homebrew. | Обновления управляются через Homebrew. |
-| ✓ | Updates are managed through the App Store. | Обновления управляются через App Store. |
 | ✓ | Use a glass effect for the clipboard panel | Использовать эффект стекла для панели буфера обмена |
-| ✓ | Version | Версия |
-| ✓ | Version %@ available | Доступна версия %@ |
 | ✓ | Welcome to Pesto Clipboard | Добро пожаловать в Pesto Clipboard |
 | ✓ | When enabled, items copied from 1Password, Bitwarden, LastPass, and other password managers will not be saved. | При включении элементы, скопированные из 1Password, Bitwarden, LastPass и других менеджеров паролей, не будут сохранены. |
 | ✓ | When enabled, items copied on other Macs or iOS devices via Universal Clipboard will not be saved. | При включении элементы, скопированные на других Mac или iOS-устройствах через Универсальный буфер обмена, не будут сохранены. |
-| ✓ | You're up to date | У вас последняя версия |
 | ✓ | Your clipboard history, always at your fingertips. | История буфера обмена всегда под рукой. |
-| ✓ | brew upgrade pesto-clipboard | brew upgrade pesto-clipboard |
 | ✓ | items | элементов |
-| ✓ | nightly | ночная |

@@ -1,8 +1,8 @@
 # Indonesian (id) Translations
 
 Source language: English (en)
-Total strings: 138
-Translated: 138 (100%)
+Total strings: 123
+Translated: 123 (100%)
 Missing: 0
 Stale: 0
 
@@ -34,10 +34,7 @@ Stale: 0
 | ✓ | Cancel | Batal |
 | ✓ | Capture | Tangkap |
 | ✓ | Capture Types | Jenis Tangkapan |
-| ✓ | Check Now | Periksa Sekarang |
 | ✓ | Check automatically | Periksa secara otomatis |
-| ✓ | Check for Updates | Periksa Pembaruan |
-| ✓ | Check for updates automatically | Periksa pembaruan secara otomatis |
 | ✓ | Choose a keyboard shortcut to quickly open your clipboard history from anywhere. | Pilih pintasan keyboard untuk membuka riwayat papan klip dengan cepat dari mana saja. |
 | ✓ | Choose what types of content to capture from the clipboard. | Pilih jenis konten yang akan ditangkap dari papan klip. |
 | ✓ | Clear All History | Hapus Semua Riwayat |
@@ -59,7 +56,6 @@ Stale: 0
 | ✓ | Delete | Hapus |
 | ✓ | Delete (⌫) | Hapus (⌫) |
 | ✓ | Delete items after: | Hapus item setelah: |
-| ✓ | Download Update | Unduh Pembaruan |
 | ✓ | Edit | Edit |
 | ✓ | Edit Clipboard Item | Edit Item Papan Klip |
 | ✓ | Error | Kesalahan |
@@ -122,9 +118,7 @@ Stale: 0
 | ✓ | Show Clipboard | Tampilkan Papan Klip |
 | ✓ | Show starred only | Tampilkan hanya berbintang |
 | ✓ | Showing starred only | Menampilkan hanya berbintang |
-| ✓ | Skip This Version | Lewati Versi Ini |
 | ✓ | Sort by: | Urutkan berdasarkan: |
-| ✓ | Source | Sumber |
 | ✓ | Sources | Sumber |
 | ✓ | Star items to keep them safe | Beri bintang item untuk menyimpannya |
 | ✓ | Starred items are never automatically deleted. | Item berbintang tidak pernah dihapus secara otomatis. |
@@ -134,19 +128,10 @@ Stale: 0
 | ✓ | Text | Teks |
 | ✓ | Transparent background | Latar belakang transparan |
 | ✓ | Try restarting the app. If the problem persists, your clipboard data may need to be reset. | Coba mulai ulang aplikasi. Jika masalah berlanjut, data papan klip Anda mungkin perlu direset. |
-| ✓ | Update Available | Pembaruan Tersedia |
-| ✓ | Update checks disabled for nightly builds | Pemeriksaan pembaruan dinonaktifkan untuk build nightly |
-| ✓ | Updates | Pembaruan |
 | ✓ | Updates are managed through Homebrew. | Pembaruan dikelola melalui Homebrew. |
-| ✓ | Updates are managed through the App Store. | Pembaruan dikelola melalui App Store. |
 | ✓ | Use a glass effect for the clipboard panel | Gunakan efek kaca untuk panel papan klip |
-| ✓ | Version | Versi |
-| ✓ | Version %@ available | Versi %@ tersedia |
 | ✓ | Welcome to Pesto Clipboard | Selamat Datang di Pesto Clipboard |
 | ✓ | When enabled, items copied from 1Password, Bitwarden, LastPass, and other password managers will not be saved. | Jika diaktifkan, item yang disalin dari 1Password, Bitwarden, LastPass, dan pengelola kata sandi lainnya tidak akan disimpan. |
 | ✓ | When enabled, items copied on other Macs or iOS devices via Universal Clipboard will not be saved. | Jika diaktifkan, item yang disalin di Mac atau perangkat iOS lain melalui Universal Clipboard tidak akan disimpan. |
-| ✓ | You're up to date | Anda sudah diperbarui |
 | ✓ | Your clipboard history, always at your fingertips. | Riwayat papan klip Anda, selalu dalam jangkauan. |
-| ✓ | brew upgrade pesto-clipboard | brew upgrade pesto-clipboard |
 | ✓ | items | item |
-| ✓ | nightly | nightly |

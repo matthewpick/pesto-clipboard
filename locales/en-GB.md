@@ -1,8 +1,8 @@
 # English (UK) (en-GB) Translations
 
 Source language: English (en)
-Total strings: 138
-Translated: 138 (100%)
+Total strings: 123
+Translated: 123 (100%)
 Missing: 0
 Stale: 0
 
@@ -34,10 +34,7 @@ Stale: 0
 | ✓ | Cancel | Cancel |
 | ✓ | Capture | Capture |
 | ✓ | Capture Types | Capture Types |
-| ✓ | Check Now | Check Now |
 | ✓ | Check automatically | Check automatically |
-| ✓ | Check for Updates | Check for Updates |
-| ✓ | Check for updates automatically | Check for updates automatically |
 | ✓ | Choose a keyboard shortcut to quickly open your clipboard history from anywhere. | Choose a keyboard shortcut to quickly open your clipboard history from anywhere. |
 | ✓ | Choose what types of content to capture from the clipboard. | Choose what types of content to capture from the clipboard. |
 | ✓ | Clear All History | Clear All History |
@@ -59,7 +56,6 @@ Stale: 0
 | ✓ | Delete | Delete |
 | ✓ | Delete (⌫) | Delete (⌫) |
 | ✓ | Delete items after: | Delete items after: |
-| ✓ | Download Update | Download Update |
 | ✓ | Edit | Edit |
 | ✓ | Edit Clipboard Item | Edit Clipboard Item |
 | ✓ | Error | Error |
@@ -122,9 +118,7 @@ Stale: 0
 | ✓ | Show Clipboard | Show Clipboard |
 | ✓ | Show starred only | Show starred only |
 | ✓ | Showing starred only | Showing starred only |
-| ✓ | Skip This Version | Skip This Version |
 | ✓ | Sort by: | Sort by: |
-| ✓ | Source | Source |
 | ✓ | Sources | Sources |
 | ✓ | Star items to keep them safe | Star items to keep them safe |
 | ✓ | Starred items are never automatically deleted. | Starred items are never automatically deleted. |
@@ -134,19 +128,10 @@ Stale: 0
 | ✓ | Text | Text |
 | ✓ | Transparent background | Transparent background |
 | ✓ | Try restarting the app. If the problem persists, your clipboard data may need to be reset. | Try restarting the app. If the problem persists, your clipboard data may need to be reset. |
-| ✓ | Update Available | Update Available |
-| ✓ | Update checks disabled for nightly builds | Update checks disabled for nightly builds |
-| ✓ | Updates | Updates |
 | ✓ | Updates are managed through Homebrew. | Updates are managed through Homebrew. |
-| ✓ | Updates are managed through the App Store. | Updates are managed through the App Store. |
 | ✓ | Use a glass effect for the clipboard panel | Use a glass effect for the clipboard panel |
-| ✓ | Version | Version |
-| ✓ | Version %@ available | Version %@ available |
 | ✓ | Welcome to Pesto Clipboard | Welcome to Pesto Clipboard |
 | ✓ | When enabled, items copied from 1Password, Bitwarden, LastPass, and other password managers will not be saved. | When enabled, items copied from 1Password, Bitwarden, LastPass, and other password managers will not be saved. |
 | ✓ | When enabled, items copied on other Macs or iOS devices via Universal Clipboard will not be saved. | When enabled, items copied on other Macs or iOS devices via Universal Clipboard will not be saved. |
-| ✓ | You're up to date | You're up to date |
 | ✓ | Your clipboard history, always at your fingertips. | Your clipboard history, always at your fingertips. |
-| ✓ | brew upgrade pesto-clipboard | brew upgrade pesto-clipboard |
 | ✓ | items | items |
-| ✓ | nightly | nightly |

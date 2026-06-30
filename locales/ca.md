@@ -1,8 +1,8 @@
 # Catalan (ca) Translations
 
 Source language: English (en)
-Total strings: 138
-Translated: 138 (100%)
+Total strings: 123
+Translated: 123 (100%)
 Missing: 0
 Stale: 0
 
@@ -34,10 +34,7 @@ Stale: 0
 | ✓ | Cancel | Cancel·la |
 | ✓ | Capture | Captura |
 | ✓ | Capture Types | Tipus de captura |
-| ✓ | Check Now | Comprovar ara |
 | ✓ | Check automatically | Comprovar automàticament |
-| ✓ | Check for Updates | Buscar actualitzacions |
-| ✓ | Check for updates automatically | Comprovar actualitzacions automàticament |
 | ✓ | Choose a keyboard shortcut to quickly open your clipboard history from anywhere. | Tria una drecera de teclat per obrir ràpidament l'historial del porta-retalls. |
 | ✓ | Choose what types of content to capture from the clipboard. | Tria quins tipus de contingut capturar del porta-retalls. |
 | ✓ | Clear All History | Esborra tot l'historial |
@@ -59,7 +56,6 @@ Stale: 0
 | ✓ | Delete | Elimina |
 | ✓ | Delete (⌫) | Elimina (⌫) |
 | ✓ | Delete items after: | Elimina elements després de: |
-| ✓ | Download Update | Descarregar actualització |
 | ✓ | Edit | Edita |
 | ✓ | Edit Clipboard Item | Edita l'element del porta-retalls |
 | ✓ | Error | Error |
@@ -122,9 +118,7 @@ Stale: 0
 | ✓ | Show Clipboard | Mostra el porta-retalls |
 | ✓ | Show starred only | Mostra només els preferits |
 | ✓ | Showing starred only | Mostrant només els preferits |
-| ✓ | Skip This Version | Ometre aquesta versió |
 | ✓ | Sort by: | Ordena per: |
-| ✓ | Source | Font |
 | ✓ | Sources | Fonts |
 | ✓ | Star items to keep them safe | Marca elements com a preferits per mantenir-los segurs |
 | ✓ | Starred items are never automatically deleted. | Els elements preferits mai s'eliminen automàticament. |
@@ -134,19 +128,10 @@ Stale: 0
 | ✓ | Text | Text |
 | ✓ | Transparent background | Fons transparent |
 | ✓ | Try restarting the app. If the problem persists, your clipboard data may need to be reset. | Prova de reiniciar l'aplicació. Si el problema persisteix, és possible que hagis de restablir les dades del porta-retalls. |
-| ✓ | Update Available | Actualització disponible |
-| ✓ | Update checks disabled for nightly builds | Comprovació d'actualitzacions desactivada per a compilacions nocturnes |
-| ✓ | Updates | Actualitzacions |
 | ✓ | Updates are managed through Homebrew. | Les actualitzacions es gestionen mitjançant Homebrew. |
-| ✓ | Updates are managed through the App Store. | Les actualitzacions es gestionen mitjançant l'App Store. |
 | ✓ | Use a glass effect for the clipboard panel | Utilitza un efecte de vidre per al panell del porta-retalls |
-| ✓ | Version | Versió |
-| ✓ | Version %@ available | Versió %@ disponible |
 | ✓ | Welcome to Pesto Clipboard | Benvingut a Pesto Clipboard |
 | ✓ | When enabled, items copied from 1Password, Bitwarden, LastPass, and other password managers will not be saved. | Quan s'activa, els elements copiats de 1Password, Bitwarden, LastPass i altres gestors de contrasenyes no es desaran. |
 | ✓ | When enabled, items copied on other Macs or iOS devices via Universal Clipboard will not be saved. | Quan s'activa, els elements copiats en altres Macs o dispositius iOS mitjançant el porta-retalls universal no es desaran. |
-| ✓ | You're up to date | Estàs al dia |
 | ✓ | Your clipboard history, always at your fingertips. | El teu historial del porta-retalls, sempre a l'abast. |
-| ✓ | brew upgrade pesto-clipboard | brew upgrade pesto-clipboard |
 | ✓ | items | elements |
-| ✓ | nightly | nightly |

@@ -162,4 +162,11 @@ class FloatingPanel: NSPanel {
 
 class KeyAcceptingHostingView<Content: View>: NSHostingView<Content> {
     override var acceptsFirstResponder: Bool { true }
+
+    // Workaround for a Swift optimizer crash (EarlyPerfInliner /
+    // isCallerAndCalleeLayoutConstraintsCompatible) when inlining into this
+    // generic NSHostingView subclass's implicit deinit under -O. Providing an
+    // explicit deinit that opts out of optimization keeps the inliner off it.
+    @_optimize(none)
+    deinit {}
 }

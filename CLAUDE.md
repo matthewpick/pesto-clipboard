@@ -6,9 +6,33 @@ This file provides guidance for Claude Code when working on this project.
 
 Pesto Clipboard is a macOS menu bar clipboard manager built with SwiftUI. It stores clipboard history (text, images, files) and allows quick access via global hotkey.
 
+## Project Generation (XcodeGen)
+
+The `.xcodeproj` is **generated** from `PestoClipboard/project.yml` using
+[XcodeGen](https://github.com/yonaskolb/xcodegen) and is **not** committed to git.
+After a fresh clone — and any time `project.yml` changes — regenerate it before building:
+
+```bash
+make generate
+# or directly:
+xcodegen generate --spec PestoClipboard/project.yml
+```
+
+Edit `PestoClipboard/project.yml` (targets, build settings, packages, schemes,
+entitlements) rather than the generated `project.pbxproj`. The Makefile build/test
+targets run `generate` automatically as a prerequisite.
+
+Both `project.pbxproj` and `PestoClipboard/PestoClipboard.entitlements` are generated
+and gitignored. Entitlements live under the target's `entitlements.properties` in
+`project.yml` — edit them there, not via Xcode's Signing & Capabilities UI (which would
+be overwritten on the next `generate`).
+
 ## Build Commands
 
 ```bash
+# Generate the Xcode project first (not needed if using the Makefile targets)
+xcodegen generate --spec PestoClipboard/project.yml
+
 # Build the project
 xcodebuild -project PestoClipboard/PestoClipboard.xcodeproj -scheme PestoClipboard -configuration Debug build
 
@@ -24,6 +48,7 @@ xcodebuild -project PestoClipboard/PestoClipboard.xcodeproj -scheme PestoClipboa
 The project includes a Makefile with convenient shortcuts:
 
 ```bash
+make generate       # Generate .xcodeproj from project.yml (XcodeGen)
 make build          # Build release version
 make build-debug    # Build debug version
 make test           # Run tests

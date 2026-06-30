@@ -1,8 +1,8 @@
 # German (de) Translations
 
 Source language: English (en)
-Total strings: 138
-Translated: 138 (100%)
+Total strings: 123
+Translated: 123 (100%)
 Missing: 0
 Stale: 0
 
@@ -34,10 +34,7 @@ Stale: 0
 | ✓ | Cancel | Abbrechen |
 | ✓ | Capture | Erfassen |
 | ✓ | Capture Types | Erfassungstypen |
-| ✓ | Check Now | Jetzt prüfen |
 | ✓ | Check automatically | Automatisch prüfen |
-| ✓ | Check for Updates | Nach Updates suchen |
-| ✓ | Check for updates automatically | Automatisch nach Updates suchen |
 | ✓ | Choose a keyboard shortcut to quickly open your clipboard history from anywhere. | Wähle ein Tastenkürzel, um den Zwischenablageverlauf schnell von überall zu öffnen. |
 | ✓ | Choose what types of content to capture from the clipboard. | Wähle, welche Inhaltstypen aus der Zwischenablage erfasst werden sollen. |
 | ✓ | Clear All History | Gesamten Verlauf löschen |
@@ -59,7 +56,6 @@ Stale: 0
 | ✓ | Delete | Löschen |
 | ✓ | Delete (⌫) | Löschen (⌫) |
 | ✓ | Delete items after: | Elemente löschen nach: |
-| ✓ | Download Update | Update herunterladen |
 | ✓ | Edit | Bearbeiten |
 | ✓ | Edit Clipboard Item | Zwischenablage-Eintrag bearbeiten |
 | ✓ | Error | Fehler |
@@ -122,9 +118,7 @@ Stale: 0
 | ✓ | Show Clipboard | Zwischenablage anzeigen |
 | ✓ | Show starred only | Nur Favoriten anzeigen |
 | ✓ | Showing starred only | Zeige nur Favoriten |
-| ✓ | Skip This Version | Diese Version überspringen |
 | ✓ | Sort by: | Sortieren nach: |
-| ✓ | Source | Quelle |
 | ✓ | Sources | Quellen |
 | ✓ | Star items to keep them safe | Elemente als Favoriten markieren, um sie zu sichern |
 | ✓ | Starred items are never automatically deleted. | Favoriten werden nie automatisch gelöscht. |
@@ -134,19 +128,10 @@ Stale: 0
 | ✓ | Text | Text |
 | ✓ | Transparent background | Transparenter Hintergrund |
 | ✓ | Try restarting the app. If the problem persists, your clipboard data may need to be reset. | Versuche, die App neu zu starten. Wenn das Problem weiterhin besteht, müssen möglicherweise deine Zwischenablage-Daten zurückgesetzt werden. |
-| ✓ | Update Available | Update verfügbar |
-| ✓ | Update checks disabled for nightly builds | Update-Prüfung für Nightly-Builds deaktiviert |
-| ✓ | Updates | Updates |
 | ✓ | Updates are managed through Homebrew. | Updates werden über Homebrew verwaltet. |
-| ✓ | Updates are managed through the App Store. | Updates werden über den App Store verwaltet. |
 | ✓ | Use a glass effect for the clipboard panel | Glaseffekt für das Zwischenablage-Panel verwenden |
-| ✓ | Version | Version |
-| ✓ | Version %@ available | Version %@ verfügbar |
 | ✓ | Welcome to Pesto Clipboard | Willkommen bei Pesto Clipboard |
 | ✓ | When enabled, items copied from 1Password, Bitwarden, LastPass, and other password managers will not be saved. | Wenn aktiviert, werden Elemente, die aus 1Password, Bitwarden, LastPass und anderen Passwort-Managern kopiert wurden, nicht gespeichert. |
 | ✓ | When enabled, items copied on other Macs or iOS devices via Universal Clipboard will not be saved. | Wenn aktiviert, werden Elemente, die auf anderen Macs oder iOS-Geräten über die universelle Zwischenablage kopiert wurden, nicht gespeichert. |
-| ✓ | You're up to date | Du bist auf dem neuesten Stand |
 | ✓ | Your clipboard history, always at your fingertips. | Dein Zwischenablageverlauf, immer griffbereit. |
-| ✓ | brew upgrade pesto-clipboard | brew upgrade pesto-clipboard |
 | ✓ | items | Elemente |
-| ✓ | nightly | Nightly |

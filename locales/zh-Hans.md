@@ -1,8 +1,8 @@
 # Chinese (Simplified) (zh-Hans) Translations
 
 Source language: English (en)
-Total strings: 138
-Translated: 138 (100%)
+Total strings: 123
+Translated: 123 (100%)
 Missing: 0
 Stale: 0
 
@@ -34,10 +34,7 @@ Stale: 0
 | ✓ | Cancel | 取消 |
 | ✓ | Capture | 捕获 |
 | ✓ | Capture Types | 捕获类型 |
-| ✓ | Check Now | 立即检查 |
 | ✓ | Check automatically | 自动检查 |
-| ✓ | Check for Updates | 检查更新 |
-| ✓ | Check for updates automatically | 自动检查更新 |
 | ✓ | Choose a keyboard shortcut to quickly open your clipboard history from anywhere. | 选择一个键盘快捷键，随时快速打开剪贴板历史记录。 |
 | ✓ | Choose what types of content to capture from the clipboard. | 选择要从剪贴板捕获的内容类型。 |
 | ✓ | Clear All History | 清除所有历史记录 |
@@ -59,7 +56,6 @@ Stale: 0
 | ✓ | Delete | 删除 |
 | ✓ | Delete (⌫) | 删除 (⌫) |
 | ✓ | Delete items after: | 删除项目于： |
-| ✓ | Download Update | 下载更新 |
 | ✓ | Edit | 编辑 |
 | ✓ | Edit Clipboard Item | 编辑剪贴板项目 |
 | ✓ | Error | 错误 |
@@ -122,9 +118,7 @@ Stale: 0
 | ✓ | Show Clipboard | 显示剪贴板 |
 | ✓ | Show starred only | 仅显示收藏 |
 | ✓ | Showing starred only | 仅显示收藏项目 |
-| ✓ | Skip This Version | 跳过此版本 |
 | ✓ | Sort by: | 排序方式： |
-| ✓ | Source | 来源 |
 | ✓ | Sources | 来源 |
 | ✓ | Star items to keep them safe | 收藏项目以确保安全 |
 | ✓ | Starred items are never automatically deleted. | 收藏的项目永远不会被自动删除。 |
@@ -134,19 +128,10 @@ Stale: 0
 | ✓ | Text | 文本 |
 | ✓ | Transparent background | 透明背景 |
 | ✓ | Try restarting the app. If the problem persists, your clipboard data may need to be reset. | 尝试重新启动应用程序。如果问题仍然存在，您可能需要重置剪贴板数据。 |
-| ✓ | Update Available | 有可用更新 |
-| ✓ | Update checks disabled for nightly builds | 每日构建版本已禁用更新检查 |
-| ✓ | Updates | 更新 |
 | ✓ | Updates are managed through Homebrew. | 更新通过 Homebrew 管理。 |
-| ✓ | Updates are managed through the App Store. | 更新通过 App Store 管理。 |
 | ✓ | Use a glass effect for the clipboard panel | 为剪贴板面板使用玻璃效果 |
-| ✓ | Version | 版本 |
-| ✓ | Version %@ available | 版本 %@ 可用 |
 | ✓ | Welcome to Pesto Clipboard | 欢迎使用 Pesto Clipboard |
 | ✓ | When enabled, items copied from 1Password, Bitwarden, LastPass, and other password managers will not be saved. | 启用后，从 1Password、Bitwarden、LastPass 和其他密码管理器复制的项目将不会保存。 |
 | ✓ | When enabled, items copied on other Macs or iOS devices via Universal Clipboard will not be saved. | 启用后，通过通用剪贴板在其他 Mac 或 iOS 设备上复制的项目将不会保存。 |
-| ✓ | You're up to date | 已是最新版本 |
 | ✓ | Your clipboard history, always at your fingertips. | 您的剪贴板历史记录，触手可及。 |
-| ✓ | brew upgrade pesto-clipboard | brew upgrade pesto-clipboard |
 | ✓ | items | 项 |
-| ✓ | nightly | 每夜版 |

@@ -1,7 +1,13 @@
 import CoreData
+import os
 
 struct PersistenceController {
     static let shared = PersistenceController()
+
+    private static let logger = Logger(
+        subsystem: Bundle.main.bundleIdentifier ?? "PestoClipboard",
+        category: "PersistenceController"
+    )
 
     let container: NSPersistentContainer
 
@@ -10,22 +16,91 @@ struct PersistenceController {
         let model = Self.createManagedObjectModel()
         container = NSPersistentContainer(name: "PestoClipboard", managedObjectModel: model)
 
+        let description = container.persistentStoreDescriptions.first
         if inMemory {
-            container.persistentStoreDescriptions.first?.url = URL(fileURLWithPath: "/dev/null")
+            description?.url = URL(fileURLWithPath: "/dev/null")
         } else {
             // Store in Application Support
-            let storeURL = Self.storeURL()
-            container.persistentStoreDescriptions.first?.url = storeURL
+            description?.url = Self.storeURL()
         }
 
-        container.loadPersistentStores { description, error in
-            if let error = error as NSError? {
-                fatalError("Failed to load Core Data store: \(error), \(error.userInfo)")
-            }
-        }
+        // Enable automatic lightweight migration (default for NSPersistentContainer,
+        // but set explicitly so model changes don't surprise us).
+        description?.shouldMigrateStoreAutomatically = true
+        description?.shouldInferMappingModelAutomatically = true
+
+        Self.loadStoreWithRecovery(container: container, inMemory: inMemory)
 
         container.viewContext.automaticallyMergesChangesFromParent = true
         container.viewContext.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
+    }
+
+    /// Loads the persistent store, recovering from an unreadable/corrupt/incompatible store
+    /// instead of crashing. Clipboard history is a disposable cache: if the store can't be opened
+    /// (corruption, a leftover -wal/-shm after a hard quit, a failed migration, a missing external
+    /// data file, etc.) we discard it and start fresh. If even a fresh store fails, we fall back to
+    /// an in-memory store so the app still launches. This avoids the permanent crash-loop that a
+    /// `fatalError` here would cause once a store gets into a bad state.
+    private static func loadStoreWithRecovery(container: NSPersistentContainer, inMemory: Bool) {
+        if let error = load(container) {
+            logger.error("Failed to load Core Data store: \(error, privacy: .public)")
+
+            // Don't destroy the in-memory store (used in previews/tests); just surface the failure.
+            guard !inMemory,
+                  let storeURL = container.persistentStoreDescriptions.first?.url,
+                  storeURL.path != "/dev/null" else {
+                logger.fault("In-memory store failed to load; continuing without recovery.")
+                return
+            }
+
+            // Discard the unreadable store (removes .sqlite, -wal, -shm and external binary data).
+            do {
+                try container.persistentStoreCoordinator.destroyPersistentStore(
+                    at: storeURL, type: .sqlite, options: nil
+                )
+                logger.notice("Discarded unreadable store; recreating a fresh one.")
+            } catch {
+                logger.error("destroyPersistentStore failed: \(error as NSError, privacy: .public); removing files manually.")
+                removeStoreFiles(at: storeURL)
+            }
+
+            // Retry with a fresh store.
+            if let retryError = load(container) {
+                logger.fault("Recreated store still failed: \(retryError, privacy: .public). Falling back to in-memory store.")
+                container.persistentStoreDescriptions.first?.url = URL(fileURLWithPath: "/dev/null")
+                if let memError = load(container) {
+                    logger.fault("In-memory fallback failed: \(memError, privacy: .public)")
+                }
+            }
+        }
+    }
+
+    /// Loads the container's stores synchronously, returning the first load error (if any).
+    private static func load(_ container: NSPersistentContainer) -> NSError? {
+        var loadError: NSError?
+        container.loadPersistentStores { _, error in
+            if let error = error as NSError? {
+                loadError = error
+            }
+        }
+        return loadError
+    }
+
+    /// Fallback cleanup if `destroyPersistentStore` can't remove the store itself.
+    /// Removes the SQLite file, its -wal/-shm sidecars, and the external binary data directory.
+    private static func removeStoreFiles(at storeURL: URL) {
+        let fileManager = FileManager.default
+        let supportDir = storeURL.deletingLastPathComponent()
+            .appendingPathComponent(".\(storeURL.deletingPathExtension().lastPathComponent)_SUPPORT", isDirectory: true)
+        let targets = [
+            storeURL,
+            URL(fileURLWithPath: storeURL.path + "-wal"),
+            URL(fileURLWithPath: storeURL.path + "-shm"),
+            supportDir
+        ]
+        for url in targets {
+            try? fileManager.removeItem(at: url)
+        }
     }
 
     private static func storeURL() -> URL {

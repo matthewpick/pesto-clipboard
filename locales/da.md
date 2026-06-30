@@ -1,8 +1,8 @@
 # Danish (da) Translations
 
 Source language: English (en)
-Total strings: 138
-Translated: 138 (100%)
+Total strings: 123
+Translated: 123 (100%)
 Missing: 0
 Stale: 0
 
@@ -34,10 +34,7 @@ Stale: 0
 | ✓ | Cancel | Annuller |
 | ✓ | Capture | Optag |
 | ✓ | Capture Types | Optagelsestyper |
-| ✓ | Check Now | Tjek nu |
 | ✓ | Check automatically | Tjek automatisk |
-| ✓ | Check for Updates | Søg efter opdateringer |
-| ✓ | Check for updates automatically | Tjek automatisk efter opdateringer |
 | ✓ | Choose a keyboard shortcut to quickly open your clipboard history from anywhere. | Vælg en tastaturgenvej for hurtigt at åbne udklipsholderhistorikken. |
 | ✓ | Choose what types of content to capture from the clipboard. | Vælg hvilke indholdstyper der skal optages fra udklipsholderen. |
 | ✓ | Clear All History | Ryd al historik |
@@ -59,7 +56,6 @@ Stale: 0
 | ✓ | Delete | Slet |
 | ✓ | Delete (⌫) | Slet (⌫) |
 | ✓ | Delete items after: | Slet elementer efter: |
-| ✓ | Download Update | Download opdatering |
 | ✓ | Edit | Rediger |
 | ✓ | Edit Clipboard Item | Rediger udklipsholderpost |
 | ✓ | Error | Fejl |
@@ -122,9 +118,7 @@ Stale: 0
 | ✓ | Show Clipboard | Vis udklipsholder |
 | ✓ | Show starred only | Vis kun favoritter |
 | ✓ | Showing starred only | Viser kun favoritter |
-| ✓ | Skip This Version | Spring denne version over |
 | ✓ | Sort by: | Sortér efter: |
-| ✓ | Source | Kilde |
 | ✓ | Sources | Kilder |
 | ✓ | Star items to keep them safe | Markér elementer som favoritter for at beskytte dem |
 | ✓ | Starred items are never automatically deleted. | Favoritmarkerede elementer slettes aldrig automatisk. |
@@ -134,19 +128,10 @@ Stale: 0
 | ✓ | Text | Tekst |
 | ✓ | Transparent background | Gennemsigtig baggrund |
 | ✓ | Try restarting the app. If the problem persists, your clipboard data may need to be reset. | Prøv at genstarte appen. Hvis problemet fortsætter, skal dine udklipsholderdata muligvis nulstilles. |
-| ✓ | Update Available | Opdatering tilgængelig |
-| ✓ | Update checks disabled for nightly builds | Opdateringskontrol deaktiveret for natlige builds |
-| ✓ | Updates | Opdateringer |
 | ✓ | Updates are managed through Homebrew. | Opdateringer administreres via Homebrew. |
-| ✓ | Updates are managed through the App Store. | Opdateringer administreres via App Store. |
 | ✓ | Use a glass effect for the clipboard panel | Brug glaseffekt til udklipsholderpanelet |
-| ✓ | Version | Version |
-| ✓ | Version %@ available | Version %@ tilgængelig |
 | ✓ | Welcome to Pesto Clipboard | Velkommen til Pesto Clipboard |
 | ✓ | When enabled, items copied from 1Password, Bitwarden, LastPass, and other password managers will not be saved. | Når aktiveret, vil elementer kopieret fra 1Password, Bitwarden, LastPass og andre adgangskodeadministratorer ikke blive gemt. |
 | ✓ | When enabled, items copied on other Macs or iOS devices via Universal Clipboard will not be saved. | Når aktiveret, vil elementer kopieret på andre Macs eller iOS-enheder via Universal Udklipsholder ikke blive gemt. |
-| ✓ | You're up to date | Du er opdateret |
 | ✓ | Your clipboard history, always at your fingertips. | Din udklipsholderhistorik, altid lige ved hånden. |
-| ✓ | brew upgrade pesto-clipboard | brew upgrade pesto-clipboard |
 | ✓ | items | elementer |
-| ✓ | nightly | natlig |

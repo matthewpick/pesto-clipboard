@@ -4,7 +4,6 @@ import UniformTypeIdentifiers
 
 struct PreferencesView: View {
     @State private var selectedTab: PreferenceTab = .general
-    @ObservedObject private var updateChecker = UpdateChecker.shared
 
     enum PreferenceTab: String, CaseIterable {
         case general = "General"
@@ -35,17 +34,9 @@ struct PreferencesView: View {
         HStack(spacing: 0) {
             // Sidebar
             List(PreferenceTab.allCases, id: \.self, selection: $selectedTab) { tab in
-                HStack {
-                    Label(tab.localizedName, systemImage: tab.icon)
-                    Spacer()
-                    if tab == .advanced && updateChecker.updateAvailable {
-                        Circle()
-                            .fill(Color.green)
-                            .frame(width: 8, height: 8)
-                    }
-                }
-                .frame(maxWidth: .infinity, alignment: .leading)
-                .padding(.vertical, 4)
+                Label(tab.localizedName, systemImage: tab.icon)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .padding(.vertical, 4)
             }
             .listStyle(.sidebar)
             .frame(width: 180)
@@ -440,152 +431,10 @@ struct HistorySettingsView: View {
 
 struct AdvancedSettingsView: View {
     @ObservedObject private var settings = SettingsManager.shared
-    @ObservedObject private var updateChecker = UpdateChecker.shared
 
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 24) {
-                // Updates Section
-                SettingsSection(title: "Updates") {
-                    VStack(alignment: .leading, spacing: 16) {
-                        // Version info row
-                        HStack(spacing: 16) {
-                            VStack(alignment: .leading, spacing: 2) {
-                                Text("Version")
-                                    .font(.caption)
-                                    .foregroundStyle(.tertiary)
-                                HStack(spacing: 4) {
-                                    Text(updateChecker.currentVersion)
-                                        .fontWeight(.medium)
-                                    if updateChecker.isNightlyBuild {
-                                        Text("nightly")
-                                            .font(.caption)
-                                            .padding(.horizontal, 6)
-                                            .padding(.vertical, 2)
-                                            .background(Color.orange.opacity(0.2))
-                                            .foregroundStyle(.orange)
-                                            .clipShape(RoundedRectangle(cornerRadius: 4))
-                                    }
-                                }
-                            }
-
-                            VStack(alignment: .leading, spacing: 2) {
-                                Text("Source")
-                                    .font(.caption)
-                                    .foregroundStyle(.tertiary)
-                                Text(updateChecker.installSource.rawValue)
-                            }
-
-                            Spacer()
-                        }
-
-                        if updateChecker.installSource == .direct || updateChecker.installSource == .homebrew {
-                            // Update available banner
-                            if updateChecker.updateAvailable, let update = updateChecker.availableUpdate {
-                                VStack(alignment: .leading, spacing: 10) {
-                                    HStack(spacing: 8) {
-                                        Image(systemName: "arrow.down.circle.fill")
-                                            .font(.title2)
-                                            .foregroundStyle(.green)
-                                        VStack(alignment: .leading, spacing: 2) {
-                                            Text("Version \(update.version) available")
-                                                .fontWeight(.medium)
-                                            if let notes = update.releaseNotes, !notes.isEmpty {
-                                                Text(notes)
-                                                    .font(.caption)
-                                                    .foregroundStyle(.secondary)
-                                                    .lineLimit(2)
-                                            }
-                                        }
-                                        Spacer()
-                                    }
-
-                                    if updateChecker.installSource == .direct {
-                                        HStack(spacing: 12) {
-                                            Button {
-                                                updateChecker.openDownloadPage()
-                                            } label: {
-                                                HStack {
-                                                    Image(systemName: "arrow.down.to.line")
-                                                    Text("Download Update")
-                                                }
-                                            }
-                                            .buttonStyle(.borderedProminent)
-
-                                            Button {
-                                                updateChecker.dismissUpdate()
-                                            } label: {
-                                                Text("Skip This Version")
-                                            }
-                                            .buttonStyle(.bordered)
-                                        }
-                                    } else {
-                                        // Homebrew install
-                                        HStack {
-                                            Text("brew upgrade pesto-clipboard")
-                                                .font(.system(.caption, design: .monospaced))
-                                                .padding(.horizontal, 8)
-                                                .padding(.vertical, 4)
-                                                .background(Color(nsColor: .textBackgroundColor))
-                                                .clipShape(RoundedRectangle(cornerRadius: 4))
-                                            Button {
-                                                NSPasteboard.general.clearContents()
-                                                NSPasteboard.general.setString("brew upgrade pesto-clipboard", forType: .string)
-                                            } label: {
-                                                Image(systemName: "doc.on.doc")
-                                            }
-                                            .buttonStyle(.borderless)
-                                            .help("Copy to clipboard")
-                                        }
-                                    }
-                                }
-                                .padding(12)
-                                .background(Color.green.opacity(0.1))
-                                .clipShape(RoundedRectangle(cornerRadius: 8))
-                            } else if !updateChecker.isNightlyBuild {
-                                // Up to date status
-                                HStack(spacing: 8) {
-                                    Image(systemName: "checkmark.circle.fill")
-                                        .foregroundStyle(.green)
-                                    Text("You're up to date")
-                                        .foregroundStyle(.secondary)
-                                }
-                            } else {
-                                // Nightly build notice
-                                HStack(spacing: 8) {
-                                    Image(systemName: "info.circle")
-                                        .foregroundStyle(.secondary)
-                                    Text("Update checks disabled for nightly builds")
-                                        .font(.caption)
-                                        .foregroundStyle(.secondary)
-                                }
-                            }
-
-                            // Check for updates controls
-                            if !updateChecker.isNightlyBuild {
-                                VStack(alignment: .leading, spacing: 16) {
-                                    Toggle("Check for updates automatically", isOn: $settings.checkForUpdatesAutomatically)
-                                        .toggleStyle(.checkbox)
-
-                                    Button {
-                                        updateChecker.checkForUpdates()
-                                    } label: {
-                                        HStack {
-                                            Image(systemName: "arrow.clockwise")
-                                            Text("Check Now")
-                                        }
-                                    }
-                                    .buttonStyle(.bordered)
-                                }
-                            }
-                        } else if updateChecker.installSource == .appStore {
-                            Text("Updates are managed through the App Store.")
-                                .font(.caption)
-                                .foregroundStyle(.tertiary)
-                        }
-                    }
-                }
-
                 // Menu Bar Section
                 SettingsSection(title: "Menu Bar") {
                     VStack(alignment: .leading, spacing: 8) {

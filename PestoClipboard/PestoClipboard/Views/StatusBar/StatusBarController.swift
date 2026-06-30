@@ -77,19 +77,6 @@ class StatusBarController {
         menu.addItem(NSMenuItem(title: String(localized: "Show Clipboard"), action: #selector(showClipboardAction), keyEquivalent: ""))
         menu.addItem(NSMenuItem.separator())
 
-        // Show update available item if there's an update
-        if UpdateChecker.shared.updateAvailable, let update = UpdateChecker.shared.availableUpdate {
-            let updateItem = NSMenuItem(
-                title: String(localized: "Update Available") + " (v\(update.version))",
-                action: #selector(showUpdateAction),
-                keyEquivalent: ""
-            )
-            updateItem.image = NSImage(systemSymbolName: "arrow.down.circle.fill", accessibilityDescription: nil)
-            updateItem.image?.isTemplate = false
-            menu.addItem(updateItem)
-            menu.addItem(NSMenuItem.separator())
-        }
-
         menu.addItem(NSMenuItem(title: String(localized: "Preferences"), action: #selector(showPreferencesAction), keyEquivalent: ","))
         menu.addItem(NSMenuItem(title: String(localized: "About Pesto Clipboard"), action: #selector(showAboutAction), keyEquivalent: ""))
         menu.addItem(NSMenuItem.separator())
@@ -102,11 +89,6 @@ class StatusBarController {
         statusItem.menu = menu
         statusItem.button?.performClick(nil)
         statusItem.menu = nil
-    }
-
-    @objc private func showUpdateAction() {
-        hidePanel()
-        PreferencesWindowController.shared.showPreferences()
     }
 
     @objc private func showClipboardAction() {

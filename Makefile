@@ -1,27 +1,33 @@
-.PHONY: build build-debug test clean install dmg bump-version locales-export locales-import locales-status
+.PHONY: generate build build-debug test clean install dmg bump-version locales-export locales-import locales-status
 
 PROJECT_NAME = PestoClipboard
 APP_NAME = Pesto Clipboard
 PROJECT_DIR = PestoClipboard
 BUILD_DIR = build
+PROJECT_SPEC = $(PROJECT_DIR)/project.yml
 VERSION ?= $(shell git describe --tags --abbrev=0 2>/dev/null | sed 's/^v//' || echo "dev")
 DMG_NAME = PestoClipboard-$(VERSION).dmg
 
-build:
+# Generate the Xcode project from project.yml (the source of truth).
+# The .xcodeproj is not committed; regenerate it before any build.
+generate:
+	xcodegen generate --spec $(PROJECT_SPEC)
+
+build: generate
 	xcodebuild -project $(PROJECT_DIR)/$(PROJECT_NAME).xcodeproj \
 		-scheme $(PROJECT_NAME) \
 		-configuration Release \
 		-derivedDataPath $(BUILD_DIR) \
 		build
 
-build-debug:
+build-debug: generate
 	xcodebuild -project $(PROJECT_DIR)/$(PROJECT_NAME).xcodeproj \
 		-scheme $(PROJECT_NAME) \
 		-configuration Debug \
 		-derivedDataPath $(BUILD_DIR) \
 		build
 
-test:
+test: generate
 	xcodebuild test \
 		-project $(PROJECT_DIR)/$(PROJECT_NAME).xcodeproj \
 		-scheme $(PROJECT_NAME) \
@@ -62,7 +68,8 @@ bump-version:
 ifndef V
 	$(error V is required. Usage: make bump-version V=0.0.4)
 endif
-	@sed -i '' 's/MARKETING_VERSION = [^;]*;/MARKETING_VERSION = $(V);/g' $(PROJECT_DIR)/$(PROJECT_NAME).xcodeproj/project.pbxproj
+	@sed -i '' 's/MARKETING_VERSION: .*/MARKETING_VERSION: "$(V)"/' $(PROJECT_SPEC)
+	@$(MAKE) generate
 	@echo "Version bumped to $(V)"
 	@echo ""
 	@echo "Next steps:"

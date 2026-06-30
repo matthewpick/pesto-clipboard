@@ -43,36 +43,40 @@ brew install matthewpick/pesto-clipboard/pesto-clipboard
 
 - Xcode 15.0 or later
 - macOS 14.0 or later
+- [XcodeGen](https://github.com/yonaskolb/xcodegen) — `brew install xcodegen`
+
+The Xcode project is generated from `PestoClipboard/project.yml` by XcodeGen and is
+**not** checked into the repo, so you generate it before building. The
+KeyboardShortcuts package and all build settings (bundle id, entitlements, Info.plist,
+deployment target) are defined in `project.yml` — edit that, not the generated
+`.xcodeproj`.
 
 ### Steps
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/yourusername/pesto-clipboard.git
+   git clone https://github.com/matthewpick/pesto-clipboard.git
    cd pesto-clipboard
    ```
 
-2. Open Xcode and create a new macOS App project:
-   - Product Name: `PestoClipboard`
-   - Team: Your development team
-   - Organization Identifier: `com.yourname`
-   - Interface: SwiftUI
-   - Language: Swift
-   - Storage: None (we use programmatic Core Data)
+2. Generate the Xcode project:
+   ```bash
+   make generate
+   # or directly: xcodegen generate --spec PestoClipboard/project.yml
+   ```
 
-3. Add the source files from `PestoClipboard/` to your Xcode project
+3. Build and run:
+   ```bash
+   make build-debug   # build with xcodebuild
+   make test          # run the test suite
+   ```
+   Or open the generated project in Xcode:
+   ```bash
+   open PestoClipboard/PestoClipboard.xcodeproj
+   ```
 
-4. Add the KeyboardShortcuts package:
-   - File > Add Package Dependencies
-   - Enter: `https://github.com/sindresorhus/KeyboardShortcuts`
-   - Add to target: PestoClipboard
-
-5. Configure the project:
-   - Set deployment target to macOS 14.0
-   - Add Info.plist entries (see `PestoClipboard/App/Info.plist`)
-   - Ensure `LSUIElement = YES` for menu bar only app
-
-6. Build and run!
+> The Makefile build/test targets run `make generate` automatically, so a clean
+> checkout builds in one step.
 
 ## Keyboard Shortcuts
 
@@ -87,20 +91,21 @@ brew install matthewpick/pesto-clipboard/pesto-clipboard
 
 ## Data Storage & Privacy
 
-Clipboard history is stored in a Core Data SQLite database at:
+Clipboard history is stored in a Core Data SQLite database. Because the app is
+sandboxed, the database lives inside its container:
 
 ```
-~/Library/Application Support/PestoClipboard/
+~/Library/Containers/com.pestoclipboard.PestoClipboard/Data/Library/Application Support/PestoClipboard/
 ```
 
 **Security:** The app runs in a macOS sandbox, so other sandboxed apps cannot access your clipboard history. Data is not encrypted at the app level — we rely on macOS FileVault (full-disk encryption) for data-at-rest protection, which is enabled by default on most Macs.
 
-**App Exclusions:** You can exclude specific apps from clipboard monitoring in Preferences. Common password managers (1Password, Bitwarden, etc.) are excluded by default.
+**Password managers:** Clipboard content from password managers (1Password, Bitwarden, etc.) is ignored by default, detected via the markers those apps add to the pasteboard. You can toggle this off in Preferences.
 
 To forcefully delete all clipboard history, quit the app and run:
 
 ```bash
-rm -rf ~/Library/Application\ Support/PestoClipboard/
+rm -rf ~/Library/Containers/com.pestoclipboard.PestoClipboard/Data/Library/Application\ Support/PestoClipboard/
 ```
 
 ## License

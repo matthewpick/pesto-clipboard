@@ -39,9 +39,23 @@ jobs:
       - name: Generate Xcode project
         run: xcodegen generate --spec PestoClipboard/project.yml
 
-      - name: Get short SHA
-        id: sha
-        run: echo "SHORT_SHA=${GITHUB_SHA::7}" >> $GITHUB_OUTPUT
+      - name: Compute nightly version
+        id: version
+        run: |
+          SHORT_SHA=${GITHUB_SHA::7}
+          echo "SHORT_SHA=$SHORT_SHA" >> $GITHUB_OUTPUT
+
+          # Base marketing version from project.yml (e.g. 0.3.5)
+          BASE_VERSION=$(grep -m1 'MARKETING_VERSION:' PestoClipboard/project.yml | sed -E 's/.*"([^"]+)".*/\1/')
+
+          # Stamp a distinguishable nightly version so it can't be confused with a release.
+          # Marketing version carries the commit; build number is the monotonic run number.
+          MARKETING_VERSION="${BASE_VERSION}-nightly.${SHORT_SHA}"
+          BUILD_NUMBER="${{ github.run_number }}"
+
+          echo "MARKETING_VERSION=$MARKETING_VERSION" >> $GITHUB_OUTPUT
+          echo "BUILD_NUMBER=$BUILD_NUMBER" >> $GITHUB_OUTPUT
+          echo "Nightly version: $MARKETING_VERSION ($BUILD_NUMBER)"
 
       - name: Install Apple certificate
         env:
@@ -89,6 +103,8 @@ jobs:
             -derivedDataPath build \
             -arch arm64 \
             -arch x86_64 \
+            MARKETING_VERSION="${{ steps.version.outputs.MARKETING_VERSION }}" \
+            CURRENT_PROJECT_VERSION="${{ steps.version.outputs.BUILD_NUMBER }}" \
             CODE_SIGN_STYLE=Manual \
             CODE_SIGN_IDENTITY="Developer ID Application" \
             DEVELOPMENT_TEAM="$APPLE_TEAM_ID" \

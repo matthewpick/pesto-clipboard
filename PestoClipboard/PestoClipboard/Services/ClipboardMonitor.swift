@@ -140,18 +140,16 @@ class ClipboardMonitor: ObservableObject {
         if settings.captureText {
             let (text, rtfData) = extractTextAndRTF(from: pasteboard)
             if let text = text, !text.isEmpty {
-                if settings.plainTextMode {
-                    // Plaintext mode: store the item as plain text (no RTF) and strip
-                    // formatting from the live clipboard so any paste, in any app, is plain.
-                    Self.logger.info("Captured text (\(text.count) chars, plaintext mode)")
-                    historyManager.addTextItem(text, rtfData: nil)
-                    if pasteboardHasFormatting(pasteboard) {
-                        PasteHelper.writePlainText(text, to: pasteboard)
-                        lastChangeCount = pasteboard.changeCount
-                    }
-                } else {
-                    Self.logger.info("Captured text (\(text.count) chars, RTF: \(rtfData != nil))")
-                    historyManager.addTextItem(text, rtfData: rtfData)
+                // Always store full fidelity (including RTF) in history — the source of
+                // truth — so toggling plaintext mode off later can still restore formatting.
+                Self.logger.info("Captured text (\(text.count) chars, RTF: \(rtfData != nil), plaintext mode: \(settings.plainTextMode))")
+                historyManager.addTextItem(text, rtfData: rtfData)
+
+                // Plaintext mode strips formatting from the live clipboard only, so any
+                // paste in any app is plain while the stored item keeps its formatting.
+                if settings.plainTextMode, pasteboardHasFormatting(pasteboard) {
+                    PasteHelper.writePlainText(text, to: pasteboard)
+                    lastChangeCount = pasteboard.changeCount
                 }
                 return
             }

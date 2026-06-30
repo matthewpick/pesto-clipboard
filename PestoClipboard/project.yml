@@ -1,0 +1,90 @@
+name: PestoClipboard
+options:
+  bundleIdPrefix: com.pestoclipboard
+  deploymentTarget:
+    macOS: "14.0"
+  createIntermediateGroups: true
+
+settings:
+  base:
+    MARKETING_VERSION: "0.3.5"
+    CURRENT_PROJECT_VERSION: 1
+    SWIFT_VERSION: "5.0"
+    CODE_SIGN_STYLE: Automatic
+    # Project-level settings from the original project (apply to all targets)
+    ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS: YES
+    LOCALIZATION_PREFERS_STRING_CATALOGS: YES
+    ENABLE_USER_SCRIPT_SANDBOXING: YES
+    CLANG_CXX_LANGUAGE_STANDARD: "gnu++20"
+    GCC_C_LANGUAGE_STANDARD: gnu17
+    # The original set these Swift flags on both the app and test targets
+    SWIFT_APPROACHABLE_CONCURRENCY: YES
+    SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY: YES
+
+packages:
+  KeyboardShortcuts:
+    url: https://github.com/sindresorhus/KeyboardShortcuts
+    from: 2.4.0
+
+targets:
+  PestoClipboard:
+    type: application
+    platform: macOS
+    sources:
+      - path: PestoClipboard
+        excludes:
+          - "**/*.backup.*"
+    entitlements:
+      path: PestoClipboard/PestoClipboard.entitlements
+      properties:
+        com.apple.security.app-sandbox: true
+        com.apple.security.files.user-selected.read-only: true
+        com.apple.security.network.client: true
+    settings:
+      base:
+        PRODUCT_NAME: "Pesto Clipboard"
+        PRODUCT_BUNDLE_IDENTIFIER: com.pestoclipboard.PestoClipboard
+        GENERATE_INFOPLIST_FILE: YES
+        INFOPLIST_KEY_CFBundleDisplayName: "Pesto Clipboard"
+        INFOPLIST_KEY_LSUIElement: YES
+        INFOPLIST_KEY_NSHumanReadableCopyright: ""
+        INFOPLIST_KEY_LSApplicationCategoryType: public.app-category.utilities
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+        ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME: AccentColor
+        ENABLE_PREVIEWS: YES
+        SWIFT_DEFAULT_ACTOR_ISOLATION: MainActor
+        SWIFT_EMIT_LOC_STRINGS: YES
+        STRING_CATALOG_GENERATE_SYMBOLS: YES
+    dependencies:
+      - package: KeyboardShortcuts
+
+  PestoClipboardTests:
+    type: bundle.unit-test
+    platform: macOS
+    sources:
+      - PestoClipboardTests
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.pestoclipboard.PestoClipboardTests
+        GENERATE_INFOPLIST_FILE: YES
+        TEST_HOST: "$(BUILT_PRODUCTS_DIR)/Pesto Clipboard.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Pesto Clipboard"
+        BUNDLE_LOADER: "$(TEST_HOST)"
+    dependencies:
+      - target: PestoClipboard
+
+schemes:
+  PestoClipboard:
+    build:
+      targets:
+        PestoClipboard: all
+        PestoClipboardTests: [test]
+    run:
+      config: Debug
+    test:
+      config: Debug
+      targets:
+        - PestoClipboardTests
+    profile:
+      config: Release
+    archive:
+      config: Release

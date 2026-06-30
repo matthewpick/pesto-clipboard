@@ -26,6 +26,12 @@ jobs:
           xcodebuild -version
           swift --version
 
+      - name: Install XcodeGen
+        run: brew install xcodegen
+
+      - name: Generate Xcode project
+        run: xcodegen generate --spec PestoClipboard/project.yml
+
       - name: Resolve Swift Package Dependencies
         run: |
           xcodebuild -resolvePackageDependencies \

@@ -37,8 +37,12 @@ targets:
     entitlements:
       path: PestoClipboard/PestoClipboard.entitlements
       properties:
-        com.apple.security.app-sandbox: true
-        com.apple.security.files.user-selected.read-only: true
+        # Sandbox stays off: shipped v0.3.5 binaries were signed without
+        # entitlements, so all existing user data lives at the unsandboxed
+        # ~/Library/Application Support/PestoClipboard/ path. Enabling the
+        # sandbox moves the app into a fresh container and users see an
+        # empty history. Requires a data migration before turning back on.
+        com.apple.security.app-sandbox: false
     settings:
       base:
         PRODUCT_NAME: "Pesto Clipboard"

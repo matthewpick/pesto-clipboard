@@ -91,21 +91,20 @@ deployment target) are defined in `project.yml` — edit that, not the generated
 
 ## Data Storage & Privacy
 
-Clipboard history is stored in a Core Data SQLite database. Because the app is
-sandboxed, the database lives inside its container:
+Clipboard history is stored in a Core Data SQLite database:
 
 ```
-~/Library/Containers/com.pestoclipboard.PestoClipboard/Data/Library/Application Support/PestoClipboard/
+~/Library/Application Support/PestoClipboard/
 ```
 
-**Security:** The app runs in a macOS sandbox, so other sandboxed apps cannot access your clipboard history. Data is not encrypted at the app level — we rely on macOS FileVault (full-disk encryption) for data-at-rest protection, which is enabled by default on most Macs.
+**Security:** The app does not use the macOS App Sandbox (a clipboard manager needs to read every pasteboard change, and sandboxing would orphan existing users' history in a container). Data is not encrypted at the app level — we rely on macOS FileVault (full-disk encryption) for data-at-rest protection, which is enabled by default on most Macs.
 
 **Password managers:** Clipboard content from password managers (1Password, Bitwarden, etc.) is ignored by default, detected via the markers those apps add to the pasteboard. You can toggle this off in Preferences.
 
 To forcefully delete all clipboard history, quit the app and run:
 
 ```bash
-rm -rf ~/Library/Containers/com.pestoclipboard.PestoClipboard/Data/Library/Application\ Support/PestoClipboard/
+rm -rf ~/Library/Application\ Support/PestoClipboard/
 ```
 
 ## License

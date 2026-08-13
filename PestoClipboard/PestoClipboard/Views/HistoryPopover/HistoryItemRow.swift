@@ -30,6 +30,11 @@ struct HistoryItemRow: View {
 
             Spacer(minLength: 4)
 
+            // Countdown for items with their own expiration
+            if let expiresAt = decorator.expiresAt {
+                expirationBadge(expiresAt)
+            }
+
             // Index number for keyboard shortcut (1-9)
             if index <= 9 {
                 Text("\(index)")
@@ -61,6 +66,21 @@ struct HistoryItemRow: View {
         .listRowInsets(EdgeInsets(top: 1, leading: 0, bottom: 1, trailing: 0))
         .listRowSeparator(.hidden)
         .listRowBackground(Color.clear)
+    }
+
+    // MARK: - Expiration
+
+    /// Countdown shown on items that carry their own lifetime. `.relative` keeps the
+    /// text current on its own, so the list doesn't need a per-row ticking timer.
+    private func expirationBadge(_ expiresAt: Date) -> some View {
+        HStack(spacing: 2) {
+            Image(systemName: "clock")
+            Text(expiresAt, style: .relative)
+        }
+        .font(.system(size: 10))
+        .foregroundStyle(.secondary)
+        .fixedSize()
+        .help(Text("Expires \(expiresAt.formatted(date: .abbreviated, time: .shortened))"))
     }
 
     // MARK: - Drag and Drop

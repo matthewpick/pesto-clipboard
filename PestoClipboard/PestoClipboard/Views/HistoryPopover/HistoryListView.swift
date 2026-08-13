@@ -86,6 +86,14 @@ struct ItemContextMenu: View {
     @ObservedObject var viewModel: HistoryViewModel
     let onDismiss: () -> Void
 
+    /// Writes through to the history manager so picking a preset applies it immediately.
+    private var expiration: Binding<ExpirationOption> {
+        Binding(
+            get: { item.expirationOption },
+            set: { viewModel.historyManager.setExpiration($0, for: item) }
+        )
+    }
+
     var body: some View {
         Button {
             viewModel.copyToClipboard(item)
@@ -116,6 +124,17 @@ struct ItemContextMenu: View {
                 Label("Edit", systemImage: "pencil")
             }
         }
+
+        Divider()
+
+        Picker(selection: expiration) {
+            ForEach(ExpirationOption.allCases) { option in
+                Text(option.localizedName).tag(option)
+            }
+        } label: {
+            Label("Expire After", systemImage: "clock")
+        }
+        .pickerStyle(.menu)
 
         Divider()
 

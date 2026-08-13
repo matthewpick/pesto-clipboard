@@ -16,6 +16,7 @@ protocol ClipboardHistoryManaging: AnyObject {
     func addFileItem(urls: [URL])
     func moveToTop(_ item: ClipboardItem)
     func togglePin(_ item: ClipboardItem)
+    func setExpiration(_ option: ExpirationOption, for item: ClipboardItem)
     func updateTextContent(_ item: ClipboardItem, newText: String)
     func deleteItem(_ item: ClipboardItem)
     func deleteItems(at offsets: IndexSet)
@@ -32,6 +33,7 @@ class ClipboardHistoryManager: ObservableObject, ClipboardHistoryManaging {
     private let maxItemsOverride: Int?
     private var cancellables = Set<AnyCancellable>()
     private var autoDeleteTimer: Timer?
+    private var expirationTimer: Timer?
 
     private var maxItems: Int {
         maxItemsOverride ?? SettingsManager.shared.historyLimit
@@ -212,7 +214,10 @@ class ClipboardHistoryManager: ObservableObject, ClipboardHistoryManaging {
 
     func moveToTop(_ item: ClipboardItem) {
         item.createdAt = Date()
+        // Copying a temporary item again gives it its full lifetime back.
+        item.rearmExpirationIfNeeded()
         saveAndRefresh()
+        scheduleNextExpirationSweep()
     }
 
     func togglePin(_ item: ClipboardItem) {
@@ -224,7 +229,9 @@ class ClipboardHistoryManager: ObservableObject, ClipboardHistoryManaging {
         item.textContent = newText
         item.contentHash = computeHash(for: newText)
         item.createdAt = Date()
+        item.rearmExpirationIfNeeded()
         saveAndRefresh()
+        scheduleNextExpirationSweep()
     }
 
     // MARK: - Delete
@@ -301,6 +308,55 @@ class ClipboardHistoryManager: ObservableObject, ClipboardHistoryManaging {
         return digest.map { String(format: "%02x", $0) }.joined()
     }
 
+    // MARK: - Per-Item Expiration
+
+    /// Applies a lifetime to a single item. `.never` clears it.
+    func setExpiration(_ option: ExpirationOption, for item: ClipboardItem) {
+        item.applyExpiration(option)
+        saveAndRefresh()
+        scheduleNextExpirationSweep()
+    }
+
+    /// Deletes items whose per-item lifetime has run out.
+    ///
+    /// Unlike the global auto-delete, this ignores `isPinned`: the countdown was set
+    /// on that specific item on purpose, so it wins over starring.
+    @discardableResult
+    func deleteItemsPastExpiration(asOf date: Date = Date()) -> Int {
+        do {
+            let expired = try viewContext.fetch(ClipboardItem.expiredItemsFetchRequest(asOf: date))
+            guard !expired.isEmpty else { return 0 }
+
+            for item in expired {
+                viewContext.delete(item)
+            }
+            try viewContext.save()
+            fetchItems()
+            return expired.count
+        } catch {
+            print("Failed to delete items past expiration: \(error)")
+            return 0
+        }
+    }
+
+    /// Arms a one-shot timer for the soonest upcoming deadline, so an item disappears
+    /// when it actually expires instead of waiting for the next 5-minute sweep.
+    private func scheduleNextExpirationSweep() {
+        expirationTimer?.invalidate()
+        expirationTimer = nil
+
+        guard let next = try? viewContext.fetch(ClipboardItem.nextExpirationFetchRequest()).first,
+              let expiresAt = next.expiresAt else {
+            return
+        }
+
+        // Fire slightly after the deadline so the item is unambiguously expired.
+        let delay = max(expiresAt.timeIntervalSinceNow + 0.5, 1)
+        expirationTimer = Timer.scheduledTimer(withTimeInterval: delay, repeats: false) { [weak self] _ in
+            self?.runExpirationSweep()
+        }
+    }
+
     // MARK: - Auto-Delete
 
     func startAutoDeleteTimer() {
@@ -310,29 +366,43 @@ class ClipboardHistoryManager: ObservableObject, ClipboardHistoryManaging {
         SettingsManager.shared.$autoDeleteInterval
             .dropFirst()
             .sink { [weak self] _ in
-                self?.performAutoDeleteIfEnabled()
+                self?.runExpirationSweep()
+            }
+            .store(in: &cancellables)
+
+        // Timers don't fire while the machine is asleep, so sweep on wake as well:
+        // an item that expired overnight must be gone when the screen comes back.
+        NSWorkspace.shared.notificationCenter
+            .publisher(for: NSWorkspace.didWakeNotification)
+            .sink { [weak self] _ in
+                self?.runExpirationSweep()
             }
             .store(in: &cancellables)
 
         // Run immediately on start
-        performAutoDeleteIfEnabled()
+        runExpirationSweep()
 
-        // Schedule timer to run every 5 minutes
+        // Backstop sweep every 5 minutes for the global auto-delete setting
         autoDeleteTimer = Timer.scheduledTimer(withTimeInterval: 300, repeats: true) { [weak self] _ in
-            self?.performAutoDeleteIfEnabled()
+            self?.runExpirationSweep()
         }
     }
 
     func stopAutoDeleteTimer() {
         autoDeleteTimer?.invalidate()
         autoDeleteTimer = nil
+        expirationTimer?.invalidate()
+        expirationTimer = nil
     }
 
-    private func performAutoDeleteIfEnabled() {
-        guard let interval = SettingsManager.shared.autoDeleteInterval.timeInterval else {
-            return
+    /// Runs both cleanup policies (global auto-delete + per-item lifetimes) and
+    /// re-arms the timer for the next deadline.
+    private func runExpirationSweep() {
+        if let interval = SettingsManager.shared.autoDeleteInterval.timeInterval {
+            deleteExpiredItems(olderThan: interval)
         }
-        deleteExpiredItems(olderThan: interval)
+        deleteItemsPastExpiration()
+        scheduleNextExpirationSweep()
     }
 
     func deleteExpiredItems(olderThan interval: TimeInterval) {

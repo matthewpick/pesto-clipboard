@@ -14,12 +14,48 @@ public class ClipboardItem: NSManagedObject, Identifiable {
     @NSManaged public var fileURLsData: Data?
     @NSManaged public var isPinned: Bool
     @NSManaged public var totalSizeBytes: Int64
+    @NSManaged public var expiresAt: Date?
+    @NSManaged public var expirationDuration: Double
     @NSManaged public var contents: Set<ClipboardItemContent>?
 
     // MARK: - Computed Properties
 
     var itemType: ClipboardItemType {
         ClipboardItemType(rawValue: contentType) ?? .text
+    }
+
+    // MARK: - Expiration
+
+    /// The lifetime preset currently applied to this item.
+    var expirationOption: ExpirationOption {
+        ExpirationOption(duration: expirationDuration)
+    }
+
+    var hasExpiration: Bool {
+        expiresAt != nil
+    }
+
+    func isExpired(asOf date: Date = Date()) -> Bool {
+        guard let expiresAt else { return false }
+        return expiresAt <= date
+    }
+
+    /// Starts (or restarts) the countdown from `date`. Passing `.never` clears it.
+    func applyExpiration(_ option: ExpirationOption, from date: Date = Date()) {
+        guard let duration = option.duration else {
+            expirationDuration = 0
+            expiresAt = nil
+            return
+        }
+        expirationDuration = duration
+        expiresAt = date.addingTimeInterval(duration)
+    }
+
+    /// Restarts the countdown from `date` if a lifetime is set. Called when an item
+    /// is copied again so re-using a temporary item gives it its full lifetime back.
+    func rearmExpirationIfNeeded(from date: Date = Date()) {
+        guard expirationDuration > 0 else { return }
+        expiresAt = date.addingTimeInterval(expirationDuration)
     }
 
     var fileURLs: [URL]? {
@@ -108,18 +144,48 @@ extension ClipboardItem {
         return NSFetchRequest<ClipboardItem>(entityName: "ClipboardItem")
     }
 
+    /// Matches items whose per-item lifetime has not run out yet. Expired rows are
+    /// filtered out of every list fetch so a stale item can never be shown between
+    /// the moment it expires and the moment the sweep deletes it (after a long
+    /// sleep, for instance).
+    static func unexpiredPredicate(asOf date: Date = Date()) -> NSPredicate {
+        NSPredicate(format: "expiresAt == nil OR expiresAt > %@", date as NSDate)
+    }
+
     static func allItemsFetchRequest() -> NSFetchRequest<ClipboardItem> {
         let request = fetchRequest()
         request.sortDescriptors = [NSSortDescriptor(keyPath: \ClipboardItem.createdAt, ascending: false)]
+        request.predicate = unexpiredPredicate()
         return request
     }
 
     static func searchFetchRequest(query: String) -> NSFetchRequest<ClipboardItem> {
         let request = fetchRequest()
         request.sortDescriptors = [NSSortDescriptor(keyPath: \ClipboardItem.createdAt, ascending: false)]
-        if !query.isEmpty {
-            request.predicate = NSPredicate(format: "textContent CONTAINS[cd] %@", query)
+        if query.isEmpty {
+            request.predicate = unexpiredPredicate()
+        } else {
+            request.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [
+                NSPredicate(format: "textContent CONTAINS[cd] %@", query),
+                unexpiredPredicate()
+            ])
         }
+        return request
+    }
+
+    /// Items whose lifetime has run out and that are ready to be deleted.
+    static func expiredItemsFetchRequest(asOf date: Date = Date()) -> NSFetchRequest<ClipboardItem> {
+        let request = fetchRequest()
+        request.predicate = NSPredicate(format: "expiresAt != nil AND expiresAt <= %@", date as NSDate)
+        return request
+    }
+
+    /// The soonest deadline still in the future, used to schedule the sweep timer.
+    static func nextExpirationFetchRequest(after date: Date = Date()) -> NSFetchRequest<ClipboardItem> {
+        let request = fetchRequest()
+        request.predicate = NSPredicate(format: "expiresAt != nil AND expiresAt > %@", date as NSDate)
+        request.sortDescriptors = [NSSortDescriptor(keyPath: \ClipboardItem.expiresAt, ascending: true)]
+        request.fetchLimit = 1
         return request
     }
 

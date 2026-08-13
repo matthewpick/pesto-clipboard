@@ -663,6 +663,12 @@
         }
       }
     },
+    "5 minutes" : {
+
+    },
+    "6 hours" : {
+
+    },
     "7 days" : {
       "localizations" : {
         "ca" : {
@@ -850,6 +856,9 @@
           }
         }
       }
+    },
+    "15 minutes" : {
+
     },
     "30 days" : {
       "localizations" : {
@@ -3298,6 +3307,7 @@
       }
     },
     "Copy to clipboard" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ca" : {
           "stringUnit" : {
@@ -4425,6 +4435,12 @@
           }
         }
       }
+    },
+    "Expire After" : {
+
+    },
+    "Expires %@" : {
+
     },
     "Failed to load clipboard history" : {
       "localizations" : {
@@ -5838,6 +5854,7 @@
       }
     },
     "Installed via App Store" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ca" : {
           "stringUnit" : {
@@ -5932,6 +5949,7 @@
       }
     },
     "Installed via direct download" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ca" : {
           "stringUnit" : {
@@ -6026,6 +6044,7 @@
       }
     },
     "Installed via Homebrew" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ca" : {
           "stringUnit" : {
@@ -9126,6 +9145,9 @@
           }
         }
       }
+    },
+    "Right-click any item and use \"Expire After\" to give it its own countdown. Those items are removed when it runs out, even if starred." : {
+
     },
     "Run Setup Wizard" : {
       "localizations" : {

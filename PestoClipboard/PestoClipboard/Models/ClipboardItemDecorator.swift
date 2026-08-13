@@ -74,6 +74,13 @@ class ClipboardItemDecorator: ObservableObject, Identifiable, Hashable {
 
     // MARK: - Passthrough Properties
 
+    /// Read live from the item rather than cached at init: decorators are reused
+    /// across refreshes, so a lifetime the user just picked has to show up without
+    /// waiting for the decorator to be rebuilt.
+    var expiresAt: Date? {
+        item.expiresAt
+    }
+
     /// Returns the attributed string for RTF content (loads from Core Data on-demand)
     var attributedString: NSAttributedString? {
         item.attributedString

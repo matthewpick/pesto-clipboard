@@ -113,7 +113,9 @@ struct PersistenceController {
         return appFolder.appendingPathComponent("PestoClipboard.sqlite")
     }
 
-    private static func createManagedObjectModel() -> NSManagedObjectModel {
+    /// Internal rather than private so migration tests can build a store from an
+    /// earlier revision of this model and check it still opens.
+    static func createManagedObjectModel() -> NSManagedObjectModel {
         let model = NSManagedObjectModel()
 
         // ClipboardItem entity
@@ -185,6 +187,21 @@ struct PersistenceController {
         totalSizeBytesAttribute.isOptional = false
         totalSizeBytesAttribute.defaultValue = 0
 
+        // Absolute deadline for a per-item expiration; nil means the item never expires
+        // on its own (the global auto-delete setting still applies).
+        let expiresAtAttribute = NSAttributeDescription()
+        expiresAtAttribute.name = "expiresAt"
+        expiresAtAttribute.attributeType = .dateAttributeType
+        expiresAtAttribute.isOptional = true
+
+        // The lifetime the user picked, kept so re-copying an item can re-arm its
+        // countdown and so the UI can show which preset is active. 0 means none.
+        let expirationDurationAttribute = NSAttributeDescription()
+        expirationDurationAttribute.name = "expirationDuration"
+        expirationDurationAttribute.attributeType = .doubleAttributeType
+        expirationDurationAttribute.isOptional = false
+        expirationDurationAttribute.defaultValue = 0.0
+
         // Attributes for ClipboardItemContent
         let contentTypeAttr = NSAttributeDescription()
         contentTypeAttr.name = "type"
@@ -236,6 +253,8 @@ struct PersistenceController {
             fileURLsAttribute,
             isPinnedAttribute,
             totalSizeBytesAttribute,
+            expiresAtAttribute,
+            expirationDurationAttribute,
             contentsRelationship
         ]
 

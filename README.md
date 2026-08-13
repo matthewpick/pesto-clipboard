@@ -13,6 +13,7 @@ Fresh, free, and open-source clipboard management.
 - **Search**: Quickly filter your clipboard history
 - **Global Hotkey**: Open history with Cmd+Shift+V (customizable)
 - **Plaintext Paste**: Strip formatting when pasting
+- **Per-Item Expiration**: Give a copied item a lifetime (5 minutes to 7 days) and it deletes itself when the countdown runs out
 - **Launch at Login**: Start automatically when you log in
 
 ## Screenshot

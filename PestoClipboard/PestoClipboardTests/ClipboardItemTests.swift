@@ -197,7 +197,9 @@ struct ClipboardItemTests {
     @Test func searchFetchRequestWithEmptyQuery() {
         let request = ClipboardItem.searchFetchRequest(query: "")
 
-        #expect(request.predicate == nil)
+        // No text filter, but expired items are still held back
+        #expect(request.predicate?.predicateFormat.contains("expiresAt") == true)
+        #expect(request.predicate?.predicateFormat.contains("textContent") == false)
     }
 
     @Test func fetchRequestByHash() {

@@ -385,6 +385,10 @@ struct HistorySettingsView: View {
                         Text("Starred items are never automatically deleted.")
                             .font(.caption)
                             .foregroundStyle(.tertiary)
+
+                        Text("Right-click any item and use \"Expire After\" to give it its own countdown. Those items are removed when it runs out, even if starred.")
+                            .font(.caption)
+                            .foregroundStyle(.tertiary)
                     }
                 }
 

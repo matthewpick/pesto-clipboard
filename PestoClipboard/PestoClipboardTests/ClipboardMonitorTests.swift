@@ -20,6 +20,7 @@ final class MockClipboardHistoryManager: ClipboardHistoryManaging {
 
     private(set) var moveToTopCalls: [ClipboardItem] = []
     private(set) var togglePinCalls: [ClipboardItem] = []
+    private(set) var setExpirationCalls: [(option: ExpirationOption, item: ClipboardItem)] = []
     private(set) var updateTextContentCalls: [(item: ClipboardItem, newText: String)] = []
 
     private(set) var deleteItemCalls: [ClipboardItem] = []
@@ -59,6 +60,10 @@ final class MockClipboardHistoryManager: ClipboardHistoryManaging {
 
     func togglePin(_ item: ClipboardItem) {
         togglePinCalls.append(item)
+    }
+
+    func setExpiration(_ option: ExpirationOption, for item: ClipboardItem) {
+        setExpirationCalls.append((option: option, item: item))
     }
 
     func updateTextContent(_ item: ClipboardItem, newText: String) {

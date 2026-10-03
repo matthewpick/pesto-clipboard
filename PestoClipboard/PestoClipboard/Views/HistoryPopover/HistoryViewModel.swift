@@ -89,7 +89,14 @@ class HistoryViewModel: ObservableObject {
         .receive(on: DispatchQueue.main)
         .sink { [weak self] _ in
             DispatchQueue.main.async {
-                self?.objectWillChange.send()
+                guard let self else { return }
+                // Cached decorators read their mutable metadata live, so a save that
+                // changed an item (star, edit) publishes nothing by itself — poke the
+                // rows so they re-render. Deferred, so this never fires mid-update.
+                for decorator in self.decoratorCache.values {
+                    decorator.refreshMetadata()
+                }
+                self.objectWillChange.send()
             }
         }
         .store(in: &cancellables)

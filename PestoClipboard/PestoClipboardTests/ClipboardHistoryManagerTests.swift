@@ -1,5 +1,6 @@
 import Testing
 import CoreData
+import AppKit
 @testable import Pesto_Clipboard
 
 @MainActor
@@ -150,6 +151,122 @@ struct ClipboardHistoryManagerTests {
         manager.clearAllIncludingStarred()
 
         #expect(manager.items.count == 0)
+    }
+
+    // Regression: clearAll used to iterate the in-memory `items` array, which an
+    // active search narrows to just the matches — so clearing history from
+    // Preferences while a search was typed in the panel left the rest behind.
+    @Test func clearAllRemovesEverythingEvenAfterASearch() {
+        let manager = createManager()
+
+        manager.addTextItem("apple")
+        manager.addTextItem("banana")
+        manager.addTextItem("cherry")
+
+        manager.searchItems(query: "apple")
+        #expect(manager.items.count == 1, "search narrows the visible items")
+
+        manager.clearAll()
+
+        manager.fetchItems()
+        #expect(manager.items.isEmpty, "clearAll must empty the store, not just the visible subset")
+    }
+
+    @Test func clearAllIncludingStarredRemovesEverythingEvenAfterASearch() {
+        let manager = createManager()
+
+        manager.addTextItem("apple")
+        manager.addTextItem("banana")
+        manager.togglePin(manager.items[0])
+
+        manager.searchItems(query: "apple")
+        #expect(manager.items.count == 1)
+
+        manager.clearAllIncludingStarred()
+
+        manager.fetchItems()
+        #expect(manager.items.isEmpty)
+    }
+
+    @Test func clearAllAfterASearchStillKeepsPinnedItems() {
+        let manager = createManager()
+
+        manager.addTextItem("keep me")
+        manager.addTextItem("apple")
+        manager.togglePin(manager.items.last!)   // pin "keep me"
+
+        manager.searchItems(query: "apple")
+        manager.clearAll()
+
+        manager.fetchItems()
+        #expect(manager.items.count == 1)
+        #expect(manager.items.first?.textContent == "keep me")
+    }
+
+    // MARK: - Edit Tests
+
+    // Regression: editing left the old rtfData in place, so the row kept rendering —
+    // and rich-text apps kept pasting — the pre-edit text.
+    @Test func updateTextContentDropsStaleRTF() {
+        let manager = createManager()
+
+        let attributed = NSAttributedString(
+            string: "original",
+            attributes: [.font: NSFont.boldSystemFont(ofSize: 14)]
+        )
+        let rtfData = try? attributed.data(
+            from: NSRange(location: 0, length: attributed.length),
+            documentAttributes: [.documentType: NSAttributedString.DocumentType.rtf]
+        )
+        manager.addTextItem("original", rtfData: rtfData)
+
+        let item = manager.items[0]
+        #expect(item.itemType == .rtf)
+
+        manager.updateTextContent(item, newText: "edited")
+
+        #expect(item.textContent == "edited")
+        #expect(item.rtfData == nil, "stale RTF must not survive the edit")
+        #expect(item.itemType == .text, "item is plain text once its formatting is gone")
+        #expect(item.attributedString == nil)
+    }
+
+    @Test func editedItemPastesTheEditedText() {
+        let manager = createManager()
+
+        let attributed = NSAttributedString(
+            string: "original",
+            attributes: [.font: NSFont.boldSystemFont(ofSize: 14)]
+        )
+        let rtfData = try? attributed.data(
+            from: NSRange(location: 0, length: attributed.length),
+            documentAttributes: [.documentType: NSAttributedString.DocumentType.rtf]
+        )
+        manager.addTextItem("original", rtfData: rtfData)
+
+        let item = manager.items[0]
+        manager.updateTextContent(item, newText: "edited")
+
+        let pasteboard = NSPasteboard(name: .init("test-edit-\(UUID().uuidString)"))
+        PasteHelper.writeToClipboard(item: item, pasteboard: pasteboard, asPlainText: false)
+
+        #expect(pasteboard.string(forType: .string) == "edited")
+        // A rich-text target prefers RTF, so a leftover RTF payload would win and
+        // paste the old text even though the plain string above is correct.
+        #expect(pasteboard.data(forType: .rtf) == nil)
+    }
+
+    @Test func updateTextContentOnPlainItemStaysPlain() {
+        let manager = createManager()
+
+        manager.addTextItem("original")
+        let item = manager.items[0]
+
+        manager.updateTextContent(item, newText: "edited")
+
+        #expect(item.textContent == "edited")
+        #expect(item.itemType == .text)
+        #expect(item.rtfData == nil)
     }
 
     // MARK: - Search Tests

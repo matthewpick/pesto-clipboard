@@ -224,6 +224,16 @@ class ClipboardHistoryManager: ObservableObject, ClipboardHistoryManaging {
         item.textContent = newText
         item.contentHash = computeHash(for: newText)
         item.createdAt = Date()
+
+        // The edit UI is a plain-text editor, so there is no formatting to carry over.
+        // Dropping the old RTF (and demoting the type) keeps the item self-consistent:
+        // leaving it in place would make the row render — and any rich-text app paste —
+        // the pre-edit text, since both prefer RTF over the plain string.
+        item.rtfData = nil
+        if item.itemType == .rtf {
+            item.contentType = ClipboardItemType.text.rawValue
+        }
+
         saveAndRefresh()
     }
 
@@ -241,17 +251,33 @@ class ClipboardHistoryManager: ObservableObject, ClipboardHistoryManaging {
         saveAndRefresh()
     }
 
+    /// Deletes every unpinned item in the store.
+    ///
+    /// Fetches rather than iterating `items`: that array holds whatever the UI is
+    /// currently showing, which is narrowed to the matches while a search is active.
+    /// Clearing only the visible subset would silently leave the rest behind.
     func clearAll() {
-        for item in items where !item.isPinned {
-            viewContext.delete(item)
-        }
-        saveAndRefresh()
+        deleteAll(predicate: NSPredicate(format: "isPinned == NO"))
     }
 
     func clearAllIncludingStarred() {
-        for item in items {
-            viewContext.delete(item)
+        deleteAll(predicate: nil)
+    }
+
+    private func deleteAll(predicate: NSPredicate?) {
+        let request = ClipboardItem.fetchRequest()
+        request.predicate = predicate
+
+        do {
+            for item in try viewContext.fetch(request) {
+                viewContext.delete(item)
+            }
+        } catch {
+            print("Failed to fetch items to clear: \(error)")
+            lastError = .fetchFailed(error)
+            return
         }
+
         saveAndRefresh()
     }
 

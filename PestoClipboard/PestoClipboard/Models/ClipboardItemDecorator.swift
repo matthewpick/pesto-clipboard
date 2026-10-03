@@ -20,29 +20,40 @@ class ClipboardItemDecorator: ObservableObject, Identifiable, Hashable {
     // Cleanup delay to avoid thrashing when scrolling fast
     private static let cleanupDelay: TimeInterval = 2.0
 
-    // Cached metadata (no data load needed)
+    // Immutable metadata, cached at init. These are fixed when the item is created
+    // and never mutated afterwards, so caching them avoids repeated work in the list
+    // (notably `fileURLs`, which decodes JSON on every read).
     let totalSizeBytes: Int64
     let contentType: String
-    let createdAt: Date
-    let isPinned: Bool
-    let textContent: String?
-    let displayText: String
-    let previewText: String
     let itemType: ClipboardItemType
     let fileURLs: [URL]?
+
+    // Mutable metadata, read live from the managed object. Decorators are cached and
+    // reused by HistoryViewModel for as long as their item exists, so anything the
+    // app can change after creation — starring, editing, moving an item to the top —
+    // must NOT be snapshotted here or the row would render a stale value forever.
+    // These are cheap scalar reads on an already-faulted row; the expensive binary
+    // blobs stay lazy below.
+    var isPinned: Bool { item.isPinned }
+    var createdAt: Date { item.createdAt }
+    var textContent: String? { item.textContent }
+    var displayText: String { item.displayText }
+    var previewText: String { item.previewText }
 
     init(item: ClipboardItem) {
         self.id = item.id
         self.item = item
         self.totalSizeBytes = item.totalSizeBytes
         self.contentType = item.contentType
-        self.createdAt = item.createdAt
-        self.isPinned = item.isPinned
-        self.textContent = item.textContent
-        self.displayText = item.displayText
-        self.previewText = item.previewText
         self.itemType = item.itemType
         self.fileURLs = item.fileURLs
+    }
+
+    /// Notifies observing rows that the underlying item's mutable metadata changed.
+    /// Called by HistoryViewModel after a save, since the values above are read live
+    /// and so publish nothing on their own.
+    func refreshMetadata() {
+        objectWillChange.send()
     }
 
     // MARK: - Lazy Loading

@@ -24,7 +24,6 @@ Stale: 0
 | ✓ | 7 days | 7日 |
 | ✓ | About Pesto Clipboard | Pesto Clipboardについて |
 | ✓ | Accessibility permission required | アクセシビリティの許可が必要です |
-| ✓ | Advanced | 詳細 |
 | ✓ | Appearance | 外観 |
 | ✓ | Are you sure you want to clear your clipboard history? | クリップボード履歴を消去してもよろしいですか？ |
 | ✓ | Auto-Delete | 自動削除 |
@@ -65,7 +64,6 @@ Stale: 0
 | ✓ | Files | ファイル |
 | ✓ | General | 一般 |
 | ✓ | Get Started | 始める |
-| ✓ | Hide menu bar icon | メニューバーアイコンを隠す |
 | ✓ | History | 履歴 |
 | ✓ | Ignore | 除外 |
 | ✓ | Ignore clipboard from other devices | 他のデバイスからのクリップボードを無視 |
@@ -80,9 +78,7 @@ Stale: 0
 | ✓ | Keyboard Shortcut | キーボードショートカット |
 | ✓ | Launch at login | ログイン時に起動 |
 | ✓ | Limits | 制限 |
-| ✓ | Make sure you remember your keyboard shortcut! | キーボードショートカットを忘れないでください！ |
 | ✓ | Maximum items: | 最大項目数: |
-| ✓ | Menu Bar | メニューバー |
 | ✓ | Never | しない |
 | ✓ | Next | 次へ |
 | ✓ | No clipboard history | クリップボード履歴がありません |
@@ -91,7 +87,6 @@ Stale: 0
 | ✓ | No results found | 結果が見つかりません |
 | ✓ | No starred items | スター付き項目がありません |
 | ✓ | OK | OK |
-| ✓ | Only access Pesto Clipboard via keyboard shortcut | キーボードショートカットでのみアクセス |
 | ✓ | Open Pesto Clipboard: | Pesto Clipboardを開く: |
 | ✓ | Paste as Original | オリジナルとしてペースト |
 | ✓ | Paste as Plaintext | プレーンテキストとしてペースト |

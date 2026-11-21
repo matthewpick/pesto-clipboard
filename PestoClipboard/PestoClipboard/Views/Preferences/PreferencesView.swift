@@ -9,14 +9,12 @@ struct PreferencesView: View {
         case general = "General"
         case capture = "Capture"
         case history = "History"
-        case advanced = "Advanced"
 
         var icon: String {
             switch self {
             case .general: return "gearshape.fill"
             case .capture: return "doc.on.clipboard"
             case .history: return "clock.fill"
-            case .advanced: return "gearshape.2.fill"
             }
         }
 
@@ -25,7 +23,6 @@ struct PreferencesView: View {
             case .general: return String(localized: "General")
             case .capture: return String(localized: "Capture")
             case .history: return String(localized: "History")
-            case .advanced: return String(localized: "Advanced")
             }
         }
     }
@@ -52,8 +49,6 @@ struct PreferencesView: View {
                     CaptureSettingsView()
                 case .history:
                     HistorySettingsView()
-                case .advanced:
-                    AdvancedSettingsView()
                 }
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -424,45 +419,6 @@ struct HistorySettingsView: View {
         } message: {
             Text("Are you sure you want to clear your clipboard history?")
         }
-    }
-}
-
-// MARK: - Advanced Settings
-
-struct AdvancedSettingsView: View {
-    @ObservedObject private var settings = SettingsManager.shared
-
-    var body: some View {
-        ScrollView {
-            VStack(alignment: .leading, spacing: 24) {
-                // Menu Bar Section
-                SettingsSection(title: "Menu Bar") {
-                    VStack(alignment: .leading, spacing: 8) {
-                        SettingsToggle(
-                            title: "Hide menu bar icon",
-                            subtitle: "Only access Pesto Clipboard via keyboard shortcut",
-                            isOn: $settings.hideMenuBarIcon
-                        )
-
-                        if settings.hideMenuBarIcon {
-                            HStack(spacing: 8) {
-                                Image(systemName: "exclamationmark.triangle.fill")
-                                    .foregroundStyle(.yellow)
-                                Text("Make sure you remember your keyboard shortcut!")
-                                    .font(.caption)
-                                    .foregroundStyle(.secondary)
-                            }
-                            .padding(.top, 4)
-                        }
-                    }
-                }
-
-                Spacer()
-            }
-            .padding(24)
-        }
-        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
-        .background(Color(nsColor: .windowBackgroundColor))
     }
 }
 

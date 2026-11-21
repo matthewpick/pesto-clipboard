@@ -24,7 +24,6 @@ Stale: 0
 | ✓ | 7 days | 7 dage |
 | ✓ | About Pesto Clipboard | Om Pesto Clipboard |
 | ✓ | Accessibility permission required | Tilgængelighedstilladelse kræves |
-| ✓ | Advanced | Avanceret |
 | ✓ | Appearance | Udseende |
 | ✓ | Are you sure you want to clear your clipboard history? | Er du sikker på, at du vil rydde udklipsholderhistorikken? |
 | ✓ | Auto-Delete | Automatisk sletning |
@@ -65,7 +64,6 @@ Stale: 0
 | ✓ | Files | Filer |
 | ✓ | General | Generelt |
 | ✓ | Get Started | Kom i gang |
-| ✓ | Hide menu bar icon | Skjul menulinjeikon |
 | ✓ | History | Historik |
 | ✓ | Ignore | Ignorer |
 | ✓ | Ignore clipboard from other devices | Ignorer udklipsholder fra andre enheder |
@@ -80,9 +78,7 @@ Stale: 0
 | ✓ | Keyboard Shortcut | Tastaturgenvej |
 | ✓ | Launch at login | Start ved login |
 | ✓ | Limits | Grænser |
-| ✓ | Make sure you remember your keyboard shortcut! | Sørg for at huske din tastaturgenvej! |
 | ✓ | Maximum items: | Maksimalt antal elementer: |
-| ✓ | Menu Bar | Menulinje |
 | ✓ | Never | Aldrig |
 | ✓ | Next | Næste |
 | ✓ | No clipboard history | Ingen udklipsholderhistorik |
@@ -91,7 +87,6 @@ Stale: 0
 | ✓ | No results found | Ingen resultater fundet |
 | ✓ | No starred items | Ingen favoritter |
 | ✓ | OK | OK |
-| ✓ | Only access Pesto Clipboard via keyboard shortcut | Få kun adgang til Pesto Clipboard via tastaturgenvej |
 | ✓ | Open Pesto Clipboard: | Åbn Pesto Clipboard: |
 | ✓ | Paste as Original | Indsæt som original |
 | ✓ | Paste as Plaintext | Indsæt som almindelig tekst |

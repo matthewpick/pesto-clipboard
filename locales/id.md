@@ -24,7 +24,6 @@ Stale: 0
 | ✓ | 7 days | 7 hari |
 | ✓ | About Pesto Clipboard | Tentang Pesto Clipboard |
 | ✓ | Accessibility permission required | Izin aksesibilitas diperlukan |
-| ✓ | Advanced | Lanjutan |
 | ✓ | Appearance | Tampilan |
 | ✓ | Are you sure you want to clear your clipboard history? | Apakah Anda yakin ingin menghapus riwayat papan klip? |
 | ✓ | Auto-Delete | Hapus Otomatis |
@@ -65,7 +64,6 @@ Stale: 0
 | ✓ | Files | File |
 | ✓ | General | Umum |
 | ✓ | Get Started | Mulai |
-| ✓ | Hide menu bar icon | Sembunyikan ikon bilah menu |
 | ✓ | History | Riwayat |
 | ✓ | Ignore | Abaikan |
 | ✓ | Ignore clipboard from other devices | Abaikan papan klip dari perangkat lain |
@@ -80,9 +78,7 @@ Stale: 0
 | ✓ | Keyboard Shortcut | Pintasan Keyboard |
 | ✓ | Launch at login | Jalankan saat masuk |
 | ✓ | Limits | Batas |
-| ✓ | Make sure you remember your keyboard shortcut! | Pastikan Anda mengingat pintasan keyboard Anda! |
 | ✓ | Maximum items: | Maksimum item: |
-| ✓ | Menu Bar | Bilah Menu |
 | ✓ | Never | Tidak Pernah |
 | ✓ | Next | Berikutnya |
 | ✓ | No clipboard history | Tidak ada riwayat papan klip |
@@ -91,7 +87,6 @@ Stale: 0
 | ✓ | No results found | Tidak ada hasil ditemukan |
 | ✓ | No starred items | Tidak ada item berbintang |
 | ✓ | OK | OK |
-| ✓ | Only access Pesto Clipboard via keyboard shortcut | Akses Pesto Clipboard hanya melalui pintasan keyboard |
 | ✓ | Open Pesto Clipboard: | Buka Pesto Clipboard: |
 | ✓ | Paste as Original | Tempel Asli |
 | ✓ | Paste as Plaintext | Tempel sebagai Teks Biasa |

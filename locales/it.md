@@ -24,7 +24,6 @@ Stale: 0
 | ✓ | 7 days | 7 giorni |
 | ✓ | About Pesto Clipboard | Informazioni su Pesto Clipboard |
 | ✓ | Accessibility permission required | Autorizzazione accessibilità richiesta |
-| ✓ | Advanced | Avanzate |
 | ✓ | Appearance | Aspetto |
 | ✓ | Are you sure you want to clear your clipboard history? | Vuoi davvero cancellare la cronologia degli appunti? |
 | ✓ | Auto-Delete | Eliminazione automatica |
@@ -65,7 +64,6 @@ Stale: 0
 | ✓ | Files | File |
 | ✓ | General | Generali |
 | ✓ | Get Started | Inizia |
-| ✓ | Hide menu bar icon | Nascondi icona della barra dei menu |
 | ✓ | History | Cronologia |
 | ✓ | Ignore | Ignora |
 | ✓ | Ignore clipboard from other devices | Ignora appunti da altri dispositivi |
@@ -80,9 +78,7 @@ Stale: 0
 | ✓ | Keyboard Shortcut | Scorciatoia da tastiera |
 | ✓ | Launch at login | Avvia all'accesso |
 | ✓ | Limits | Limiti |
-| ✓ | Make sure you remember your keyboard shortcut! | Assicurati di ricordare la scorciatoia da tastiera! |
 | ✓ | Maximum items: | Elementi massimi: |
-| ✓ | Menu Bar | Barra dei menu |
 | ✓ | Never | Mai |
 | ✓ | Next | Avanti |
 | ✓ | No clipboard history | Nessuna cronologia degli appunti |
@@ -91,7 +87,6 @@ Stale: 0
 | ✓ | No results found | Nessun risultato trovato |
 | ✓ | No starred items | Nessun elemento preferito |
 | ✓ | OK | OK |
-| ✓ | Only access Pesto Clipboard via keyboard shortcut | Accedi a Pesto Clipboard solo tramite scorciatoia da tastiera |
 | ✓ | Open Pesto Clipboard: | Apri Pesto Clipboard: |
 | ✓ | Paste as Original | Incolla come originale |
 | ✓ | Paste as Plaintext | Incolla come testo semplice |

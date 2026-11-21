@@ -24,7 +24,6 @@ Stale: 0
 | ✓ | 7 days | 7 дней |
 | ✓ | About Pesto Clipboard | О Pesto Clipboard |
 | ✓ | Accessibility permission required | Требуется разрешение Универсального доступа |
-| ✓ | Advanced | Дополнительно |
 | ✓ | Appearance | Оформление |
 | ✓ | Are you sure you want to clear your clipboard history? | Вы уверены, что хотите очистить историю буфера обмена? |
 | ✓ | Auto-Delete | Автоудаление |
@@ -65,7 +64,6 @@ Stale: 0
 | ✓ | Files | Файлы |
 | ✓ | General | Основные |
 | ✓ | Get Started | Начать |
-| ✓ | Hide menu bar icon | Скрыть значок в строке меню |
 | ✓ | History | История |
 | ✓ | Ignore | Игнорировать |
 | ✓ | Ignore clipboard from other devices | Игнорировать буфер обмена с других устройств |
@@ -80,9 +78,7 @@ Stale: 0
 | ✓ | Keyboard Shortcut | Сочетание клавиш |
 | ✓ | Launch at login | Запускать при входе |
 | ✓ | Limits | Ограничения |
-| ✓ | Make sure you remember your keyboard shortcut! | Убедитесь, что вы помните сочетание клавиш! |
 | ✓ | Maximum items: | Максимум элементов: |
-| ✓ | Menu Bar | Строка меню |
 | ✓ | Never | Никогда |
 | ✓ | Next | Далее |
 | ✓ | No clipboard history | История буфера обмена пуста |
@@ -91,7 +87,6 @@ Stale: 0
 | ✓ | No results found | Результаты не найдены |
 | ✓ | No starred items | Нет избранных элементов |
 | ✓ | OK | ОК |
-| ✓ | Only access Pesto Clipboard via keyboard shortcut | Доступ к Pesto Clipboard только по сочетанию клавиш |
 | ✓ | Open Pesto Clipboard: | Открыть Pesto Clipboard: |
 | ✓ | Paste as Original | Вставить как оригинал |
 | ✓ | Paste as Plaintext | Вставить как текст |

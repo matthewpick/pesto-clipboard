@@ -24,7 +24,6 @@ Stale: 0
 | ✓ | 7 days | 7 दिन |
 | ✓ | About Pesto Clipboard | Pesto Clipboard के बारे में |
 | ✓ | Accessibility permission required | एक्सेसिबिलिटी अनुमति आवश्यक |
-| ✓ | Advanced | उन्नत |
 | ✓ | Appearance | दिखावट |
 | ✓ | Are you sure you want to clear your clipboard history? | क्या आप वाकई क्लिपबोर्ड इतिहास साफ़ करना चाहते हैं? |
 | ✓ | Auto-Delete | स्वतः हटाएं |
@@ -65,7 +64,6 @@ Stale: 0
 | ✓ | Files | फ़ाइलें |
 | ✓ | General | सामान्य |
 | ✓ | Get Started | शुरू करें |
-| ✓ | Hide menu bar icon | मेन्यू बार आइकन छुपाएं |
 | ✓ | History | इतिहास |
 | ✓ | Ignore | अनदेखा करें |
 | ✓ | Ignore clipboard from other devices | अन्य उपकरणों से क्लिपबोर्ड को अनदेखा करें |
@@ -80,9 +78,7 @@ Stale: 0
 | ✓ | Keyboard Shortcut | कीबोर्ड शॉर्टकट |
 | ✓ | Launch at login | लॉगिन पर शुरू करें |
 | ✓ | Limits | सीमाएं |
-| ✓ | Make sure you remember your keyboard shortcut! | अपना कीबोर्ड शॉर्टकट याद रखें! |
 | ✓ | Maximum items: | अधिकतम आइटम: |
-| ✓ | Menu Bar | मेन्यू बार |
 | ✓ | Never | कभी नहीं |
 | ✓ | Next | अगला |
 | ✓ | No clipboard history | कोई क्लिपबोर्ड इतिहास नहीं |
@@ -91,7 +87,6 @@ Stale: 0
 | ✓ | No results found | कोई परिणाम नहीं मिला |
 | ✓ | No starred items | कोई तारांकित आइटम नहीं |
 | ✓ | OK | ठीक है |
-| ✓ | Only access Pesto Clipboard via keyboard shortcut | Pesto Clipboard को केवल कीबोर्ड शॉर्टकट से एक्सेस करें |
 | ✓ | Open Pesto Clipboard: | Pesto Clipboard खोलें: |
 | ✓ | Paste as Original | मूल रूप में पेस्ट करें |
 | ✓ | Paste as Plaintext | सादे टेक्स्ट के रूप में पेस्ट करें |

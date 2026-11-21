@@ -24,7 +24,6 @@ Stale: 0
 | ✓ | 7 days | 7 天 |
 | ✓ | About Pesto Clipboard | 关于 Pesto Clipboard |
 | ✓ | Accessibility permission required | 需要辅助功能权限 |
-| ✓ | Advanced | 高级 |
 | ✓ | Appearance | 外观 |
 | ✓ | Are you sure you want to clear your clipboard history? | 确定要清除剪贴板历史记录吗？ |
 | ✓ | Auto-Delete | 自动删除 |
@@ -65,7 +64,6 @@ Stale: 0
 | ✓ | Files | 文件 |
 | ✓ | General | 通用 |
 | ✓ | Get Started | 开始使用 |
-| ✓ | Hide menu bar icon | 隐藏菜单栏图标 |
 | ✓ | History | 历史记录 |
 | ✓ | Ignore | 忽略 |
 | ✓ | Ignore clipboard from other devices | 忽略来自其他设备的剪贴板 |
@@ -80,9 +78,7 @@ Stale: 0
 | ✓ | Keyboard Shortcut | 键盘快捷键 |
 | ✓ | Launch at login | 登录时启动 |
 | ✓ | Limits | 限制 |
-| ✓ | Make sure you remember your keyboard shortcut! | 请务必记住您的键盘快捷键！ |
 | ✓ | Maximum items: | 最大项目数： |
-| ✓ | Menu Bar | 菜单栏 |
 | ✓ | Never | 从不 |
 | ✓ | Next | 下一步 |
 | ✓ | No clipboard history | 没有剪贴板历史记录 |
@@ -91,7 +87,6 @@ Stale: 0
 | ✓ | No results found | 未找到结果 |
 | ✓ | No starred items | 没有收藏项目 |
 | ✓ | OK | 好 |
-| ✓ | Only access Pesto Clipboard via keyboard shortcut | 仅通过键盘快捷键访问 Pesto Clipboard |
 | ✓ | Open Pesto Clipboard: | 打开 Pesto Clipboard： |
 | ✓ | Paste as Original | 粘贴为原始格式 |
 | ✓ | Paste as Plaintext | 粘贴为纯文本 |

@@ -24,7 +24,6 @@ Stale: 0
 | ✓ | 7 days | 7 Tage |
 | ✓ | About Pesto Clipboard | Über Pesto Clipboard |
 | ✓ | Accessibility permission required | Bedienungshilfen-Berechtigung erforderlich |
-| ✓ | Advanced | Erweitert |
 | ✓ | Appearance | Erscheinungsbild |
 | ✓ | Are you sure you want to clear your clipboard history? | Möchtest du den Zwischenablageverlauf wirklich löschen? |
 | ✓ | Auto-Delete | Automatisch löschen |
@@ -65,7 +64,6 @@ Stale: 0
 | ✓ | Files | Dateien |
 | ✓ | General | Allgemein |
 | ✓ | Get Started | Loslegen |
-| ✓ | Hide menu bar icon | Menüleistensymbol ausblenden |
 | ✓ | History | Verlauf |
 | ✓ | Ignore | Ignorieren |
 | ✓ | Ignore clipboard from other devices | Zwischenablage von anderen Geräten ignorieren |
@@ -80,9 +78,7 @@ Stale: 0
 | ✓ | Keyboard Shortcut | Tastenkürzel |
 | ✓ | Launch at login | Bei Anmeldung starten |
 | ✓ | Limits | Grenzen |
-| ✓ | Make sure you remember your keyboard shortcut! | Merke dir dein Tastaturkürzel! |
 | ✓ | Maximum items: | Maximale Elemente: |
-| ✓ | Menu Bar | Menüleiste |
 | ✓ | Never | Nie |
 | ✓ | Next | Weiter |
 | ✓ | No clipboard history | Kein Zwischenablageverlauf |
@@ -91,7 +87,6 @@ Stale: 0
 | ✓ | No results found | Keine Ergebnisse gefunden |
 | ✓ | No starred items | Keine Favoriten |
 | ✓ | OK | OK |
-| ✓ | Only access Pesto Clipboard via keyboard shortcut | Pesto Clipboard nur per Tastaturkürzel öffnen |
 | ✓ | Open Pesto Clipboard: | Pesto Clipboard öffnen: |
 | ✓ | Paste as Original | Als Original einfügen |
 | ✓ | Paste as Plaintext | Als reinen Text einfügen |

@@ -24,7 +24,6 @@ Stale: 0
 | ✓ | 7 days | 7 jours |
 | ✓ | About Pesto Clipboard | À propos de Pesto Clipboard |
 | ✓ | Accessibility permission required | Autorisation d'accessibilité requise |
-| ✓ | Advanced | Avancé |
 | ✓ | Appearance | Apparence |
 | ✓ | Are you sure you want to clear your clipboard history? | Voulez-vous vraiment effacer l'historique du presse-papiers ? |
 | ✓ | Auto-Delete | Suppression automatique |
@@ -65,7 +64,6 @@ Stale: 0
 | ✓ | Files | Fichiers |
 | ✓ | General | Général |
 | ✓ | Get Started | Commencer |
-| ✓ | Hide menu bar icon | Masquer l'icône de la barre des menus |
 | ✓ | History | Historique |
 | ✓ | Ignore | Ignorer |
 | ✓ | Ignore clipboard from other devices | Ignorer le presse-papiers des autres appareils |
@@ -80,9 +78,7 @@ Stale: 0
 | ✓ | Keyboard Shortcut | Raccourci clavier |
 | ✓ | Launch at login | Lancer à la connexion |
 | ✓ | Limits | Limites |
-| ✓ | Make sure you remember your keyboard shortcut! | N'oubliez pas votre raccourci clavier ! |
 | ✓ | Maximum items: | Nombre maximum d'éléments : |
-| ✓ | Menu Bar | Barre des menus |
 | ✓ | Never | Jamais |
 | ✓ | Next | Suivant |
 | ✓ | No clipboard history | Aucun historique du presse-papiers |
@@ -91,7 +87,6 @@ Stale: 0
 | ✓ | No results found | Aucun résultat trouvé |
 | ✓ | No starred items | Aucun favori |
 | ✓ | OK | OK |
-| ✓ | Only access Pesto Clipboard via keyboard shortcut | Accéder à Pesto Clipboard uniquement via le raccourci clavier |
 | ✓ | Open Pesto Clipboard: | Ouvrir Pesto Clipboard : |
 | ✓ | Paste as Original | Coller comme original |
 | ✓ | Paste as Plaintext | Coller comme texte brut |

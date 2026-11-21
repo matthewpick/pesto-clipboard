@@ -24,7 +24,6 @@ Stale: 0
 | ✓ | 7 days | 7 dagar |
 | ✓ | About Pesto Clipboard | Om Pesto Clipboard |
 | ✓ | Accessibility permission required | Tillgänglighetsbehörighet krävs |
-| ✓ | Advanced | Avancerat |
 | ✓ | Appearance | Utseende |
 | ✓ | Are you sure you want to clear your clipboard history? | Är du säker på att du vill rensa urklippshistoriken? |
 | ✓ | Auto-Delete | Automatisk radering |
@@ -65,7 +64,6 @@ Stale: 0
 | ✓ | Files | Filer |
 | ✓ | General | Allmänt |
 | ✓ | Get Started | Kom igång |
-| ✓ | Hide menu bar icon | Dölj menyradsikon |
 | ✓ | History | Historik |
 | ✓ | Ignore | Ignorera |
 | ✓ | Ignore clipboard from other devices | Ignorera urklipp från andra enheter |
@@ -80,9 +78,7 @@ Stale: 0
 | ✓ | Keyboard Shortcut | Kortkommando |
 | ✓ | Launch at login | Starta vid inloggning |
 | ✓ | Limits | Gränser |
-| ✓ | Make sure you remember your keyboard shortcut! | Se till att du kommer ihåg ditt kortkommando! |
 | ✓ | Maximum items: | Maximalt antal objekt: |
-| ✓ | Menu Bar | Menyrad |
 | ✓ | Never | Aldrig |
 | ✓ | Next | Nästa |
 | ✓ | No clipboard history | Ingen urklippshistorik |
@@ -91,7 +87,6 @@ Stale: 0
 | ✓ | No results found | Inga resultat hittades |
 | ✓ | No starred items | Inga favoriter |
 | ✓ | OK | OK |
-| ✓ | Only access Pesto Clipboard via keyboard shortcut | Öppna Pesto Clipboard endast via kortkommando |
 | ✓ | Open Pesto Clipboard: | Öppna Pesto Clipboard: |
 | ✓ | Paste as Original | Klistra in som original |
 | ✓ | Paste as Plaintext | Klistra in som oformaterad text |

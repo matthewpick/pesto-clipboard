@@ -24,7 +24,6 @@ Stale: 0
 | ✓ | 7 days | 7 days |
 | ✓ | About Pesto Clipboard | About Pesto Clipboard |
 | ✓ | Accessibility permission required | Accessibility permission required |
-| ✓ | Advanced | Advanced |
 | ✓ | Appearance | Appearance |
 | ✓ | Are you sure you want to clear your clipboard history? | Are you sure you want to clear your clipboard history? |
 | ✓ | Auto-Delete | Auto-Delete |
@@ -65,7 +64,6 @@ Stale: 0
 | ✓ | Files | Files |
 | ✓ | General | General |
 | ✓ | Get Started | Get Started |
-| ✓ | Hide menu bar icon | Hide menu bar icon |
 | ✓ | History | History |
 | ✓ | Ignore | Ignore |
 | ✓ | Ignore clipboard from other devices | Ignore clipboard from other devices |
@@ -80,9 +78,7 @@ Stale: 0
 | ✓ | Keyboard Shortcut | Keyboard Shortcut |
 | ✓ | Launch at login | Launch at login |
 | ✓ | Limits | Limits |
-| ✓ | Make sure you remember your keyboard shortcut! | Make sure you remember your keyboard shortcut! |
 | ✓ | Maximum items: | Maximum items: |
-| ✓ | Menu Bar | Menu Bar |
 | ✓ | Never | Never |
 | ✓ | Next | Next |
 | ✓ | No clipboard history | No clipboard history |
@@ -91,7 +87,6 @@ Stale: 0
 | ✓ | No results found | No results found |
 | ✓ | No starred items | No starred items |
 | ✓ | OK | OK |
-| ✓ | Only access Pesto Clipboard via keyboard shortcut | Only access Pesto Clipboard via keyboard shortcut |
 | ✓ | Open Pesto Clipboard: | Open Pesto Clipboard: |
 | ✓ | Paste as Original | Paste as Original |
 | ✓ | Paste as Plaintext | Paste as Plain Text |

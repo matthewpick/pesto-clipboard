@@ -24,7 +24,6 @@ Stale: 0
 | ✓ | 7 days | 7 dies |
 | ✓ | About Pesto Clipboard | Sobre Pesto Clipboard |
 | ✓ | Accessibility permission required | Es requereix permís d'accessibilitat |
-| ✓ | Advanced | Avançat |
 | ✓ | Appearance | Aparença |
 | ✓ | Are you sure you want to clear your clipboard history? | Estàs segur que vols esborrar l'historial del porta-retalls? |
 | ✓ | Auto-Delete | Eliminació automàtica |
@@ -65,7 +64,6 @@ Stale: 0
 | ✓ | Files | Fitxers |
 | ✓ | General | General |
 | ✓ | Get Started | Comença |
-| ✓ | Hide menu bar icon | Amaga la icona de la barra de menú |
 | ✓ | History | Historial |
 | ✓ | Ignore | Ignora |
 | ✓ | Ignore clipboard from other devices | Ignora el porta-retalls d'altres dispositius |
@@ -80,9 +78,7 @@ Stale: 0
 | ✓ | Keyboard Shortcut | Drecera de teclat |
 | ✓ | Launch at login | Inicia en iniciar sessió |
 | ✓ | Limits | Límits |
-| ✓ | Make sure you remember your keyboard shortcut! | Assegura't de recordar la teva drecera de teclat! |
 | ✓ | Maximum items: | Màxim d'elements: |
-| ✓ | Menu Bar | Barra de menú |
 | ✓ | Never | Mai |
 | ✓ | Next | Següent |
 | ✓ | No clipboard history | Sense historial del porta-retalls |
@@ -91,7 +87,6 @@ Stale: 0
 | ✓ | No results found | No s'han trobat resultats |
 | ✓ | No starred items | Sense elements preferits |
 | ✓ | OK | D'acord |
-| ✓ | Only access Pesto Clipboard via keyboard shortcut | Accedeix a Pesto Clipboard només amb la drecera de teclat |
 | ✓ | Open Pesto Clipboard: | Obre Pesto Clipboard: |
 | ✓ | Paste as Original | Enganxa com a original |
 | ✓ | Paste as Plaintext | Enganxa com a text pla |

@@ -24,7 +24,6 @@ Stale: 0
 | ✓ | 7 days | 7일 |
 | ✓ | About Pesto Clipboard | Pesto Clipboard에 관하여 |
 | ✓ | Accessibility permission required | 손쉬운 사용 권한 필요 |
-| ✓ | Advanced | 고급 |
 | ✓ | Appearance | 모양 |
 | ✓ | Are you sure you want to clear your clipboard history? | 클립보드 기록을 지우시겠습니까? |
 | ✓ | Auto-Delete | 자동 삭제 |
@@ -65,7 +64,6 @@ Stale: 0
 | ✓ | Files | 파일 |
 | ✓ | General | 일반 |
 | ✓ | Get Started | 시작하기 |
-| ✓ | Hide menu bar icon | 메뉴 막대 아이콘 숨기기 |
 | ✓ | History | 기록 |
 | ✓ | Ignore | 무시 |
 | ✓ | Ignore clipboard from other devices | 다른 기기의 클립보드 무시 |
@@ -80,9 +78,7 @@ Stale: 0
 | ✓ | Keyboard Shortcut | 키보드 단축키 |
 | ✓ | Launch at login | 로그인 시 실행 |
 | ✓ | Limits | 제한 |
-| ✓ | Make sure you remember your keyboard shortcut! | 키보드 단축키를 기억하세요! |
 | ✓ | Maximum items: | 최대 항목 수: |
-| ✓ | Menu Bar | 메뉴 막대 |
 | ✓ | Never | 안 함 |
 | ✓ | Next | 다음 |
 | ✓ | No clipboard history | 클립보드 기록 없음 |
@@ -91,7 +87,6 @@ Stale: 0
 | ✓ | No results found | 결과 없음 |
 | ✓ | No starred items | 즐겨찾기 항목 없음 |
 | ✓ | OK | 확인 |
-| ✓ | Only access Pesto Clipboard via keyboard shortcut | 키보드 단축키로만 Pesto Clipboard에 접근 |
 | ✓ | Open Pesto Clipboard: | Pesto Clipboard 열기: |
 | ✓ | Paste as Original | 원본으로 붙여넣기 |
 | ✓ | Paste as Plaintext | 일반 텍스트로 붙여넣기 |

@@ -19,6 +19,42 @@ struct HeaderView: View {
         .padding(.horizontal, 12)
         .padding(.top, 10)
         .padding(.bottom, 6)
+        .windowDraggable()
+    }
+}
+
+// MARK: - Window Drag
+
+/// Hands the drag to the system (`performDrag`) when a SwiftUI drag begins.
+/// A SwiftUI gesture is the trigger because `isMovableByWindowBackground` and
+/// AppKit drag views don't receive mouse events reliably through SwiftUI
+/// hosting views.
+private struct WindowDragModifier: ViewModifier {
+    @State private var isDragging = false
+
+    func body(content: Content) -> some View {
+        content
+            .contentShape(Rectangle())
+            .gesture(
+                DragGesture(minimumDistance: 0, coordinateSpace: .global)
+                    .onChanged { _ in
+                        guard !isDragging,
+                              let event = NSApp.currentEvent,
+                              event.type == .leftMouseDown || event.type == .leftMouseDragged,
+                              let window = event.window else { return }
+                        isDragging = true
+                        window.performDrag(with: event)
+                    }
+                    .onEnded { _ in
+                        isDragging = false
+                    }
+            )
+    }
+}
+
+extension View {
+    func windowDraggable() -> some View {
+        modifier(WindowDragModifier())
     }
 }
 

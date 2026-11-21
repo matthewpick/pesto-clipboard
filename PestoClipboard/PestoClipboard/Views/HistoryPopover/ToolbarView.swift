@@ -60,6 +60,7 @@ struct ToolbarView: View {
         .padding(.leading, 10)
         .padding(.trailing, 10)
         .padding(.vertical, 6)
+        .windowDraggable()
     }
 }
 
